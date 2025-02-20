@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 10:23:26 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/20 10:29:43 by nadahman         ###   ########.fr       */
+/*   Created: 2024/10/02 09:51:54 by nadahman          #+#    #+#             */
+/*   Updated: 2024/10/11 09:35:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+/*
 int main(void)
 {
-    char *input;
-
-    while (1)
-    {
-        input = readline("minishell$ ");
-	}
-    return 0;
+    ft_putchar_fd('A', 1);
+    return (0);
 }
+*/

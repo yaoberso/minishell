@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 10:23:26 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/20 10:29:43 by nadahman         ###   ########.fr       */
+/*   Created: 2024/10/01 12:22:32 by nadahman          #+#    #+#             */
+/*   Updated: 2024/10/07 13:30:35 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main(void)
+int	ft_isalpha(int c)
 {
-    char *input;
-
-    while (1)
-    {
-        input = readline("minishell$ ");
+	if (!((c >= 'a' && c <= 'z')
+			|| (c >= 'A' && c <= 'Z')))
+	{
+		return (0);
 	}
-    return 0;
+	return (1);
 }
+/*
+#include <stdio.h>
+int main (void)
+{
+	printf("%d", ft_isalpha('5'));
+			return (0);
+}
+*/

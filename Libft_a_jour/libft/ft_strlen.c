@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 10:23:26 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/20 10:29:43 by nadahman         ###   ########.fr       */
+/*   Created: 2024/10/01 13:28:54 by nadahman          #+#    #+#             */
+/*   Updated: 2024/10/11 09:38:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
+int	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}	
+/*
 int main(void)
 {
-    char *input;
-
-    while (1)
-    {
-        input = readline("minishell$ ");
-	}
-    return 0;
+	char *str = "Salut";
+	printf("%d", ft_strlen(str));
+	return (0);
 }
+*/

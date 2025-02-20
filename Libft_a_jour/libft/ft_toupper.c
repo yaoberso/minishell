@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 10:23:26 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/20 10:29:43 by nadahman         ###   ########.fr       */
+/*   Created: 2024/10/09 11:38:28 by nadahman          #+#    #+#             */
+/*   Updated: 2024/10/11 09:40:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
+int	ft_toupper(int c)
+{
+	if (c >= 'a' && c <= 'z')
+	{
+		c = c - 32;
+	}
+	return (c);
+}
+/*
 #include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
 int main(void)
 {
-    char *input;
-
-    while (1)
-    {
-        input = readline("minishell$ ");
-	}
-    return 0;
+    char c = 'A';
+    
+    printf("'%c'\n", c, ft_toupper(c));
+    
+    return (0);
 }
+*/

@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 10:23:26 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/20 10:29:43 by nadahman         ###   ########.fr       */
+/*   Created: 2024/10/03 09:56:08 by nadahman          #+#    #+#             */
+/*   Updated: 2024/10/11 09:35:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
+void	ft_putendl_fd(char *s, int fd)
+{
+	if (s == NULL)
+	{
+		return ;
+	}
+	while (*s != '\0')
+	{
+		write(fd, s, 1);
+		s++;
+	}
+	write(fd, "\n", 1);
+}
+
+/*
 int main(void)
 {
-    char *input;
-
-    while (1)
-    {
-        input = readline("minishell$ ");
-	}
-    return 0;
+    ft_putendl_fd("Hello, World!", 1);
+    return (0);
 }
+*/

@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 10:23:26 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/20 10:29:43 by nadahman         ###   ########.fr       */
+/*   Created: 2024/10/02 10:35:26 by nadahman          #+#    #+#             */
+/*   Updated: 2024/10/11 09:29:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	pos;
+
+	pos = 0;
+	while (pos < n)
+	{
+		((char *)s)[pos] = 0;
+		pos++;
+	}
+}
+
+/*
 #include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
 int main(void)
 {
-    char *input;
+    char str[6] = "Hello";
 
-    while (1)
-    {
-        input = readline("minishell$ ");
-	}
-    return 0;
+    ft_bzero(str, 3);
+
+    printf("Chaîne après ft_bzero : %s\n", str);
+
+    return (0);
 }
+*/
