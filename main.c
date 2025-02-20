@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/20 13:19:16 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:26:03 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int main()
 	while (1)
 	{
 		str = readline("minishell$ ");
-		printf("%s\n", str);
+		parsing(str);
+		
 	}
 	return (0);
 }

@@ -1,36 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/20 20:01:20 by nas              ###   ########.fr       */
+/*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
+/*   Updated: 2025/02/20 19:55:46 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-// Structure pour les commandes
-
-typedef struct s_cmd
+// regroupe les fonctions de parsing
+void	parsing()
 {
-	char *cmd;
-	char **arg;
-} t_cmd;
+	
+}
 
-// stucture en liste chainé qui va contenir tout les elements de la commande
-typedef struct s_token
+// le cas ou il y'a un seul argument entre guillemets
+void	pars_one_arg(char *str, t_cmd *cmd)
 {
-    char            *value;
-    struct s_token  *next;
-} t_token;
+	cmd->cmd = ft_split(str, ' ');
+}
 
-#endif
+// le cas ou il y'a plusieurs arguments
+void pars_mult(char *str, t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		while (str[i] == ' ' || str[i] == '\t')
+			i++;
+		if (str[i] == '\0')
+			break ;
+	}
+}
