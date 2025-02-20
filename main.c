@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 13:21:05 by nadahman          #+#    #+#             */
-/*   Updated: 2024/10/11 09:31:38 by marvin           ###   ########.fr       */
+/*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
+/*   Updated: 2025/02/20 11:49:38 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_isdigit(int c)
-{
-	if (!(c >= '0' && c <= '9'))
-	{
-		return (0);
-	}
-	return (1);
-}
+// int main()
+// {
+// 	char	*input;
 
-/*
-#include <stdio.h>
-int main(void)
+// 	while (1)
+// 	{
+// 		input = readline("minishell$ ");
+// 	}
+// 	return (0);
+// }
+
+
+int main()
 {
-	char *str = "salut 74200";
-	printf("%i", ft_isdigit(str));
+	printf("salut");
 	return (0);
-}*/
+}
