@@ -6,13 +6,13 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 10:41:00 by yaoberso          #+#    #+#             */
-/*   Updated: 2024/10/09 14:14:41 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:54:08 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int static	calc(int s, int *i, const char *str)
+static int	calc(int s, int *i, const char *str)
 {
 	int		r;
 
@@ -28,13 +28,11 @@ int static	calc(int s, int *i, const char *str)
 int	ft_atoi(const char *str)
 {
 	int		i;
-	int		r;
 	int		s;
 	int		count;
 
 	count = 0;
 	i = 0;
-	r = 0;
 	s = 1;
 	while ((str[i] <= 13 && str[i] >= 9) || str[i] == ' ')
 		i++;
