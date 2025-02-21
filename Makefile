@@ -3,26 +3,28 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+         #
+#    By: yann <yann@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-#    Updated: 2025/02/20 13:05:27 by yaoberso         ###   ########.fr        #
+#    Updated: 2025/02/21 11:06:57 by yann             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CFLAGS = -Wall -Wextra -Werror -g3
+READLINE_DIR = $(shell brew --prefix readline)
+INCLUDES = -I$(READLINE_DIR)/include
+LIBS = -L$(READLINE_DIR)/lib
+
 CC = gcc
-OBJ = $(SRCS:.c=.o)
-
 SRCS = main.c
-
+OBJ = $(SRCS:.c=.o)
 LIBFT_OBJ = libft/libft.a
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_OBJ) -lreadline -lncurses -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_OBJ) $(INCLUDES) $(LIBS) -lreadline -lncurses -o $(NAME)
 
 $(LIBFT_OBJ):
 	make -C libft
@@ -38,4 +40,6 @@ fclean: clean
 re: fclean all
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+.PHONY: all clean fclean re
