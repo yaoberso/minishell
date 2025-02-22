@@ -3,19 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+         #
+#    By: nas <nas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-#    Updated: 2025/02/20 13:05:27 by yaoberso         ###   ########.fr        #
+#    Updated: 2025/02/21 11:58:18 by nas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -Iincludes -Iparsing -g3 
 CC = gcc
 OBJ = $(SRCS:.c=.o)
 
-SRCS = main.c
+SRCS =	main.c \
+		parsing/parsing.c \
+		parsing/pars_utils.c
+	 
+
 
 LIBFT_OBJ = libft/libft.a
 
