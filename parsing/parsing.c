@@ -6,78 +6,92 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/02/22 10:13:32 by nas              ###   ########.fr       */
+/*   Updated: 2025/02/23 19:14:36 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// regroupe les fonctions de parsing
+// la fonction qui va extraire toutes les commandes des arguments
+char *recup_token(char *str, int *index)
+{
+    int i = *index;
+    int start, end;
+    char c;
+    char *str_recup;
+
+    while (str[i] && ft_isspace(str[i]))
+        i++;
+    
+    if (str[i] == NULL)
+        return NULL;
+    if (str[i] == '"' || str[i] == '\'')
+    {
+        c = str[i];
+        i++;
+        start = i;
+        while (str[i] && str[i] != c)
+            i++;
+        if (str[i] == NULL)
+            return NULL;
+        end = i;
+        i++;
+    }
+    else
+    {
+        start = i;
+        while (str[i] && !ft_isspace(str[i]) && str[i] != '<' && str[i] != '>')
+            i++;
+        end = i;
+    }
+
+    *index = i;
+    if (end <= start)
+        return NULL;
+    
+    str_recup = ft_substr(str, start, end - start);
+    return str_recup;
+}
+
+
+
+// analyse, decoupe et rempli les structures en fonction de ce qu'on recupere
 void parsing(char *str, t_cmd *cmd)
 {
     int i;
     char *token;
-    int token_count;
+    t_redirection *new_redir;
 
-	i = 0;
-	token_count = 0;
+    i = 0;
+    if (str == NULL || cmd == NULL)
+        return ;
+
     cmd->cmd = NULL;
     cmd->arg = NULL;
+    cmd->redirection = NULL;
 
-    while ((token = recup_token(str, &i)) != NULL)
+    while (str[i])
     {
-        if (token_count == 0)
-            cmd->cmd = token;
-        else
-            add_token(&cmd->arg, new_token(token));
-
-        token_count++;
-    }
-    if (token_count == 1)
-        pars_one_arg(str, cmd);
-    else                
-        pars_mult(str, cmd);
-}
-
-// le cas ou il y'a un seul argument entre guillemets
-void pars_one_arg(char *str, t_cmd *cmd)
-{
-    int i = 0;
-    char *token;
-
-    token = recup_token(str, &i);
-    if (token != NULL)
-    {
-        cmd->cmd = token;
-        cmd->arg = NULL;
-        token = recup_token(str, &i);
-        while (token != NULL)
+        while (str[i] && ft_isspace(str[i]))
+            i++;
+        if (str[i] == '<' || str[i] == '>')
         {
-            add_token(&cmd->arg, new_token(token));
-            free(token);
-            token = recup_token(str, &i);
+            new_redir = found_redirection(str, &i);
+            if (new_redir)
+                add_redirection(cmd, new_redir);
+            continue;
+        }
+        token = recup_token(str, &i);
+        if (token)
+        {
+            if (cmd->cmd == NULL)
+                cmd->cmd = token;
+            else
+                add_token(&cmd->arg, new_token(token));
         }
     }
-    else
-    {
-        cmd->cmd = NULL;
-        cmd->arg = NULL;
-    }
 }
 
-// le cas ou il y'a plusieurs arguments
-void pars_mult(char *str, t_cmd *cmd)
-{
-    int i = 0;
-    char *token;
 
-    cmd->arg = NULL;
-    cmd->cmd = recup_token(str, &i);
 
-    while ((token = recup_token(str, &i)) != NULL)
-    {
-        add_token(&cmd->arg, new_token(token));
-        free(token);
-    }
-}
 

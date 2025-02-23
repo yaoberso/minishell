@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/22 10:12:47 by nas              ###   ########.fr       */
+/*   Updated: 2025/02/23 18:47:21 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,36 @@ typedef struct s_token
     struct s_token  *next;
 } t_token;
 
+// Structure pour les redirections
+typedef struct s_redirection 
+{
+    char    *type;    // le type de redirection ça "<" ça ">" ou ça">>"
+    char    *file;    // le fichier de redirection
+    struct s_redirection *next;
+} t_redirection;
+
 // Structure pour les commandes
 typedef struct s_cmd
 {
 	char *cmd;  // pour les commandes
 	t_token *arg; // liste chainé qui va contenir les arguments
+	t_redirection   *redirection; // liste chainé qui va contenir les redirections
 } t_cmd;
 
 
 
 
-
-void add_token(t_token **head, t_token *new);
+// Fonctions de parsing
+void 	add_token(t_token **head, t_token *new);
 t_token	*new_token(char *str);
-void	parsing();
+void	parsing(char *str, t_cmd *cmd);
 void	pars_one_arg(char *str, t_cmd *cmd);
-void pars_mult(char *str, t_cmd *cmd);
-char *recup_token(char *str, int *index);
-void print_arguments(t_token *arg);
+void 	pars_mult(char *str, t_cmd *cmd);
+char 	*recup_token(char *str, int *index);
+t_redirection    *found_redirection(char *str, int *index);
+void    add_redirection(t_cmd *cmd, t_redirection *new_redir);
 
+// utils
+void 	print_arguments(t_token *arg);
+int    ft_isspace(char c);
 #endif
