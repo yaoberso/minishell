@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yann <yann@student.42.fr>                  +#+  +:+       +#+         #
+#    By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-#    Updated: 2025/02/21 11:06:57 by yann             ###   ########.fr        #
+#    Updated: 2025/02/24 12:30:17 by yaoberso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ INCLUDES = -I$(READLINE_DIR)/include
 LIBS = -L$(READLINE_DIR)/lib
 
 CC = gcc
-SRCS = main.c
+SRCS =	main.c \
+		signal.c
 OBJ = $(SRCS:.c=.o)
 LIBFT_OBJ = libft/libft.a
 
