@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/02/23 18:42:30 by nas              ###   ########.fr       */
+/*   Updated: 2025/02/24 13:33:11 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,62 @@ void add_redirection(t_cmd *cmd, t_redirection *new_redir)
     }
 }
 
+void    add_pipe(t_cmd *cmd, t_pipe *pipe)
+{
+    t_pipe *tmp;
+    
+    if (cmd == NULL || pipe == NULL)
+        return;
+    if (cmd->pipe == NULL)
+    {
+        cmd->pipe = pipe;
+        return;
+    }
+    else
+    {
+        tmp = cmd->pipe;
+        while (tmp->next != NULL)
+            tmp = tmp->next;
+        tmp->next = pipe;
+    }
+}
+
+t_pipe  *found_pipe(char *str, int *index)
+{
+    t_pipe *pipe = malloc(sizeof(t_pipe));
+    if (pipe == NULL)
+        return (NULL);
+    
+    pipe->type = NULL;
+    pipe->next = NULL;
+    if (str[*index] == '|')
+    {
+        pipe->type = ft_strdup("|");
+        if (pipe->type == NULL)
+        {
+            free(pipe);
+            return (NULL);
+        }
+        (*index)++;
+    }
+    else
+    {
+        free(pipe);
+        return (NULL);
+    }
+    while (str[*index] && ft_isspace(str[*index]))
+        (*index)++;
+    pipe->arg_pipe = recup_token(str, index);
+    if (pipe->arg_pipe == NULL)
+    {
+        free(pipe->type);
+        free(pipe);
+        return (NULL);
+    }
+    return (pipe);
+}
+
+
 // pour trouver une redirection, le *index c'est la position du caractere apres la redirection
 t_redirection *found_redirection(char *str, int *index)
 {
@@ -107,7 +163,20 @@ t_redirection *found_redirection(char *str, int *index)
     }
     while (str[*index] && ft_isspace(str[*index]))
         (*index)++;
+    if (str[*index] == '\0' || ft_isspace(str[*index]))
+    {
+        printf("Error : aucun fichier\n");
+        return (NULL);
+    }
     redir->file = recup_token(str, index);
+    if (redir->file && (redir->file[0] == '>' || redir->file[0] == '<' || redir->file[0] == '|'))
+    {
+        printf("Error : Nom de fichier invalide\n");
+        free(redir->type);
+        free(redir->file);
+        free(redir);
+        return (NULL);
+    }
     if (redir->file == NULL)
     {
         free(redir->type);

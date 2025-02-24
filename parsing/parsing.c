@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/02/23 19:14:36 by nas              ###   ########.fr       */
+/*   Updated: 2025/02/24 11:54:30 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char *recup_token(char *str, int *index)
     while (str[i] && ft_isspace(str[i]))
         i++;
     
-    if (str[i] == NULL)
+    if (!str[i])
         return NULL;
     if (str[i] == '"' || str[i] == '\'')
     {
@@ -32,7 +32,7 @@ char *recup_token(char *str, int *index)
         start = i;
         while (str[i] && str[i] != c)
             i++;
-        if (str[i] == NULL)
+        if (!str[i])
             return NULL;
         end = i;
         i++;
@@ -40,7 +40,7 @@ char *recup_token(char *str, int *index)
     else
     {
         start = i;
-        while (str[i] && !ft_isspace(str[i]) && str[i] != '<' && str[i] != '>')
+        while (str[i] && !ft_isspace(str[i]) && str[i] != '<' && str[i] != '>' && str[i] != '|')
             i++;
         end = i;
     }
@@ -61,6 +61,7 @@ void parsing(char *str, t_cmd *cmd)
     int i;
     char *token;
     t_redirection *new_redir;
+    t_pipe  *pipe;
 
     i = 0;
     if (str == NULL || cmd == NULL)
@@ -69,6 +70,7 @@ void parsing(char *str, t_cmd *cmd)
     cmd->cmd = NULL;
     cmd->arg = NULL;
     cmd->redirection = NULL;
+    cmd->pipe = NULL;
 
     while (str[i])
     {
@@ -79,7 +81,12 @@ void parsing(char *str, t_cmd *cmd)
             new_redir = found_redirection(str, &i);
             if (new_redir)
                 add_redirection(cmd, new_redir);
-            continue;
+        }
+        else if (str[i] == '|')
+        {
+            pipe = found_pipe(str, &i);
+            if (pipe)
+                add_pipe(cmd, pipe);
         }
         token = recup_token(str, &i);
         if (token)

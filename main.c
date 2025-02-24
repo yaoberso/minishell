@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/23 19:03:21 by nas              ###   ########.fr       */
+/*   Updated: 2025/02/24 11:37:08 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int main()
     cmd->cmd = NULL;
     cmd->arg = NULL;
     cmd->redirection = NULL;
+    cmd->pipe = NULL;
     while (1)
     {
         str = readline("minishell$ ");
@@ -41,6 +42,17 @@ int main()
                 printf("type de redirection: %s\n", tmp->type);
                 printf("fichier de redirection: %s\n", tmp->file);
                 tmp = tmp->next;
+            }
+        }
+        if (cmd->pipe == NULL)
+            printf("Pas de pipe\n");
+        else
+        {
+            t_pipe *tmp2 = cmd->pipe;
+            while (tmp2 != NULL)
+            {
+                printf("Pipe : %s\n", tmp2->type);
+                tmp2 = tmp2->next;
             }
         }
 
