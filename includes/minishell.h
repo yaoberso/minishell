@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/24 12:33:16 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:50:43 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_redirection
 typedef struct s_pipe
 {
     char *type;
-    char *arg_pipe;
+    char *cmd_pipe;
     struct s_pipe *next;
 } t_pipe;
 

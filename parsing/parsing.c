@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/02/24 11:54:30 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:14:35 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 // la fonction qui va extraire toutes les commandes des arguments
 char *recup_token(char *str, int *index)
 {
-    int i = *index;
+    int i;
     int start, end;
     char c;
     char *str_recup;
 
+    i = *index;
     while (str[i] && ft_isspace(str[i]))
         i++;
     

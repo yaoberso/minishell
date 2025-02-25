@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/02/24 13:33:11 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:51:17 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,22 +86,21 @@ void    add_pipe(t_cmd *cmd, t_pipe *pipe)
     }
 }
 
-t_pipe  *found_pipe(char *str, int *index)
+t_pipe *found_pipe(char *str, int *index)
 {
-    t_pipe *pipe = malloc(sizeof(t_pipe));
+    t_pipe *pipe;
+    
+    pipe = malloc(sizeof(t_pipe));
     if (pipe == NULL)
         return (NULL);
     
     pipe->type = NULL;
+    pipe->cmd_pipe = NULL;
     pipe->next = NULL;
+    
     if (str[*index] == '|')
     {
         pipe->type = ft_strdup("|");
-        if (pipe->type == NULL)
-        {
-            free(pipe);
-            return (NULL);
-        }
         (*index)++;
     }
     else
@@ -109,15 +108,28 @@ t_pipe  *found_pipe(char *str, int *index)
         free(pipe);
         return (NULL);
     }
+    if (pipe->type == NULL)
+    {
+        free(pipe);
+        return (NULL);
+    }
     while (str[*index] && ft_isspace(str[*index]))
         (*index)++;
-    pipe->arg_pipe = recup_token(str, index);
-    if (pipe->arg_pipe == NULL)
+    if (str[*index] == '\0' || str[*index] == '|' || str[*index] == '<' || str[*index] == '>')
+    {
+        printf("Error: apres le `|'\n");
+        free(pipe->type);
+        free(pipe);
+        return (NULL);
+    }
+    pipe->cmd_pipe = recup_token(str, index);
+    if (pipe->cmd_pipe == NULL)
     {
         free(pipe->type);
         free(pipe);
         return (NULL);
     }
+    
     return (pipe);
 }
 
