@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/02/25 10:51:17 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:24:16 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,9 +175,9 @@ t_redirection *found_redirection(char *str, int *index)
     }
     while (str[*index] && ft_isspace(str[*index]))
         (*index)++;
-    if (str[*index] == '\0' || ft_isspace(str[*index]))
+    if (str[*index] == '\0' || ft_isspace(str[*index]) || str[*index] == '>' || str[*index] == '<' || str[*index] == '|')
     {
-        printf("Error : aucun fichier\n");
+        printf("Error : apres la redirection\n");
         return (NULL);
     }
     redir->file = recup_token(str, index);

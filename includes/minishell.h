@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/25 10:50:43 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:16:40 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_cmd
 	char *cmd;  // pour les commandes
 	t_token *arg; // liste chainé qui va contenir les arguments
 	t_redirection   *redirection; // liste chainé qui va contenir les redirections
-    t_pipe  *pipe;
+    struct s_cmd *next_cmd; // structure cree des qu un pipe est trouve
 } t_cmd;
 
 
