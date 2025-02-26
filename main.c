@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/25 12:13:29 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:28:34 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void    aff_result(t_cmd *cmd, char *str)
 {
     t_redirection *tmp;
-    t_pipe *tmp2;
+    t_cmd *next_cmd;
     
     if (cmd->redirection)
     {
@@ -27,19 +27,32 @@ void    aff_result(t_cmd *cmd, char *str)
             tmp = tmp->next;
         }
     }
-    if (cmd->pipe)
+    
+    if (cmd->next_cmd)
     {
-        tmp2 = cmd->pipe;
-        while (tmp2 != NULL)
+        next_cmd = cmd->next_cmd;
+        while (next_cmd != NULL)
         {
-            printf("Pipe : %s\n", tmp2->type);
-            printf("CMD du pipe : %s\n", tmp2->cmd_pipe);
-            tmp2 = tmp2->next;
+            printf("Pipe : |\n");
+            printf("Cmd apres pipe : %s\n", next_cmd->cmd);
+            if (next_cmd->arg)
+            {
+                print_arguments(next_cmd->arg);
+            }
+            if (next_cmd->redirection)
+            {
+                printf("Redirections apres pipe :\n");
+                tmp = next_cmd->redirection;
+                while (tmp != NULL)
+                {
+                    printf("  Type: %s, Fichier: %s\n", tmp->type, tmp->file);
+                    tmp = tmp->next;
+                }
+            }
+            next_cmd = next_cmd->next_cmd;
         }
     }
-
     free(str);
-
 }
 
 int main()
@@ -54,7 +67,6 @@ int main()
     cmd->cmd = NULL;
     cmd->arg = NULL;
     cmd->redirection = NULL;
-    cmd->pipe = NULL;
     while (1)
     {
         str = readline("minishell$ ");

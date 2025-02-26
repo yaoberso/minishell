@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/02/25 10:14:35 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:31:08 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ char *recup_token(char *str, int *index)
             i++;
         end = i;
     }
-
     *index = i;
     if (end <= start)
         return NULL;
-    
     str_recup = ft_substr(str, start, end - start);
     return str_recup;
 }
@@ -62,21 +60,22 @@ void parsing(char *str, t_cmd *cmd)
     int i;
     char *token;
     t_redirection *new_redir;
-    t_pipe  *pipe;
-
+    t_cmd *next_cmd;
+    
     i = 0;
     if (str == NULL || cmd == NULL)
-        return ;
-
+        return;
     cmd->cmd = NULL;
     cmd->arg = NULL;
     cmd->redirection = NULL;
-    cmd->pipe = NULL;
-
+    cmd->next_cmd = NULL;
+    
     while (str[i])
     {
         while (str[i] && ft_isspace(str[i]))
             i++;
+        if (!str[i])
+            break ;
         if (str[i] == '<' || str[i] == '>')
         {
             new_redir = found_redirection(str, &i);
@@ -85,17 +84,21 @@ void parsing(char *str, t_cmd *cmd)
         }
         else if (str[i] == '|')
         {
-            pipe = found_pipe(str, &i);
-            if (pipe)
-                add_pipe(cmd, pipe);
+            next_cmd = found_next_cmd(str, &i);
+            if (next_cmd)
+                add_next_cmd(cmd, next_cmd);
+            break ;
         }
-        token = recup_token(str, &i);
-        if (token)
+        else
         {
-            if (cmd->cmd == NULL)
-                cmd->cmd = token;
-            else
-                add_token(&cmd->arg, new_token(token));
+            token = recup_token(str, &i);
+            if (token)
+            {
+                if (cmd->cmd == NULL)
+                    cmd->cmd = token;
+                else
+                    add_token(&cmd->arg, new_token(token));
+            }
         }
     }
 }

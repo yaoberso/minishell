@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/25 14:16:40 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:29:03 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,6 @@ typedef struct s_redirection
     struct s_redirection *next;
 } t_redirection;
 
-// Structure pour les pipes
-typedef struct s_pipe
-{
-    char *type;
-    char *cmd_pipe;
-    struct s_pipe *next;
-} t_pipe;
-
 
 // Structure pour les commandes
 typedef struct s_cmd
@@ -54,8 +46,6 @@ typedef struct s_cmd
 } t_cmd;
 
 
-
-
 // Fonctions de parsing
 void 	add_token(t_token **head, t_token *new);
 t_token	*new_token(char *str);
@@ -63,8 +53,8 @@ void	parsing(char *str, t_cmd *cmd);
 char 	*recup_token(char *str, int *index);
 t_redirection    *found_redirection(char *str, int *index);
 void    add_redirection(t_cmd *cmd, t_redirection *new_redir);
-t_pipe  *found_pipe(char *str, int *index);
-void    add_pipe(t_cmd *cmd, t_pipe *pipe);
+t_cmd *found_next_cmd(char *str, int *index);
+void add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
 
 // utils
 void 	print_arguments(t_token *arg);

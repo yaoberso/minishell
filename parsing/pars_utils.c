@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/02/25 13:24:16 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:21:48 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,51 +66,48 @@ void add_redirection(t_cmd *cmd, t_redirection *new_redir)
     }
 }
 
-void    add_pipe(t_cmd *cmd, t_pipe *pipe)
+void add_next_cmd(t_cmd *cmd, t_cmd *next_cmd)
 {
-    t_pipe *tmp;
+    t_cmd *tmp;
     
-    if (cmd == NULL || pipe == NULL)
+    if (cmd == NULL || next_cmd == NULL)
         return;
-    if (cmd->pipe == NULL)
+    
+    if (cmd->next_cmd == NULL)
     {
-        cmd->pipe = pipe;
+        cmd->next_cmd = next_cmd;
         return;
     }
     else
     {
-        tmp = cmd->pipe;
-        while (tmp->next != NULL)
-            tmp = tmp->next;
-        tmp->next = pipe;
+        tmp = cmd->next_cmd;
+        while (tmp->next_cmd != NULL)
+            tmp = tmp->next_cmd;
+        tmp->next_cmd = next_cmd;
     }
 }
 
-t_pipe *found_pipe(char *str, int *index)
+t_cmd *found_next_cmd(char *str, int *index)
 {
-    t_pipe *pipe;
+    t_cmd *next_cmd;
+    t_redirection *new_redir;
+    t_cmd *another_cmd;
+    char *token;
     
-    pipe = malloc(sizeof(t_pipe));
-    if (pipe == NULL)
+    next_cmd = malloc(sizeof(t_cmd));
+    if (next_cmd == NULL)
         return (NULL);
-    
-    pipe->type = NULL;
-    pipe->cmd_pipe = NULL;
-    pipe->next = NULL;
-    
+    next_cmd->cmd = NULL;
+    next_cmd->arg = NULL;
+    next_cmd->redirection = NULL;
+    next_cmd->next_cmd = NULL;
     if (str[*index] == '|')
     {
-        pipe->type = ft_strdup("|");
         (*index)++;
     }
     else
     {
-        free(pipe);
-        return (NULL);
-    }
-    if (pipe->type == NULL)
-    {
-        free(pipe);
+        free(next_cmd);
         return (NULL);
     }
     while (str[*index] && ft_isspace(str[*index]))
@@ -118,19 +115,44 @@ t_pipe *found_pipe(char *str, int *index)
     if (str[*index] == '\0' || str[*index] == '|' || str[*index] == '<' || str[*index] == '>')
     {
         printf("Error: apres le `|'\n");
-        free(pipe->type);
-        free(pipe);
+        free(next_cmd);
         return (NULL);
     }
-    pipe->cmd_pipe = recup_token(str, index);
-    if (pipe->cmd_pipe == NULL)
+    next_cmd->cmd = recup_token(str, index);
+    if (next_cmd->cmd == NULL)
     {
-        free(pipe->type);
-        free(pipe);
+        free(next_cmd);
         return (NULL);
     }
-    
-    return (pipe);
+    while (str[*index])
+    {
+        while (str[*index] && ft_isspace(str[*index]))
+            (*index)++;
+        if (!str[*index])
+            break ; 
+        if (str[*index] == '<' || str[*index] == '>')
+        {
+            new_redir = found_redirection(str, index);
+            if (new_redir)
+                add_redirection(next_cmd, new_redir);
+            else
+                break ;
+        }
+        else if (str[*index] == '|')
+        {
+            another_cmd = found_next_cmd(str, index);
+            if (another_cmd)
+                add_next_cmd(next_cmd, another_cmd);
+            break ;
+        }
+        else
+        {
+            token = recup_token(str, index);
+            if (token)
+                add_token(&next_cmd->arg, new_token(token));
+        }
+    }
+    return (next_cmd);
 }
 
 
@@ -141,6 +163,8 @@ t_redirection *found_redirection(char *str, int *index)
     
     if (redir == NULL)
         return (NULL);
+    redir->type = NULL;
+    redir->file = NULL;
     redir->next = NULL;
     if (str[*index] == '<')
     {
@@ -174,24 +198,26 @@ t_redirection *found_redirection(char *str, int *index)
         return (NULL);
     }
     while (str[*index] && ft_isspace(str[*index]))
-        (*index)++;
+        (*index)++;  
     if (str[*index] == '\0' || ft_isspace(str[*index]) || str[*index] == '>' || str[*index] == '<' || str[*index] == '|')
     {
         printf("Error : apres la redirection\n");
+        free(redir->type);
+        free(redir);
         return (NULL);
     }
     redir->file = recup_token(str, index);
-    if (redir->file && (redir->file[0] == '>' || redir->file[0] == '<' || redir->file[0] == '|'))
+    if (redir->file == NULL)
+    {
+        free(redir->type);
+        free(redir);
+        return (NULL);
+    } 
+    if (redir->file[0] == '>' || redir->file[0] == '<' || redir->file[0] == '|')
     {
         printf("Error : Nom de fichier invalide\n");
         free(redir->type);
         free(redir->file);
-        free(redir);
-        return (NULL);
-    }
-    if (redir->file == NULL)
-    {
-        free(redir->type);
         free(redir);
         return (NULL);
     }
