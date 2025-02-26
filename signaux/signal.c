@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/26 10:52:29 by nas              ###   ########.fr       */
+/*   Created: 2025/02/24 12:22:52 by yaoberso          #+#    #+#             */
+/*   Updated: 2025/02/26 10:54:30 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+void	gestionnaire(int sig)
 {
-	char			*input;
-	struct termios	term;
+	(void)sig;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	config_signals();
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (*input)
-			add_history(input);
-		printf("Vous avez tapé : %s\n", input);
-		free(input);
-	}
-	return (0);
+void	config_signals(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = gestionnaire;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
 }

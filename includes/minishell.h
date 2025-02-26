@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/26 10:29:03 by nas              ###   ########.fr       */
+/*   Updated: 2025/02/26 10:53:25 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
+#include <termios.h>
+#include <signal.h>
 
 
 // stucture en liste chainé qui va contenir tout les elements de la commande
@@ -59,4 +61,9 @@ void add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
 // utils
 void 	print_arguments(t_token *arg);
 int    ft_isspace(char c);
+
+// signaux
+extern void	rl_replace_line(const char *text, int clear_undo);
+void		config_signals(void);
+void		gestionnaire(int sig);
 #endif
