@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nas <nas@student.42.fr>                    +#+  +:+       +#+         #
+#    By: yann <yann@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-#    Updated: 2025/02/26 11:03:32 by nas              ###   ########.fr        #
+#    Updated: 2025/02/26 15:16:43 by yann             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS =	main.c \
 		parsing/pars_utils.c \
 		parsing/pars_utils2.c \
 		signaux/signal.c
+		commande/** \
 	 
 LIBFT_DIR = libft
 LIBFT_OBJ = $(LIBFT_DIR)/libft.a

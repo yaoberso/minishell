@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/26 10:53:25 by nas              ###   ########.fr       */
+/*   Updated: 2025/02/28 12:19:10 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 #include <termios.h>
 #include <signal.h>
 
+// structur qui ce met a jour a chaque deplasement dans les fichier
+typedef struct s_env
+{
+    char            *name;
+    char            *value;
+    struct s_env    *next;
+} t_env;
 
 // stucture en liste chainé qui va contenir tout les elements de la commande
 typedef struct s_token
@@ -42,11 +49,24 @@ typedef struct s_redirection
 typedef struct s_cmd
 {
 	char *cmd;  // pour les commandes
+    t_env *env;  //stock le chemin actuelle et l ancien
 	t_token *arg; // liste chainé qui va contenir les arguments
 	t_redirection   *redirection; // liste chainé qui va contenir les redirections
     struct s_cmd *next_cmd; // structure cree des qu un pipe est trouve
 } t_cmd;
 
+// Fonction pour l'environement
+void set_env_value(t_env *env, const char *name, const char *new_value);
+char *get_env_value(t_env *env, const char *name);
+
+// Fonction des commandes
+void    ft_echo(t_token *current);
+void    ft_pwd(void);
+void    ft_cd(t_token *arg, t_env *env);
+void    ft_env(char **arg);
+void    ft_export(char **arg);
+void    ft_unset(char **arg);
+void	comd_exec(t_cmd *cmd);
 
 // Fonctions de parsing
 void 	add_token(t_token **head, t_token *new);
