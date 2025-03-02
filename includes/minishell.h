@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/26 10:53:25 by nas              ###   ########.fr       */
+/*   Updated: 2025/02/28 13:08:37 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 # define MINISHELL_H
 
 #include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
 #include <termios.h>
 #include <signal.h>
+#include <sys/wait.h>
+
 
 
 // stucture en liste chainé qui va contenir tout les elements de la commande
@@ -45,6 +49,7 @@ typedef struct s_cmd
 	t_token *arg; // liste chainé qui va contenir les arguments
 	t_redirection   *redirection; // liste chainé qui va contenir les redirections
     struct s_cmd *next_cmd; // structure cree des qu un pipe est trouve
+    struct s_cmd *prev_cmd;
 } t_cmd;
 
 
@@ -61,6 +66,22 @@ void add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
 // utils
 void 	print_arguments(t_token *arg);
 int    ft_isspace(char c);
+
+// pipe et redirection
+void	exec_pipe(t_cmd *cmd);
+void	exec_redir(t_cmd *cmd);
+void	redir_stdout(int fd[2], t_cmd *next_cmd);
+void	redir_stdin(int fd[2]);
+void	redir_out(t_cmd *cmd, int fd);
+void	redir_in(t_cmd *cmd, int fd);
+void	redir_append(t_cmd *cmd, int fd);
+void	redir_heredoc(t_cmd *cmd, int fd);
+void	create_pipe(int fd[2], t_cmd *next_cmd);
+void	gerer_process(pid_t pid, int fd[2], t_cmd **cur_cmd);
+void	exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2]);
+void	redir_stdout(int fd[2], t_cmd *next_cmd);
+void	redir_stdin(int fd[2]);
+char	**get_args(t_cmd *cmd);
 
 // signaux
 extern void	rl_replace_line(const char *text, int clear_undo);

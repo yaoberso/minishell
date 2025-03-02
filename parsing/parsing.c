@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/02/26 10:31:08 by nas              ###   ########.fr       */
+/*   Updated: 2025/02/28 11:35:44 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ void parsing(char *str, t_cmd *cmd)
         {
             next_cmd = found_next_cmd(str, &i);
             if (next_cmd)
+            {
                 add_next_cmd(cmd, next_cmd);
+                next_cmd->prev_cmd = cmd;
+            }
             break ;
         }
         else
