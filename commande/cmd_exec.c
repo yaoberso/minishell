@@ -11,7 +11,7 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 	else if (ft_strcmp(cmd->cmd, "export") == 0)
 		ft_export(cmd->arg, &env);
 	else if (ft_strcmp(cmd->cmd, "pwd") == 0)
-		ft_pwd(cmd);
+		ft_pwd();
 	else if (ft_strcmp(cmd->cmd, "unset") == 0)
 		ft_unset(cmd->arg, &env);
 	else if (ft_strcmp(cmd->cmd, "exit") == 0)

@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/03 12:10:06 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:06:31 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char *get_env_value(t_env *env, const char *name);
 
 // Fonction des commandes
 void    ft_echo(t_token *current);
-void    ft_pwd(t_cmd *cmd);
+void    ft_pwd();
 void    ft_cd(t_token *arg, t_env *env);
 void    ft_env(char **arg);
 void    ft_export(t_token *arg, t_env **env);

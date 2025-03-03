@@ -1,12 +1,13 @@
 #include "minishell.h"
 
-void ft_pwd(t_cmd *cmd)
+void ft_pwd()
 {
-	char *pwd;
+	char cwd[1024];
 
-    pwd = get_env_value(cmd->env, "PWD");
-    if (pwd)
-        printf("%s\n", pwd);
-    else
-        printf("PWD not set\n");
+    if (getcwd(cwd, sizeof(cwd)) == NULL)
+    {
+        perror("getcwd");
+        exit(1);
+    }
+    printf("%s\n", cwd);
 }
