@@ -97,8 +97,8 @@ void	ft_export(t_token *arg, t_env **env)
 	current_arg = arg;
 	while (current_arg)
 	{
-		var_value = extract_var_value(current_arg->value);
-		var_name = extract_var_name(current_arg->value);
+		var_value = extract_arg_value(current_arg->value);
+		var_name = extract_arg_name(current_arg->value);
 		if (!var_name)
 		{
 			printf("export: `%s': not a valid identifier\n", current_arg->value);

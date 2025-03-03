@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yann <yann@student.42.fr>                  +#+  +:+       +#+         #
+#    By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-#    Updated: 2025/02/26 15:16:43 by yann             ###   ########.fr        #
+#    Updated: 2025/03/03 10:59:35 by yaoberso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror -Iincludes -Iparsing -Isignaux -I$(READLINE_DIR)/include -g3
 CC = gcc
-OBJ = $(SRCS:.c=.o)
+CFLAGS = -Wall -Wextra -Werror -Iincludes -Iparsing -Isignaux -I$(READLINE_DIR)/include -g3
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -22,13 +21,13 @@ else
     READLINE_DIR = /usr/include
 endif
 
-SRCS =	main.c \
-		parsing/parsing.c \
-		parsing/pars_utils.c \
-		parsing/pars_utils2.c \
-		signaux/signal.c
-		commande/** \
-	 
+SRCS = main.c \
+       $(wildcard parsing/*.c) \
+       $(wildcard signaux/*.c) \
+       $(wildcard commande/*.c)
+
+OBJ = $(SRCS:.c=.o)
+
 LIBFT_DIR = libft
 LIBFT_OBJ = $(LIBFT_DIR)/libft.a
 
@@ -52,4 +51,3 @@ re: fclean all
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-
