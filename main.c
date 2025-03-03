@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/03 11:03:33 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:24:40 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	term;
 	t_cmd			*cmd;
 	t_env			*env_list;
+	char cwd[1024];
 
 	(void)argc;
     (void)argv;
@@ -29,7 +30,14 @@ int	main(int argc, char **argv, char **envp)
 	config_signals();
 	while (1)
 	{
-		input = readline("minishell$ ");
+		if (getcwd(cwd, sizeof(cwd)) == NULL)
+        {
+            perror("getcwd");
+            exit(1);
+        }
+
+        // Créer l'invite en utilisant le chemin courant
+        input = readline(cwd);
 		if (!input)
 		{
 			printf("exit\n");

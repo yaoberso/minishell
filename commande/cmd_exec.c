@@ -14,6 +14,11 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 		ft_pwd(cmd);
 	else if (ft_strcmp(cmd->cmd, "unset") == 0)
 		ft_unset(cmd->arg, &env);
+	else if (ft_strcmp(cmd->cmd, "exit") == 0)
+	{
+		printf("exit\n");
+		exit (1);
+	}
 	else
 	{
 		printf("command not found\n");
