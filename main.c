@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/02/28 13:12:32 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/03 12:20:14 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	main(void)
 	char			*input;
 	struct termios	term;
 	t_cmd			*cmd;
+	char cwd[1024];
+	
 
 	cmd = malloc(sizeof(t_cmd));
 	if (cmd == NULL)
@@ -33,7 +35,14 @@ int	main(void)
 	config_signals();
 	while (1)
 	{
-		input = readline("minishell$ ");
+		if (getcwd(cwd, sizeof(cwd)) == NULL)
+        {
+            perror("getcwd");
+            exit(1);
+        }
+
+        // Créer l'invite en utilisant le chemin courant
+        input = readline(cwd); // Utiliser cwd pour afficher le répertoire courant
 		if (!input)
 		{
 			printf("exit\n");
