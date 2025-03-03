@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:17 by nas               #+#    #+#             */
-/*   Updated: 2025/02/28 13:03:02 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/03 12:14:17 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,31 @@ char	**get_args(t_cmd *cmd)
 	args = malloc(sizeof(char *) * (count + 2));
 	if (args == NULL)
 		return (NULL);
+	args[0] = cmd->cmd;
 	token = cmd->arg;
-	i = 0;
+	i = 1;
 	while (token)
 	{
 		args[i++] = token->value;
 		token = token->next;
 	}
-	args[i] = cmd->cmd;
-	args[i + 1] = NULL;
+	args[i] = NULL;
 	return (args);
+}
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	if (tab == NULL)
+		return;
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
 int	count_cmd(t_cmd *cmd)
@@ -56,6 +71,7 @@ int	count_cmd(t_cmd *cmd)
 	}
 	return (count);
 }
+
 
 void	redir_stdout(int fd[2], t_cmd *next_cmd)
 {

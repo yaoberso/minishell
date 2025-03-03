@@ -3,15 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/02 10:59:29 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/03 12:47:34 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*found_path(t_cmd *cmd)
+{
+	char *path;
+	char **paths;
+	char *full_path;
+	char *tmp;
+	int i;
+	
+	path = getenv("PATH");
+	if (path == NULL)
+		return (NULL);
+	paths = ft_split(path, ':');
+	if (paths == NULL)
+		return (NULL);
+	i = 0;
+	while (paths[i])
+	{
+		tmp = ft_strjoin(paths[i], "/");
+		full_path = ft_strjoin(tmp, cmd->cmd);
+		free(tmp);
+		if (access(full_path, F_OK | X_OK) == 0) 
+		{
+            free_tab(paths);
+            return (full_path);
+		}
+		free(full_path);
+		i++;
+	}
+	free_tab(paths);
+	return (NULL);
+}
 
 void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2])
 {
@@ -29,7 +60,7 @@ void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2])
 		perror("get_args");
 		exit(1);
 	}
-	execve(args[0], args, NULL); // execute la commande
+	execve(found_path(cur_cmd), args, NULL); // execute la commande
 	perror("execve");
 	exit(1);
 }
