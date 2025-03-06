@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+         #
+#    By: yann <yann@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-#    Updated: 2025/03/03 10:59:35 by yaoberso         ###   ########.fr        #
+#    Updated: 2025/03/06 10:49:10 by yann             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ else
 endif
 
 SRCS = main.c \
+	   utils.c \
        $(wildcard parsing/*.c) \
        $(wildcard signaux/*.c) \
        $(wildcard commande/*.c)

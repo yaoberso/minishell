@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/03 14:05:51 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:52:25 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd			*cmd;
 	t_env			*env_list;
 	char cwd[1024];
+	char *prompt;
 
 	(void)argc;
     (void)argv;
@@ -37,7 +38,9 @@ int	main(int argc, char **argv, char **envp)
         }
 
         // Créer l'invite en utilisant le chemin courant
-        input = readline(cwd);
+		prompt = creat_prompt(cwd);
+        input = readline(prompt);
+		free(prompt);
 		if (!input)
 		{
 			printf("exit\n");
