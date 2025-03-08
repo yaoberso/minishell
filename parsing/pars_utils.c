@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/02/26 10:21:48 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/08 11:17:44 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,15 +163,34 @@ t_redirection *found_redirection(char *str, int *index)
     
     if (redir == NULL)
         return (NULL);
+    
     redir->type = NULL;
     redir->file = NULL;
     redir->next = NULL;
+
     if (str[*index] == '<')
     {
         if (str[*index + 1] == '<')
         {
             redir->type = ft_strdup("<<");
             *index = *index + 2;
+            while (str[*index] && ft_isspace(str[*index]))
+                (*index)++;
+            if (!str[*index] || str[*index] == '>' || str[*index] == '<' || str[*index] == '|')
+            {
+                printf("Error : délimiteur de heredoc manquant après `<<`\n");
+                free(redir->type);
+                free(redir);
+                return (NULL);
+            }
+            redir->heredoc_delim = recup_token(str, index);
+            if (redir->heredoc_delim == NULL)
+            {
+                free(redir->type);
+                free(redir);
+                return (NULL);
+            }
+            return (redir);
         }
         else
         {
@@ -198,7 +217,7 @@ t_redirection *found_redirection(char *str, int *index)
         return (NULL);
     }
     while (str[*index] && ft_isspace(str[*index]))
-        (*index)++;  
+        (*index)++;
     if (str[*index] == '\0' || ft_isspace(str[*index]) || str[*index] == '>' || str[*index] == '<' || str[*index] == '|')
     {
         printf("Error : apres la redirection\n");
@@ -212,7 +231,7 @@ t_redirection *found_redirection(char *str, int *index)
         free(redir->type);
         free(redir);
         return (NULL);
-    } 
+    }
     if (redir->file[0] == '>' || redir->file[0] == '<' || redir->file[0] == '|')
     {
         printf("Error : Nom de fichier invalide\n");
@@ -221,10 +240,6 @@ t_redirection *found_redirection(char *str, int *index)
         free(redir);
         return (NULL);
     }
+
     return (redir);
 }
-
-
-
-
-

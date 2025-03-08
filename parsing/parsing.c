@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/02/28 11:35:44 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/08 11:19:13 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ char *recup_token(char *str, int *index)
     str_recup = ft_substr(str, start, end - start);
     return str_recup;
 }
-
-
 
 // analyse, decoupe et rempli les structures en fonction de ce qu'on recupere
 void parsing(char *str, t_cmd *cmd)

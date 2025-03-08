@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/03 11:39:41 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:11:51 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_redirection
 {
 	char *type; // le type de redirection ça "<" ça ">" ou ça">>"
 	char *file; // le fichier de redirection
+	char *heredoc_delim; // le delimiteur pour le heredoc "<<"
 	struct s_redirection	*next;
 }							t_redirection;
 
@@ -73,7 +74,6 @@ void						redir_stdin(int fd[2]);
 void						redir_out(t_cmd *cmd, int fd);
 void						redir_in(t_cmd *cmd, int fd);
 void						redir_append(t_cmd *cmd, int fd);
-void						redir_heredoc(t_cmd *cmd, int fd);
 void						create_pipe(int fd[2], t_cmd *next_cmd);
 void						gerer_process(pid_t pid, int fd[2],
 								t_cmd **cur_cmd);
@@ -82,7 +82,7 @@ void						exec_process(t_cmd *cur_cmd, t_cmd *next_cmd,
 void						redir_stdout(int fd[2], t_cmd *next_cmd);
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
-
+void						redir_heredoc(t_cmd *cmd, int heredoc_fd[2]);
 char						*found_path(t_cmd *cmd);
 
 // signaux

@@ -6,7 +6,7 @@
 #    By: nas <nas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-#    Updated: 2025/02/28 13:01:04 by nas              ###   ########.fr        #
+#    Updated: 2025/03/08 10:47:00 by nas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS =	main.c \
 		pipe_redir/redir.c \
 		pipe_redir/pipe_utils.c \
 		pipe_redir/redir_utils.c \
+		pipe_redir/heredoc.c \
 	 
 LIBFT_DIR = libft
 LIBFT_OBJ = $(LIBFT_DIR)/libft.a

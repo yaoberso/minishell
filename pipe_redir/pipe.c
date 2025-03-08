@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/03 12:47:34 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:16:10 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ char	*found_path(t_cmd *cmd)
 		full_path = ft_strjoin(tmp, cmd->cmd);
 		free(tmp);
 		if (access(full_path, F_OK | X_OK) == 0) 
-		{
-            free_tab(paths);
-            return (full_path);
-		}
+			return (free_tab(paths), full_path);
 		free(full_path);
 		i++;
 	}
@@ -60,7 +57,7 @@ void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2])
 		perror("get_args");
 		exit(1);
 	}
-	execve(found_path(cur_cmd), args, NULL); // execute la commande
+	execve(found_path(cur_cmd), args, NULL); // execute la commande en la cherchant dans le path
 	perror("execve");
 	exit(1);
 }
