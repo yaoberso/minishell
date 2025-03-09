@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 16:09:21 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/09 16:23:25 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char **argv, char **envp)
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	config_signals();
-	
 	while (1)
 	{
 		if (getcwd(cwd, sizeof(cwd)) == NULL)
@@ -46,16 +45,14 @@ int	main(int argc, char **argv, char **envp)
 		if (!input)
 		{
 			printf("exit\n");
-			break;
+			break ;
 		}
-		
 		if (*input)
-		{
 			add_history(input);
-			parsing(input, cmd);
-			exec_pipe(cmd, env_list);
-			cmd_exec(cmd, env_list);
-			free(input);
-		}
+		parsing(input, cmd);
+		cmd_exec(cmd, env_list);
+		exec_pipe(cmd);
+		free(input);
+	}
 	return (0);
 }

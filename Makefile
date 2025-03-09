@@ -3,24 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yann <yann@student.42.fr>                  +#+  +:+       +#+         #
+#    By: nas <nas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2025/03/09 12:18:40 by nas              ###   ########.fr        #
-=======
-#    Updated: 2025/03/06 10:49:10 by yann             ###   ########.fr        #
->>>>>>> commande-intern
+#    Updated: 2025/03/09 16:12:05 by nas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-<<<<<<< HEAD
-CFLAGS = -Wall -Wextra -Werror -Iincludes -Iparsing -Isignaux -Ifree -I$(READLINE_DIR)/include -g3
-=======
->>>>>>> commande-intern
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes -Iparsing -Isignaux -I$(READLINE_DIR)/include -g3
+CFLAGS = -Wall -Wextra -Werror -Iincludes -Iparsing -Isignaux -Icommande -Ifree -Ipipe_redir -I$(READLINE_DIR)/include -g3
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)

@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 16:07:26 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/09 16:18:25 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 #include "../libft/libft.h"
 #include <termios.h>
 #include <signal.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <fcntl.h>
+
 
 // structur qui ce met a jour a chaque deplasement dans les fichier
 typedef struct s_env
@@ -53,6 +58,7 @@ typedef struct s_cmd
 	t_token *arg; // liste chainé qui va contenir les arguments
 	t_redirection   *redirection; // liste chainé qui va contenir les redirections
     struct s_cmd *next_cmd; // structure cree des qu un pipe est trouve
+	struct s_cmd *prev_cmd; // structure cree des qu un pipe est trouve
 } t_cmd;
 
 // Fonction pour l'environement
@@ -80,6 +86,31 @@ void						add_redirection(t_cmd *cmd,
 								t_redirection *new_redir);
 t_cmd						*found_next_cmd(char *str, int *index);
 void						add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
+
+// pipe et redirection
+void						exec_pipe(t_cmd *cmd);
+void						exec_redir(t_cmd *cmd);
+void						redir_stdout(int fd[2], t_cmd *next_cmd);
+void						redir_stdin(int fd[2]);
+void						redir_out(t_cmd *cmd, int fd);
+void						redir_in(t_cmd *cmd, int fd);
+void						redir_append(t_cmd *cmd, int fd);
+void						create_pipe(int fd[2], t_cmd *next_cmd);
+void						gerer_process(pid_t pid, int fd[2],
+								t_cmd **cur_cmd);
+void						exec_process(t_cmd *cur_cmd, t_cmd *next_cmd,
+								int fd[2]);
+void						redir_stdout(int fd[2], t_cmd *next_cmd);
+void						redir_stdin(int fd[2]);
+char						**get_args(t_cmd *cmd);
+void						redir_heredoc(t_cmd *cmd, int heredoc_fd[2]);
+char						*found_path(t_cmd *cmd);
+
+// free
+void						free_token(t_token *token);
+void						free_redirection(t_redirection *redir);
+void						free_cmd(t_cmd *cmd);
+void						free_tab(char **tab);
 
 // utils
 char *creat_prompt(char *cwd);
