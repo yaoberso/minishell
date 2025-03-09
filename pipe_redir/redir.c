@@ -1,70 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 14:47:18 by nas              ###   ########.fr       */
+/*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
+/*   Updated: 2025/03/07 11:23:41 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 11:34:40 by nas              ###   ########.fr       */
+/*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
+/*   Updated: 2025/03/07 13:17:00 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+void	exec_redir(t_cmd *cmd)
 {
-	char			*input;
-	struct termios	term;
-	t_cmd			*cmd;
+	int fd;
+	int heredoc_fd[2];
+	t_redirection *current;
+	t_redirection *tmp;
 	
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	config_signals();
-	
-	while (1)
+	current = cmd->redirection;
+	while (current)
 	{
-		input = readline("minishell$ ");
-		if (!input)
+		fd = -1;
+		if (ft_strcmp(current->type, ">") == 0)
+			redir_out(cmd, fd);
+		else if (ft_strcmp(current->type, "<") == 0)	
+			redir_in(cmd, fd);
+		else if (ft_strcmp(current->type, ">>") == 0)
+			redir_append(cmd, fd);
+		else if (ft_strcmp(current->type, "<<") == 0)
 		{
-			printf("exit\n");
-			break;
+			tmp = cmd->redirection;
+			cmd->redirection = current;
+			redir_heredoc(cmd, heredoc_fd);
+			cmd->redirection = tmp;
 		}
-		
-		if (*input)
-		{
-			add_history(input);
-			cmd = malloc(sizeof(t_cmd));
-			if (cmd == NULL)
-			{
-				free(input);
-			}
-			cmd->cmd = NULL;
-			cmd->arg = NULL;
-			cmd->redirection = NULL;
-			cmd->next_cmd = NULL;
-			cmd->prev_cmd = NULL;
-			
-			parsing(input, cmd);
-			exec_pipe(cmd);
-			free_cmd(cmd);
-		}
-		free(input);
+		current = current->next;
 	}
-	return (0);
 }

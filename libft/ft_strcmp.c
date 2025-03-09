@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars_utils2.c                                      :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/23 10:16:13 by nas               #+#    #+#             */
-/*   Updated: 2025/03/08 11:18:58 by nas              ###   ########.fr       */
+/*   Created: 2025/03/01 11:00:46 by nas               #+#    #+#             */
+/*   Updated: 2025/03/01 11:02:19 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void print_arguments(t_token *arg)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-    while (arg != NULL)
-    {
-        printf("Argument: %s\n", arg->value);
-        arg = arg->next;
-    }
-}
+	int	i;
 
-int ft_isspace(char c)
-{
-    return (c == ' ' || c == '\t' || c == '\n');
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+	{
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
