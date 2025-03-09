@@ -6,7 +6,11 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:07:28 by yaoberso          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/01 11:02:52 by nas              ###   ########.fr       */
+=======
+/*   Updated: 2025/03/03 12:02:45 by yaoberso         ###   ########.fr       */
+>>>>>>> commande-intern
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +47,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int		ft_strlen(const char *str);
 char	*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(const char *s1, const char *set);

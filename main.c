@@ -6,32 +6,26 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 14:47:18 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/09 16:09:21 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 11:34:40 by nas              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include "minishell.h"
-
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char			*input;
 	struct termios	term;
 	t_cmd			*cmd;
-	
+	t_env			*env_list;
+	char cwd[1024];
+	char *prompt;
+
+	(void)argc;
+    (void)argv;
+	env_list = init_env(envp);
+	cmd = malloc(sizeof(t_cmd));
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
@@ -39,7 +33,16 @@ int	main(void)
 	
 	while (1)
 	{
-		input = readline("minishell$ ");
+		if (getcwd(cwd, sizeof(cwd)) == NULL)
+        {
+            perror("getcwd");
+            exit(1);
+        }
+
+        // Créer l'invite en utilisant le chemin courant
+		prompt = creat_prompt(cwd);
+        input = readline(prompt);
+		free(prompt);
 		if (!input)
 		{
 			printf("exit\n");
@@ -49,22 +52,10 @@ int	main(void)
 		if (*input)
 		{
 			add_history(input);
-			cmd = malloc(sizeof(t_cmd));
-			if (cmd == NULL)
-			{
-				free(input);
-			}
-			cmd->cmd = NULL;
-			cmd->arg = NULL;
-			cmd->redirection = NULL;
-			cmd->next_cmd = NULL;
-			cmd->prev_cmd = NULL;
-			
 			parsing(input, cmd);
-			exec_pipe(cmd);
-			free_cmd(cmd);
+			exec_pipe(cmd, env_list);
+			cmd_exec(cmd, env_list);
+			free(input);
 		}
-		free(input);
-	}
 	return (0);
 }
