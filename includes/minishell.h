@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/07 11:11:51 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/09 11:40:08 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
 void						redir_heredoc(t_cmd *cmd, int heredoc_fd[2]);
 char						*found_path(t_cmd *cmd);
+
+// free
+void						free_token(t_token *token);
+void						free_redirection(t_redirection *redir);
+void						free_cmd(t_cmd *cmd);
+
 
 // signaux
 extern void					rl_replace_line(const char *text, int clear_undo);

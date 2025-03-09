@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/08 11:16:10 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/09 11:43:35 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void gerer_process(pid_t pid, int fd[2], t_cmd **cur_cmd)
 void	exec_pipe(t_cmd *cmd)
 {
 	pid_t	pid;
-	int		fd[2];
+	int		fd[2] = {-1, -1};
 	t_cmd	*cur_cmd;
 
 	cur_cmd = cmd;
