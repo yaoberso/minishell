@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/03/08 11:10:38 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/10 10:03:23 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int heredoc_parent(pid_t pid, int heredoc_fd[2])
     
     close(heredoc_fd[1]);
     waitpid(pid, &status, 0);
-    if (WIFSIGNALED(status) || (WIFEXITED(status) && WEXITSTATUS(status) == 130))
+    if (WIFSIGNALED(status) || (WIFEXITED(status) && WEXITSTATUS(status) == 130)) // si un signal stop tout ou si il s est termine normalement ou par ctrl c
     {
         close(heredoc_fd[0]);
         return (1);

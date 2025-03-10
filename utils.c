@@ -12,8 +12,8 @@ char *creat_prompt(char *cwd)
 		prompt[i] = cwd[i];
 		i++;
 	}
-	prompt[i] = ' ';
-	i++;
 	prompt[i] = '$';
+	i++;
+	prompt[i] = ' ';
 	return (prompt);
 }
