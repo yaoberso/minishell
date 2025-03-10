@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/10 14:22:15 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:27:46 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	main(int argc, char **argv, char **envp)
 		free(prompt);
 		if (!input)
 		{
+			free(cmd);
+			free_env(env_list);
 			printf("exit\n");
 			break ;
 		}
