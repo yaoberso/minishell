@@ -1,5 +1,27 @@
 #include "minishell.h"
 
+int is_cmd(char *cmd)
+{
+	if (cmd == NULL)
+		return (0);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	else
+		return (0);
+}
+
 void	cmd_exec(t_cmd *cmd, t_env *env)
 {
 	if (cmd->cmd == NULL || cmd == NULL)
@@ -23,10 +45,15 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 		printf("exit\n");
 		exit (1);
 	}
-	else
+}
+void	exec_cmd_inter_exter(t_cmd *cmd, t_env *env)
+{
+	if (cmd->cmd == NULL || cmd == NULL)
 	{
-		printf("command not found\n");
-		//il faudra free ici
 		return ;
 	}
+	if (is_cmd(cmd->cmd) == 1)
+		cmd_exec(cmd, env);
+	else
+		exec_pipe(cmd, env);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/10 14:27:46 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:02:27 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*input)
 			add_history(input);
 		parsing(input, cmd);
-		cmd_exec(cmd, env_list);
-		exec_pipe(cmd);
+		exec_cmd_inter_exter(cmd, env_list);
 		free(input);
 	}
 	return (0);
