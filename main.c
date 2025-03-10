@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 16:23:25 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/10 14:22:15 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	term;
 	t_cmd			*cmd;
 	t_env			*env_list;
-	char cwd[1024];
 	char *prompt;
 
 	(void)argc;
@@ -32,14 +31,8 @@ int	main(int argc, char **argv, char **envp)
 	config_signals();
 	while (1)
 	{
-		if (getcwd(cwd, sizeof(cwd)) == NULL)
-        {
-            perror("getcwd");
-            exit(1);
-        }
-
         // Créer l'invite en utilisant le chemin courant
-		prompt = creat_prompt(cwd);
+		prompt = creat_prompt(env_list);
         input = readline(prompt);
 		free(prompt);
 		if (!input)

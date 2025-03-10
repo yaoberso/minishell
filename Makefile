@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nas <nas@student.42.fr>                    +#+  +:+       +#+         #
+#    By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-#    Updated: 2025/03/09 16:12:05 by nas              ###   ########.fr        #
+#    Updated: 2025/03/10 13:56:43 by nadahman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,9 @@ fclean: clean
 	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
+
+debug: $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=readline.supp --log-file="leaks.log" ./minishell
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

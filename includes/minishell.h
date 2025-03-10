@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 16:18:25 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/10 14:21:44 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void						free_cmd(t_cmd *cmd);
 void						free_tab(char **tab);
 
 // utils
-char *creat_prompt(char *cwd);
+char	*creat_prompt(t_env *env);
 void 	print_arguments(t_token *arg);
 int    ft_isspace(char c);
 
