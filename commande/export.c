@@ -1,19 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 13:34:58 by yaoberso          #+#    #+#             */
+/*   Updated: 2025/03/10 13:35:00 by yaoberso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char	*extract_arg_name(char	*arg)
+char	*extract_arg_name(char *arg)
 {
-	int i;
-	int len;
-	char *name;
+	int		i;
+	int		len;
+	char	*name;
 
 	i = 0;
 	len = 0;
 	while (arg[len] != '=' && arg[len] != '\0')
-        len++;
+		len++;
 	name = malloc(sizeof(char) * len - 1);
 	if (!name)
 		return (NULL);
-	while(i < len)
+	while (i < len)
 	{
 		name[i] = arg[i];
 		i++;
@@ -24,24 +36,24 @@ char	*extract_arg_name(char	*arg)
 
 char	*extract_arg_value(char *arg)
 {
-	int i;
-	int j;
-	int len;
-	char *value;
+	int		i;
+	int		j;
+	int		len;
+	char	*value;
 
 	j = 0;
 	i = 0;
 	while (arg[i] != '=' && arg[i] != '\0')
-        i++;
+		i++;
 	if (arg[i] == '=')
 		i++;
 	len = i;
 	while (arg[len] != '\0')
-        len++;
+		len++;
 	value = malloc(sizeof(char) * (len - i + 1));
 	if (!value)
 		return (NULL);
-	while(i < len)
+	while (i < len)
 	{
 		value[j] = arg[i];
 		i++;
@@ -51,38 +63,34 @@ char	*extract_arg_value(char *arg)
 	return (value);
 }
 
-void add_env_variable(t_env **env, char *var_name, char *var_value)
+void	add_env_variable(t_env **env, char *var_name, char *var_value)
 {
-    t_env *new_var;
-    t_env *temp;
+	t_env	*new_var;
+	t_env	*temp;
 
-    new_var = malloc(sizeof(t_env));
-    if (!new_var)
-        return;
-
-    new_var->name = var_name;
-    new_var->value = var_value;
-    new_var->next = NULL;
-
-    if (*env == NULL)
-    {
-        *env = new_var;
-        return;
-    }
-
-    temp = *env;
-    while (temp->next)
-        temp = temp->next;
-
-    temp->next = new_var;
+	new_var = malloc(sizeof(t_env));
+	if (!new_var)
+		return ;
+	new_var->name = var_name;
+	new_var->value = var_value;
+	new_var->next = NULL;
+	if (*env == NULL)
+	{
+		*env = new_var;
+		return ;
+	}
+	temp = *env;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new_var;
 }
 
 void	ft_export(t_token *arg, t_env **env)
 {
 	t_env	*current;
 	t_token	*current_arg;
-	char *var_name;
-	char *var_value;
+	char	*var_name;
+	char	*var_value;
 
 	if (!arg)
 	{
@@ -92,7 +100,7 @@ void	ft_export(t_token *arg, t_env **env)
 			printf("declare -x %s=\"%s\"\n", current->name, current->value);
 			current = current->next;
 		}
-		return;
+		return ;
 	}
 	current_arg = arg;
 	while (current_arg)
@@ -101,9 +109,10 @@ void	ft_export(t_token *arg, t_env **env)
 		var_name = extract_arg_name(current_arg->value);
 		if (!var_name)
 		{
-			printf("export: `%s': not a valid identifier\n", current_arg->value);
+			printf("export: `%s': not a valid identifier\n",
+				current_arg->value);
 			current_arg = current_arg->next;
-			continue;
+			continue ;
 		}
 		current = *env;
 		while (current)
@@ -112,7 +121,7 @@ void	ft_export(t_token *arg, t_env **env)
 			{
 				free(current->value);
 				current->value = var_value;
-				break;
+				break ;
 			}
 			current = current->next;
 		}

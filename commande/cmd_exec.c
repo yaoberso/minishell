@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_exec.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
+/*   Updated: 2025/03/10 13:35:28 by yaoberso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	cmd_exec(t_cmd *cmd, t_env *env)
@@ -21,12 +33,6 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 	else if (ft_strcmp(cmd->cmd, "exit") == 0)
 	{
 		printf("exit\n");
-		exit (1);
-	}
-	else
-	{
-		printf("command not found\n");
-		//il faudra free ici
-		return ;
+		exit(1);
 	}
 }
