@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/11 12:18:08 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:39:55 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*input)
 			add_history(input);
-		parsing(input, cmd);
+		parsing(input, cmd, env_list);
 		exec_cmd_inter_exter(cmd, env_list);
 		free(input);
 		free(cmd);

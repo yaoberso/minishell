@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_exec.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
+/*   Updated: 2025/03/11 11:51:02 by yaoberso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int is_cmd(char *cmd)
+int	is_cmd(char *cmd)
 {
 	if (cmd == NULL)
 		return (0);
@@ -46,6 +58,7 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 		exit (1);
 	}
 }
+
 void	exec_cmd_inter_exter(t_cmd *cmd, t_env *env)
 {
 	if (cmd->cmd == NULL || cmd == NULL)
