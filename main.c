@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/10 20:02:27 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/11 12:18:08 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ int	main(int argc, char **argv, char **envp)
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	config_signals();
+	cmd->cmd = NULL;
+    cmd->arg = NULL;
+    cmd->redirection = NULL;
+    cmd->next_cmd = NULL;
+	cmd->prev_cmd = NULL;
+	cmd->env = NULL;
 	while (1)
 	{
         // Créer l'invite en utilisant le chemin courant
@@ -47,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 		parsing(input, cmd);
 		exec_cmd_inter_exter(cmd, env_list);
 		free(input);
+		free(cmd);
 	}
 	return (0);
 }

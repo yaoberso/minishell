@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/10 20:30:41 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/11 13:29:05 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,16 @@ char	*found_path(t_cmd *cmd)
 
 void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2], t_env *env)
 {
+	char **args;
 
 	if (is_cmd(cur_cmd->cmd) == 1 && cur_cmd->prev_cmd)
 	{
    		printf("%s: fonctionne pas dans un pipe\n", cur_cmd->cmd);    // a voir si j e garde selon le comprortement de bash
     	exit(1);
 	}
-
-
-	char **args;
-
-	if (fd[0] != -1 && cur_cmd->prev_cmd) // si il y a une commande avant il redirige l'entree vers stdin
+	if (cur_cmd->prev_cmd) // si il y a une commande avant il redirige l'entree vers stdin
 		redir_stdin(fd);
-	if (fd[1] != -1 && next_cmd) // si il y a une commande apres il redirige la sortie vers stdout
+	if (next_cmd) // si il y a une commande apres il redirige la sortie vers stdout
 		redir_stdout(fd, next_cmd);
 	if (cur_cmd->redirection) // si il y a une redirection il l'execute
 		exec_redir(cur_cmd);
@@ -98,14 +95,15 @@ void	create_pipe(int fd[2], t_cmd *next_cmd)
 
 void gerer_process(pid_t pid, int fd[2], t_cmd **cur_cmd)
 {
-	(void)pid;
-	if (fd[1] != -1)
-		close(fd[1]); 
-	if (fd[1] != -1 && (*cur_cmd)->prev_cmd)
-		if (fd[0] != -1)
-			close(fd[0]);
-	*cur_cmd = (*cur_cmd)->next_cmd;
+    (void)pid;
+    if (fd[1] != -1)
+        close(fd[1]); 
+    if (fd[0] != -1 && *cur_cmd && (*cur_cmd)->prev_cmd)
+        close(fd[0]);
+    if (*cur_cmd)
+        *cur_cmd = (*cur_cmd)->next_cmd;
 }
+
 
 void	exec_pipe(t_cmd *cmd, t_env *env)
 {
@@ -135,3 +133,43 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 
 	while (wait(NULL) > 0); // attendre que le processus enfant se termine
 }
+
+
+
+// void	execution_pipe_2(t_cmd	*cmd, t_env	*env)
+// {
+// 	pid_t	pid;
+// 	int	fd[2];
+// 	t_cmd	*cur_cmd;
+// 	char **args;
+	
+// 	cur_cmd = cmd;
+// 	while (cur_cmd)
+// 	{
+// 		if (cur_cmd->next_cmd == NULL)
+// 			return ;
+// 		if (cur_cmd->next_cmd && pipe(fd) == -1)
+// 		{
+// 			perror("pipe");
+// 			exit(1);
+// 		}
+// 		pid = fork();
+// 		if (pid == -1)
+// 		{
+// 			perror("fork");
+// 			exit(1);
+// 		}
+// 		if (pid == 0)
+// 			exec_process(cur_cmd, cur_cmd->next_cmd, fd, env);
+// 		else
+// 			gerer_process(pid, fd, &cur_cmd);
+// 	}
+// 	if (fd[1] != -1)
+// 		close(fd[1]);
+// 	if (fd[0] != -1)
+// 		close(fd[0]);
+	
+// 	while (wait(NULL) > 0);
+	
+// }
+

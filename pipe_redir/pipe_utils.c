@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:17 by nas               #+#    #+#             */
-/*   Updated: 2025/03/10 12:10:57 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/11 09:51:41 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	redir_stdout(int fd[2], t_cmd *next_cmd)
 
 void redir_stdin(int fd[2])
 {
+	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 }
