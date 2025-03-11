@@ -6,11 +6,24 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:23 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/10 13:35:25 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:03:28 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_print_echo(t_token *arg, int newline)
+{
+	while (arg != NULL)
+	{
+		write(1, arg->value, ft_strlen(arg->value));
+		if (arg->next)
+			write(1, " ", 1);
+		arg = arg->next;
+	}
+	if (newline)
+		write(1, "\n", 1);
+}
 
 void	ft_echo(t_token *current)
 {
@@ -38,13 +51,5 @@ void	ft_echo(t_token *current)
 		else
 			break ;
 	}
-	while (arg != NULL)
-	{
-		write(1, arg->value, ft_strlen(arg->value));
-		if (arg->next)
-			write(1, " ", 1);
-		arg = arg->next;
-	}
-	if (newline)
-		write(1, "\n", 1);
+	ft_print_echo(arg, newline);
 }

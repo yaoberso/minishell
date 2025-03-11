@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:58 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/10 13:35:00 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:28:40 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ char	*extract_arg_name(char *arg)
 	len = 0;
 	while (arg[len] != '=' && arg[len] != '\0')
 		len++;
-	name = malloc(sizeof(char) * len - 1);
+	if (len == 0)
+		return (NULL);
+	name = malloc(sizeof(char) * (len + 1));
 	if (!name)
 		return (NULL);
+	i = 0;
 	while (i < len)
 	{
 		name[i] = arg[i];
@@ -41,22 +44,26 @@ char	*extract_arg_value(char *arg)
 	int		len;
 	char	*value;
 
-	j = 0;
 	i = 0;
 	while (arg[i] != '=' && arg[i] != '\0')
 		i++;
 	if (arg[i] == '=')
 		i++;
-	len = i;
-	while (arg[len] != '\0')
+	len = 0;
+	while (arg[i + len] != '\0')
 		len++;
-	value = malloc(sizeof(char) * (len - i + 1));
+	if (len >= 2 && arg[i] == '"' && arg[i + len - 1] == '"')
+	{
+		i++;
+		len -= 2;
+	}
+	value = malloc(sizeof(char) * (len + 1));
 	if (!value)
 		return (NULL);
-	while (i < len)
+	j = 0;
+	while (j < len)
 	{
-		value[j] = arg[i];
-		i++;
+		value[j] = arg[i + j];
 		j++;
 	}
 	value[j] = '\0';
@@ -105,8 +112,8 @@ void	ft_export(t_token *arg, t_env **env)
 	current_arg = arg;
 	while (current_arg)
 	{
-		var_value = extract_arg_value(current_arg->value);
 		var_name = extract_arg_name(current_arg->value);
+		var_value = extract_arg_value(current_arg->value);
 		if (!var_name)
 		{
 			printf("export: `%s': not a valid identifier\n",
@@ -126,8 +133,9 @@ void	ft_export(t_token *arg, t_env **env)
 			current = current->next;
 		}
 		if (!current)
+		{
 			add_env_variable(env, var_name, var_value);
-		free(var_name);
+		}
 		current_arg = current_arg->next;
 	}
 }
