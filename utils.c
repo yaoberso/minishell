@@ -1,19 +1,23 @@
 #include "minishell.h"
 
-char *creat_prompt(char *cwd)
+char *creat_prompt(t_env *env)
 {
-	char *prompt;
-	int i;
+    char *pwd;
+    char *prompt;
+    size_t len;
 
-	i = 0;
-	prompt = malloc(sizeof(char) * ft_strlen(cwd) + 3);
-	while(i < (ft_strlen(cwd)))
+    pwd = get_env_value(env, "PWD");
+    if (!pwd) 
 	{
-		prompt[i] = cwd[i];
-		i++;
-	}
-	prompt[i] = '$';
-	i++;
-	prompt[i] = ' ';
-	return (prompt);
+        return NULL;
+    }
+    len = strlen(pwd) + 3;
+    prompt = (char *)malloc(len * sizeof(char));
+    if (!prompt) 
+	{
+        return NULL;
+    }
+    strcpy(prompt, pwd);
+    strcat(prompt, "$ ");
+    return prompt;
 }

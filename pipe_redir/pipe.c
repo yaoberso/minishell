@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/09 11:43:35 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/10 20:30:41 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,48 @@ char	*found_path(t_cmd *cmd)
 	return (NULL);
 }
 
-void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2])
+void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2], t_env *env)
 {
+
+	if (is_cmd(cur_cmd->cmd) == 1 && cur_cmd->prev_cmd)
+	{
+   		printf("%s: fonctionne pas dans un pipe\n", cur_cmd->cmd);    // a voir si j e garde selon le comprortement de bash
+    	exit(1);
+	}
+
+
 	char **args;
 
-	if (cur_cmd->prev_cmd) // si il y a une commande avant il redirige l'entree vers stdin
+	if (fd[0] != -1 && cur_cmd->prev_cmd) // si il y a une commande avant il redirige l'entree vers stdin
 		redir_stdin(fd);
-	if (next_cmd) // si il y a une commande apres il redirige la sortie vers stdout
+	if (fd[1] != -1 && next_cmd) // si il y a une commande apres il redirige la sortie vers stdout
 		redir_stdout(fd, next_cmd);
 	if (cur_cmd->redirection) // si il y a une redirection il l'execute
 		exec_redir(cur_cmd);
+	if (is_cmd(cur_cmd->cmd) == 1) // si c'est une commande interne il l'execute
+	{	
+		cmd_exec(cur_cmd, env);  // poour executer sans utiliser fork sinon c'est chelouuuu
+		exit(1);
+	}
 	args = get_args(cur_cmd); // convertie la liste chainé en tavleau d'arguments pour execve
 	if (args == NULL)
 	{
 		perror("get_args");
 		exit(1);
 	}
+	if (fd[1] != -1)
+		close(fd[1]);
+	if (fd[0] != -1)
+		close(fd[0]);
+	if (found_path(cur_cmd) == NULL)
+	{
+		printf("command not found: %s\n", cur_cmd->cmd);
+		exit(127);
+	}
 	execve(found_path(cur_cmd), args, NULL); // execute la commande en la cherchant dans le path
 	perror("execve");
+	free(found_path(cur_cmd));
+	free_tab(args);
 	exit(1);
 }
 void	create_pipe(int fd[2], t_cmd *next_cmd)
@@ -75,13 +99,15 @@ void	create_pipe(int fd[2], t_cmd *next_cmd)
 void gerer_process(pid_t pid, int fd[2], t_cmd **cur_cmd)
 {
 	(void)pid;
-	close(fd[1]); 
-	if ((*cur_cmd)->prev_cmd) 
-		close(fd[0]);
+	if (fd[1] != -1)
+		close(fd[1]); 
+	if (fd[1] != -1 && (*cur_cmd)->prev_cmd)
+		if (fd[0] != -1)
+			close(fd[0]);
 	*cur_cmd = (*cur_cmd)->next_cmd;
 }
 
-void	exec_pipe(t_cmd *cmd)
+void	exec_pipe(t_cmd *cmd, t_env *env)
 {
 	pid_t	pid;
 	int		fd[2] = {-1, -1};
@@ -98,9 +124,14 @@ void	exec_pipe(t_cmd *cmd)
 			exit(1);
 		}
 		if (pid == 0)
-			exec_process(cur_cmd, cur_cmd->next_cmd, fd); // execute la commande
+			exec_process(cur_cmd, cur_cmd->next_cmd, fd, env); // execute la commande
 		else
 			gerer_process(pid, fd, &cur_cmd); // gere les processus
 	}
+	if (fd[1] != -1)
+		close(fd[1]);
+	if (fd[0] != -1)
+		close(fd[0]);
+
 	while (wait(NULL) > 0); // attendre que le processus enfant se termine
 }

@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 16:23:25 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/10 20:02:27 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	term;
 	t_cmd			*cmd;
 	t_env			*env_list;
-	char cwd[1024];
 	char *prompt;
 
 	(void)argc;
@@ -32,26 +31,21 @@ int	main(int argc, char **argv, char **envp)
 	config_signals();
 	while (1)
 	{
-		if (getcwd(cwd, sizeof(cwd)) == NULL)
-        {
-            perror("getcwd");
-            exit(1);
-        }
-
         // Créer l'invite en utilisant le chemin courant
-		prompt = creat_prompt(cwd);
+		prompt = creat_prompt(env_list);
         input = readline(prompt);
 		free(prompt);
 		if (!input)
 		{
+			free(cmd);
+			free_env(env_list);
 			printf("exit\n");
 			break ;
 		}
 		if (*input)
 			add_history(input);
 		parsing(input, cmd);
-		cmd_exec(cmd, env_list);
-		exec_pipe(cmd);
+		exec_cmd_inter_exter(cmd, env_list);
 		free(input);
 	}
 	return (0);

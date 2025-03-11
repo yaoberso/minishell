@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/09 16:18:25 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/10 20:31:46 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void    ft_env(t_env *env);
 void    ft_export(t_token *arg, t_env **env);
 void    ft_unset(t_token *arg, t_env **env);
 void	cmd_exec(t_cmd *cmd, t_env *env);
+void	exec_cmd_inter_exter(t_cmd *cmd, t_env *env);
+int		is_cmd(char *cmd);
 
 // Fonctions de parsing
 void						add_token(t_token **head, t_token *new);
@@ -88,7 +90,7 @@ t_cmd						*found_next_cmd(char *str, int *index);
 void						add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
 
 // pipe et redirection
-void						exec_pipe(t_cmd *cmd);
+void						exec_pipe(t_cmd *cmd, t_env *env);
 void						exec_redir(t_cmd *cmd);
 void						redir_stdout(int fd[2], t_cmd *next_cmd);
 void						redir_stdin(int fd[2]);
@@ -99,7 +101,7 @@ void						create_pipe(int fd[2], t_cmd *next_cmd);
 void						gerer_process(pid_t pid, int fd[2],
 								t_cmd **cur_cmd);
 void						exec_process(t_cmd *cur_cmd, t_cmd *next_cmd,
-								int fd[2]);
+								int fd[2], t_env *env);
 void						redir_stdout(int fd[2], t_cmd *next_cmd);
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
@@ -113,7 +115,7 @@ void						free_cmd(t_cmd *cmd);
 void						free_tab(char **tab);
 
 // utils
-char *creat_prompt(char *cwd);
+char	*creat_prompt(t_env *env);
 void 	print_arguments(t_token *arg);
 int    ft_isspace(char c);
 

@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/03/10 10:03:23 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:23:45 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@ void read_heredoc(t_cmd *cmd, int fd)
 {
     char *line;
     
-    while (1)
-    {
-        line = readline("> "); //pour cree un prompt
-        if (!line || ft_strcmp(line, cmd->redirection->heredoc_delim) == 0) 
+   if (cmd->redirection->heredoc_delim != NULL)
+   {
+        while (1)
         {
+            line = readline("> "); //pour cree un prompt
+            if (!line || ft_strcmp(line, cmd->redirection->heredoc_delim) == 0) 
+            {
+                free(line);
+                break;
+            }
+            write(fd, line, ft_strlen(line)); // ecrit la ligne dans le fd
+            write(fd, "\n", 1); 
             free(line);
-            break;
         }
-        write(fd, line, ft_strlen(line)); // ecrit la ligne dans le fd
-        write(fd, "\n", 1); 
-        free(line);
-    }
+   }
 }
 
 void heredoc_child(t_cmd *cmd, int heredoc_fd[2])
@@ -75,7 +78,11 @@ void redir_heredoc(t_cmd *cmd, int heredoc_fd[2])
     pid_t pid;
     
     if (heredoc_pipe(heredoc_fd) != 0)
+    {
+        close(heredoc_fd[0]);
+        close(heredoc_fd[1]);
         exit(1);
+    }
     pid = fork();
     if (pid == -1)
     {
