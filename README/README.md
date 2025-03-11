@@ -2,3 +2,14 @@
 
 ![alt text](<Screenshot from 2025-02-20 13-25-26.png>)
 
+
+
+
+
+
+
+
+- plusieurs pipes
+- commande interne qui passe dans les pipes
+- $?
+- norminette et leaks

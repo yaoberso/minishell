@@ -1,780 +1,883 @@
-==3850068== Memcheck, a memory error detector
-==3850068== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3850068== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==3850068== Command: ./minishell
-==3850068== Parent PID: 3850067
-==3850068== 
-==3850215== 
-==3850215== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==3850215== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==3850215==    <inherited from parent>
-==3850215== 
-==3850215== Open AF_UNIX socket 43: <unknown>
-==3850215==    <inherited from parent>
-==3850215== 
-==3850215== Open file descriptor 42: /home/nadahman/.config/Code/logs/20250311T133847/ptyhost.log
-==3850215==    <inherited from parent>
-==3850215== 
-==3850215== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
-==3850215==    <inherited from parent>
-==3850215== 
-==3850215== 
-==3850215== HEAP SUMMARY:
-==3850215==     in use at exit: 214,472 bytes in 463 blocks
-==3850215==   total heap usage: 743 allocs, 280 frees, 237,965 bytes allocated
-==3850215== 
-==3850215== 17 bytes in 1 blocks are definitely lost in loss record 11 of 73
-==3850215==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850215==    by 0x10CCDC: ft_strjoin (in /home/nadahman/Desktop/minishell/minishell)
-==3850215==    by 0x10BDCA: found_path (pipe.c:33)
-==3850215==    by 0x10BF9A: exec_process (pipe.c:74)
-==3850215==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850215==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850215==    by 0x109723: main (main.c:54)
-==3850215== 
-==3850215== 17 bytes in 1 blocks are definitely lost in loss record 12 of 73
-==3850215==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850215==    by 0x10CCDC: ft_strjoin (in /home/nadahman/Desktop/minishell/minishell)
-==3850215==    by 0x10BDCA: found_path (pipe.c:33)
-==3850215==    by 0x10BFD3: exec_process (pipe.c:79)
-==3850215==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850215==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850215==    by 0x109723: main (main.c:54)
-==3850215== 
-==3850215== 48 bytes in 1 blocks are still reachable in loss record 21 of 73
-==3850215==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850215==    by 0x1095F1: main (main.c:27)
-==3850215== 
-==3850215== 1,064 bytes in 78 blocks are still reachable in loss record 42 of 73
-==3850215==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850215==    by 0x496E5CE: strndup (strndup.c:43)
-==3850215==    by 0x10B573: init_env (init.c:38)
-==3850215==    by 0x1095E3: main (main.c:26)
-==3850215== 
-==3850215== 1,872 bytes in 78 blocks are still reachable in loss record 45 of 73
-==3850215==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850215==    by 0x10B50F: init_env (init.c:32)
-==3850215==    by 0x1095E3: main (main.c:26)
-==3850215== 
-==3850215== 3,185 bytes in 78 blocks are still reachable in loss record 48 of 73
-==3850215==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850215==    by 0x496E58E: strdup (strdup.c:42)
-==3850215==    by 0x10B58D: init_env (init.c:39)
-==3850215==    by 0x1095E3: main (main.c:26)
-==3850215== 
-==3850215== LEAK SUMMARY:
-==3850215==    definitely lost: 34 bytes in 2 blocks
-==3850215==    indirectly lost: 0 bytes in 0 blocks
-==3850215==      possibly lost: 0 bytes in 0 blocks
-==3850215==    still reachable: 6,169 bytes in 235 blocks
-==3850215==         suppressed: 208,269 bytes in 226 blocks
-==3850215== 
-==3850215== For lists of detected and suppressed errors, rerun with: -s
-==3850215== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
-==3850068== Invalid write of size 8
-==3850068==    at 0x109CA3: parsing (parsing.c:117)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid write of size 8
-==3850068==    at 0x109CAE: parsing (parsing.c:118)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid write of size 8
-==3850068==    at 0x109CBA: parsing (parsing.c:119)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068==  Address 0x4b289e8 is 24 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid write of size 8
-==3850068==    at 0x109CC6: parsing (parsing.c:120)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068==  Address 0x4b289f0 is 32 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x109E0D: parsing (parsing.c:149)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid write of size 8
-==3850068==    at 0x109E1D: parsing (parsing.c:150)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10AE4D: exec_cmd_inter_exter (cmd_exec.c:64)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10AE60: exec_cmd_inter_exter (cmd_exec.c:68)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10C13E: exec_pipe (pipe.c:117)
-==3850068==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289f0 is 32 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10C0F1: gerer_process (pipe.c:104)
-==3850068==    by 0x10C1B0: exec_pipe (pipe.c:127)
-==3850068==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289f0 is 32 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10C182: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289f0 is 32 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10BE65: exec_process (pipe.c:48)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10BEAE: exec_process (pipe.c:53)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289f8 is 40 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10BEE1: exec_process (pipe.c:57)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289e8 is 24 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10BEFA: exec_process (pipe.c:59)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10C218: get_args (pipe_utils.c:23)
-==3850255==    by 0x10BF32: exec_process (pipe.c:64)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10C26A: get_args (pipe_utils.c:33)
-==3850255==    by 0x10BF32: exec_process (pipe.c:64)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10C278: get_args (pipe_utils.c:34)
-==3850255==    by 0x10BF32: exec_process (pipe.c:64)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10BDB9: found_path (pipe.c:33)
-==3850255==    by 0x10BF9A: exec_process (pipe.c:74)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== Invalid read of size 8
-==3850255==    at 0x10BFA4: exec_process (pipe.c:76)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850255==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10973B: main (main.c:56)
-==3850255==  Block was alloc'd at
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x1095F1: main (main.c:27)
-==3850255== 
-==3850255== 
-==3850255== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==3850255== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==3850255==    <inherited from parent>
-==3850255== 
-==3850255== Open AF_UNIX socket 43: <unknown>
-==3850255==    <inherited from parent>
-==3850255== 
-==3850255== Open file descriptor 42: /home/nadahman/.config/Code/logs/20250311T133847/ptyhost.log
-==3850255==    <inherited from parent>
-==3850255== 
-==3850255== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
-==3850255==    <inherited from parent>
-==3850255== 
-==3850255== 
-==3850255== HEAP SUMMARY:
-==3850255==     in use at exit: 214,478 bytes in 468 blocks
-==3850255==   total heap usage: 734 allocs, 266 frees, 236,196 bytes allocated
-==3850255== 
-==3850255== 3 bytes in 1 blocks are definitely lost in loss record 4 of 78
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==3850255==    by 0x1099B7: recup_token (parsing.c:53)
-==3850255==    by 0x109DFD: parsing (parsing.c:146)
-==3850255==    by 0x109710: main (main.c:53)
-==3850255== 
-==3850255== 10 bytes in 1 blocks are still reachable in loss record 9 of 78
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x109B3D: recup_token (parsing.c:81)
-==3850255==    by 0x109DFD: parsing (parsing.c:146)
-==3850255==    by 0x109710: main (main.c:53)
-==3850255== 
-==3850255== 16 bytes in 1 blocks are still reachable in loss record 16 of 78
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10C253: get_args (pipe_utils.c:30)
-==3850255==    by 0x10BF32: exec_process (pipe.c:64)
-==3850255==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850255==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850255==    by 0x109723: main (main.c:54)
-==3850255== 
-==3850255== 1,064 bytes in 78 blocks are still reachable in loss record 47 of 78
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x496E5CE: strndup (strndup.c:43)
-==3850255==    by 0x10B573: init_env (init.c:38)
-==3850255==    by 0x1095E3: main (main.c:26)
-==3850255== 
-==3850255== 1,872 bytes in 78 blocks are still reachable in loss record 50 of 78
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x10B50F: init_env (init.c:32)
-==3850255==    by 0x1095E3: main (main.c:26)
-==3850255== 
-==3850255== 3,185 bytes in 78 blocks are still reachable in loss record 53 of 78
-==3850255==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850255==    by 0x496E58E: strdup (strdup.c:42)
-==3850255==    by 0x10B58D: init_env (init.c:39)
-==3850255==    by 0x1095E3: main (main.c:26)
-==3850255== 
-==3850255== LEAK SUMMARY:
-==3850255==    definitely lost: 3 bytes in 1 blocks
-==3850255==    indirectly lost: 0 bytes in 0 blocks
-==3850255==      possibly lost: 0 bytes in 0 blocks
-==3850255==    still reachable: 6,147 bytes in 236 blocks
-==3850255==         suppressed: 208,328 bytes in 231 blocks
-==3850255== 
-==3850255== For lists of detected and suppressed errors, rerun with: -s
-==3850255== ERROR SUMMARY: 31 errors from 20 contexts (suppressed: 0 from 0)
-==3850068== Invalid free() / delete / delete[] / realloc()
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x109F62: add_token (pars_utils.c:35)
-==3850068==    by 0x109E43: parsing (parsing.c:152)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid write of size 8
-==3850068==    at 0x109F72: add_token (pars_utils.c:37)
-==3850068==    by 0x109E43: parsing (parsing.c:152)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10ACB4: cmd_exec (cmd_exec.c:39)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10ACCF: cmd_exec (cmd_exec.c:43)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10AD08: cmd_exec (cmd_exec.c:45)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10AD25: cmd_exec (cmd_exec.c:46)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10C182: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289f0 is 32 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10BE65: exec_process (pipe.c:48)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10BEAE: exec_process (pipe.c:53)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289f8 is 40 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10BEE1: exec_process (pipe.c:57)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289e8 is 24 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10BEFA: exec_process (pipe.c:59)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10C218: get_args (pipe_utils.c:23)
-==3850552==    by 0x10BF32: exec_process (pipe.c:64)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10C26A: get_args (pipe_utils.c:33)
-==3850552==    by 0x10BF32: exec_process (pipe.c:64)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10C278: get_args (pipe_utils.c:34)
-==3850552==    by 0x10BF32: exec_process (pipe.c:64)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10BDB9: found_path (pipe.c:33)
-==3850552==    by 0x10BF9A: exec_process (pipe.c:74)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== Invalid read of size 8
-==3850552==    at 0x10BFA4: exec_process (pipe.c:76)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850552==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10973B: main (main.c:56)
-==3850552==  Block was alloc'd at
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x1095F1: main (main.c:27)
-==3850552== 
-==3850552== 
-==3850552== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==3850552== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==3850552==    <inherited from parent>
-==3850552== 
-==3850552== Open AF_UNIX socket 43: <unknown>
-==3850552==    <inherited from parent>
-==3850552== 
-==3850552== Open file descriptor 42: /home/nadahman/.config/Code/logs/20250311T133847/ptyhost.log
-==3850552==    <inherited from parent>
-==3850552== 
-==3850552== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
-==3850552==    <inherited from parent>
-==3850552== 
-==3850552== 
-==3850552== HEAP SUMMARY:
-==3850552==     in use at exit: 215,186 bytes in 508 blocks
-==3850552==   total heap usage: 863 allocs, 361 frees, 238,463 bytes allocated
-==3850552== 
-==3850552== 6 bytes in 1 blocks are still reachable in loss record 3 of 82
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==3850552==    by 0x1099B7: recup_token (parsing.c:53)
-==3850552==    by 0x109DFD: parsing (parsing.c:146)
-==3850552==    by 0x109710: main (main.c:53)
-==3850552== 
-==3850552== 16 bytes in 1 blocks are still reachable in loss record 11 of 82
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10C253: get_args (pipe_utils.c:30)
-==3850552==    by 0x10BF32: exec_process (pipe.c:64)
-==3850552==    by 0x10C199: exec_pipe (pipe.c:125)
-==3850552==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
-==3850552==    by 0x109723: main (main.c:54)
-==3850552== 
-==3850552== 41 bytes in 8 blocks are definitely lost in loss record 20 of 82
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==3850552==    by 0x1099B7: recup_token (parsing.c:53)
-==3850552==    by 0x109DFD: parsing (parsing.c:146)
-==3850552==    by 0x109710: main (main.c:53)
-==3850552== 
-==3850552== 59 bytes in 5 blocks are indirectly lost in loss record 25 of 82
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
-==3850552==    by 0x109F26: new_token (pars_utils.c:23)
-==3850552==    by 0x109E2D: parsing (parsing.c:152)
-==3850552==    by 0x109710: main (main.c:53)
-==3850552== 
-==3850552== 70 bytes in 4 blocks are definitely lost in loss record 27 of 82
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x109B3D: recup_token (parsing.c:81)
-==3850552==    by 0x109DFD: parsing (parsing.c:146)
-==3850552==    by 0x109710: main (main.c:53)
-==3850552== 
-==3850552== 139 (80 direct, 59 indirect) bytes in 5 blocks are definitely lost in loss record 34 of 82
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x109F08: new_token (pars_utils.c:20)
-==3850552==    by 0x109E2D: parsing (parsing.c:152)
-==3850552==    by 0x109710: main (main.c:53)
-==3850552== 
-==3850552== 1,064 bytes in 78 blocks are still reachable in loss record 51 of 82
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x496E5CE: strndup (strndup.c:43)
-==3850552==    by 0x10B573: init_env (init.c:38)
-==3850552==    by 0x1095E3: main (main.c:26)
-==3850552== 
-==3850552== 1,872 bytes in 78 blocks are still reachable in loss record 54 of 82
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x10B50F: init_env (init.c:32)
-==3850552==    by 0x1095E3: main (main.c:26)
-==3850552== 
-==3850552== 3,185 bytes in 78 blocks are still reachable in loss record 57 of 82
-==3850552==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850552==    by 0x496E58E: strdup (strdup.c:42)
-==3850552==    by 0x10B58D: init_env (init.c:39)
-==3850552==    by 0x1095E3: main (main.c:26)
-==3850552== 
-==3850552== LEAK SUMMARY:
-==3850552==    definitely lost: 191 bytes in 17 blocks
-==3850552==    indirectly lost: 59 bytes in 5 blocks
-==3850552==      possibly lost: 0 bytes in 0 blocks
-==3850552==    still reachable: 6,143 bytes in 236 blocks
-==3850552==         suppressed: 208,793 bytes in 250 blocks
-==3850552== 
-==3850552== For lists of detected and suppressed errors, rerun with: -s
-==3850552== ERROR SUMMARY: 124 errors from 30 contexts (suppressed: 0 from 0)
-==3850068== Invalid read of size 8
-==3850068==    at 0x10AD3A: cmd_exec (cmd_exec.c:47)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10AD68: cmd_exec (cmd_exec.c:49)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10AD85: cmd_exec (cmd_exec.c:50)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10ADA1: cmd_exec (cmd_exec.c:51)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10ADCA: cmd_exec (cmd_exec.c:53)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid read of size 8
-==3850068==    at 0x10ADE7: cmd_exec (cmd_exec.c:54)
-==3850068==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
-==3850068==    by 0x109723: main (main.c:54)
-==3850068==  Address 0x4b289e0 is 16 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== Invalid free() / delete / delete[] / realloc()
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1096B0: main (main.c:46)
-==3850068==  Address 0x4b289d0 is 0 bytes inside a block of size 48 free'd
-==3850068==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10973B: main (main.c:56)
-==3850068==  Block was alloc'd at
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x1095F1: main (main.c:27)
-==3850068== 
-==3850068== 
-==3850068== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==3850068== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==3850068==    <inherited from parent>
-==3850068== 
-==3850068== Open AF_UNIX socket 43: <unknown>
-==3850068==    <inherited from parent>
-==3850068== 
-==3850068== Open file descriptor 42: /home/nadahman/.config/Code/logs/20250311T133847/ptyhost.log
-==3850068==    <inherited from parent>
-==3850068== 
-==3850068== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
-==3850068==    <inherited from parent>
-==3850068== 
-==3850068== 
-==3850068== HEAP SUMMARY:
-==3850068==     in use at exit: 209,605 bytes in 320 blocks
-==3850068==   total heap usage: 983 allocs, 680 frees, 240,586 bytes allocated
-==3850068== 
-==3850068== 70 bytes in 4 blocks are definitely lost in loss record 19 of 76
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x109B3D: recup_token (parsing.c:81)
-==3850068==    by 0x109DFD: parsing (parsing.c:146)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068== 
-==3850068== 93 bytes in 9 blocks are indirectly lost in loss record 24 of 76
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
-==3850068==    by 0x109F26: new_token (pars_utils.c:23)
-==3850068==    by 0x109E2D: parsing (parsing.c:152)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068== 
-==3850068== 133 bytes in 22 blocks are definitely lost in loss record 28 of 76
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==3850068==    by 0x1099B7: recup_token (parsing.c:53)
-==3850068==    by 0x109DFD: parsing (parsing.c:146)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068== 
-==3850068== 237 (144 direct, 93 indirect) bytes in 9 blocks are definitely lost in loss record 34 of 76
-==3850068==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3850068==    by 0x109F08: new_token (pars_utils.c:20)
-==3850068==    by 0x109E2D: parsing (parsing.c:152)
-==3850068==    by 0x109710: main (main.c:53)
-==3850068== 
-==3850068== LEAK SUMMARY:
-==3850068==    definitely lost: 347 bytes in 35 blocks
-==3850068==    indirectly lost: 93 bytes in 9 blocks
-==3850068==      possibly lost: 0 bytes in 0 blocks
-==3850068==    still reachable: 0 bytes in 0 blocks
-==3850068==         suppressed: 209,165 bytes in 276 blocks
-==3850068== 
-==3850068== For lists of detected and suppressed errors, rerun with: -s
-==3850068== ERROR SUMMARY: 251 errors from 27 contexts (suppressed: 0 from 0)
+==3871420== Memcheck, a memory error detector
+==3871420== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3871420== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==3871420== Command: ./minishell
+==3871420== Parent PID: 3871419
+==3871420== 
+==3871420== Invalid write of size 8
+==3871420==    at 0x109CA3: parsing (parsing.c:117)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid write of size 8
+==3871420==    at 0x109CAE: parsing (parsing.c:118)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid write of size 8
+==3871420==    at 0x109CBA: parsing (parsing.c:119)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid write of size 8
+==3871420==    at 0x109CC6: parsing (parsing.c:120)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289e0 is 32 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x109E0D: parsing (parsing.c:149)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid write of size 8
+==3871420==    at 0x109E1D: parsing (parsing.c:150)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x109F62: add_token (pars_utils.c:35)
+==3871420==    by 0x109E43: parsing (parsing.c:152)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid write of size 8
+==3871420==    at 0x109F72: add_token (pars_utils.c:37)
+==3871420==    by 0x109E43: parsing (parsing.c:152)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10AE4D: exec_cmd_inter_exter (cmd_exec.c:64)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10AE60: exec_cmd_inter_exter (cmd_exec.c:68)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10ACB4: cmd_exec (cmd_exec.c:39)
+==3871420==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10ACCF: cmd_exec (cmd_exec.c:43)
+==3871420==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10AD08: cmd_exec (cmd_exec.c:45)
+==3871420==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10AD25: cmd_exec (cmd_exec.c:46)
+==3871420==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid free() / delete / delete[] / realloc()
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x109F7B: add_token (pars_utils.c:42)
+==3871420==    by 0x109E43: parsing (parsing.c:152)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10A041: add_next_cmd (pars_utils.c:76)
+==3871420==    by 0x109DD8: parsing (parsing.c:139)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289e0 is 32 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid write of size 8
+==3871420==    at 0x10A052: add_next_cmd (pars_utils.c:78)
+==3871420==    by 0x109DD8: parsing (parsing.c:139)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289e0 is 32 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10C13E: exec_pipe (pipe.c:117)
+==3871420==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289e0 is 32 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10C0C8: gerer_process (pipe.c:101)
+==3871420==    by 0x10C1B0: exec_pipe (pipe.c:127)
+==3871420==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289e8 is 40 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10C0F1: gerer_process (pipe.c:104)
+==3871420==    by 0x10C1B0: exec_pipe (pipe.c:127)
+==3871420==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289e0 is 32 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10C182: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289e0 is 32 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10BE65: exec_process (pipe.c:48)
+==3872640==    by 0x10C199: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10BEAE: exec_process (pipe.c:53)
+==3872640==    by 0x10C199: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289e8 is 40 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10BEE1: exec_process (pipe.c:57)
+==3872640==    by 0x10C199: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10BEFA: exec_process (pipe.c:59)
+==3872640==    by 0x10C199: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10C218: get_args (pipe_utils.c:23)
+==3872640==    by 0x10BF32: exec_process (pipe.c:64)
+==3872640==    by 0x10C199: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10C26A: get_args (pipe_utils.c:33)
+==3872640==    by 0x10BF32: exec_process (pipe.c:64)
+==3872640==    by 0x10C199: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10C278: get_args (pipe_utils.c:34)
+==3872640==    by 0x10BF32: exec_process (pipe.c:64)
+==3872640==    by 0x10C199: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10BDB9: found_path (pipe.c:33)
+==3872640==    by 0x10BF9A: exec_process (pipe.c:74)
+==3872640==    by 0x10C199: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3872640== Invalid read of size 8
+==3872640==    at 0x10BDB9: found_path (pipe.c:33)
+==3872640==    by 0x10BFD3: exec_process (pipe.c:79)
+==3872640==    by 0x10C199: exec_pipe (pipe.c:125)
+==3872640==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3872640==    by 0x109723: main (main.c:54)
+==3872640==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3872640==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x10973B: main (main.c:56)
+==3872640==  Block was alloc'd at
+==3872640==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3872640==    by 0x1095F1: main (main.c:27)
+==3872640== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10ACF0: cmd_exec (cmd_exec.c:44)
+==3871420==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x10AD3A: cmd_exec (cmd_exec.c:47)
+==3871420==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
+==3871420==    by 0x109723: main (main.c:54)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid read of size 8
+==3871420==    at 0x109FD0: add_redirection (pars_utils.c:55)
+==3871420==    by 0x109D86: parsing (parsing.c:132)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== Invalid write of size 8
+==3871420==    at 0x109FE1: add_redirection (pars_utils.c:57)
+==3871420==    by 0x109D86: parsing (parsing.c:132)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10C182: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289e0 is 32 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10BE65: exec_process (pipe.c:48)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10BEAE: exec_process (pipe.c:53)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289e8 is 40 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10BEE1: exec_process (pipe.c:57)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10C442: exec_redir (redir.c:22)
+==3875492==    by 0x10BEF5: exec_process (pipe.c:58)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10C50D: exec_redir (redir.c:34)
+==3875492==    by 0x10BEF5: exec_process (pipe.c:58)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid write of size 8
+==3875492==    at 0x10C51D: exec_redir (redir.c:35)
+==3875492==    by 0x10BEF5: exec_process (pipe.c:58)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875493== Invalid read of size 8
+==3875493==    at 0x10BA39: read_heredoc (heredoc.c:19)
+==3875493==    by 0x10BB1C: heredoc_child (heredoc.c:40)
+==3875493==    by 0x10BD0A: redir_heredoc (heredoc.c:96)
+==3875493==    by 0x10C533: exec_redir (redir.c:36)
+==3875493==    by 0x10BEF5: exec_process (pipe.c:58)
+==3875493==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875493==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875493==    by 0x109723: main (main.c:54)
+==3875493==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3875493==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10973B: main (main.c:56)
+==3875493==  Block was alloc'd at
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x1095F1: main (main.c:27)
+==3875493== 
+==3875493== Invalid read of size 8
+==3875493==    at 0x10BA68: read_heredoc (heredoc.c:24)
+==3875493==    by 0x10BB1C: heredoc_child (heredoc.c:40)
+==3875493==    by 0x10BD0A: redir_heredoc (heredoc.c:96)
+==3875493==    by 0x10C533: exec_redir (redir.c:36)
+==3875493==    by 0x10BEF5: exec_process (pipe.c:58)
+==3875493==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875493==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875493==    by 0x109723: main (main.c:54)
+==3875493==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3875493==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10973B: main (main.c:56)
+==3875493==  Block was alloc'd at
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x1095F1: main (main.c:27)
+==3875493== 
+==3875493== 
+==3875493== FILE DESCRIPTORS: 8 open (3 std) at exit.
+==3875493== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==3875493==    <inherited from parent>
+==3875493== 
+==3875493== Open file descriptor 44: /dev/ptmx
+==3875493==    <inherited from parent>
+==3875493== 
+==3875493== Open AF_UNIX socket 43: <unknown>
+==3875493==    <inherited from parent>
+==3875493== 
+==3875493== Open file descriptor 42: /home/nadahman/.config/Code/logs/20250311T133847/ptyhost.log
+==3875493==    <inherited from parent>
+==3875493== 
+==3875493== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
+==3875493==    <inherited from parent>
+==3875493== 
+==3875493== 
+==3875493== HEAP SUMMARY:
+==3875493==     in use at exit: 215,847 bytes in 551 blocks
+==3875493==   total heap usage: 1,051 allocs, 507 frees, 241,753 bytes allocated
+==3875493== 
+==3875493== 3 bytes in 1 blocks are still reachable in loss record 1 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
+==3875493==    by 0x10A46B: found_redirection (pars_utils.c:175)
+==3875493==    by 0x109D64: parsing (parsing.c:130)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 4 bytes in 1 blocks are still reachable in loss record 4 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
+==3875493==    by 0x1099B7: recup_token (parsing.c:53)
+==3875493==    by 0x10A571: found_redirection (pars_utils.c:186)
+==3875493==    by 0x109D64: parsing (parsing.c:130)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 15 bytes in 5 blocks are indirectly lost in loss record 16 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
+==3875493==    by 0x109F26: new_token (pars_utils.c:23)
+==3875493==    by 0x10A389: found_next_cmd (pars_utils.c:152)
+==3875493==    by 0x109DB6: parsing (parsing.c:136)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 15 bytes in 5 blocks are definitely lost in loss record 17 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
+==3875493==    by 0x1099B7: recup_token (parsing.c:53)
+==3875493==    by 0x10A372: found_next_cmd (pars_utils.c:150)
+==3875493==    by 0x109DB6: parsing (parsing.c:136)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 16 bytes in 5 blocks are indirectly lost in loss record 19 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
+==3875493==    by 0x1099B7: recup_token (parsing.c:53)
+==3875493==    by 0x10A212: found_next_cmd (pars_utils.c:121)
+==3875493==    by 0x109DB6: parsing (parsing.c:136)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 23 bytes in 1 blocks are still reachable in loss record 21 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
+==3875493==    by 0x10B87C: set_env_value (utils.c:39)
+==3875493==    by 0x10A9FA: ft_cdwitharg (cd.c:31)
+==3875493==    by 0x10AB6A: ft_cd (cd.c:63)
+==3875493==    by 0x10ACFE: cmd_exec (cmd_exec.c:44)
+==3875493==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
+==3875493==    by 0x109723: main (main.c:54)
+==3875493== 
+==3875493== 32 bytes in 1 blocks are still reachable in loss record 27 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10A3EB: found_redirection (pars_utils.c:162)
+==3875493==    by 0x109D64: parsing (parsing.c:130)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 32 bytes in 2 blocks are indirectly lost in loss record 28 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x109F08: new_token (pars_utils.c:20)
+==3875493==    by 0x109E2D: parsing (parsing.c:152)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 33 bytes in 1 blocks are still reachable in loss record 29 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
+==3875493==    by 0x10B87C: set_env_value (utils.c:39)
+==3875493==    by 0x10A9AB: ft_cdwitharg (cd.c:27)
+==3875493==    by 0x10AB6A: ft_cd (cd.c:63)
+==3875493==    by 0x10ACFE: cmd_exec (cmd_exec.c:44)
+==3875493==    by 0x10AE82: exec_cmd_inter_exter (cmd_exec.c:69)
+==3875493==    by 0x109723: main (main.c:54)
+==3875493== 
+==3875493== 66 bytes in 8 blocks are indirectly lost in loss record 33 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
+==3875493==    by 0x109F26: new_token (pars_utils.c:23)
+==3875493==    by 0x109E2D: parsing (parsing.c:152)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 80 bytes in 5 blocks are indirectly lost in loss record 36 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x109F08: new_token (pars_utils.c:20)
+==3875493==    by 0x10A389: found_next_cmd (pars_utils.c:152)
+==3875493==    by 0x109DB6: parsing (parsing.c:136)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 105 bytes in 17 blocks are definitely lost in loss record 40 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
+==3875493==    by 0x1099B7: recup_token (parsing.c:53)
+==3875493==    by 0x109DFD: parsing (parsing.c:146)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 194 (96 direct, 98 indirect) bytes in 6 blocks are definitely lost in loss record 47 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x109F08: new_token (pars_utils.c:20)
+==3875493==    by 0x109E2D: parsing (parsing.c:152)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 351 (240 direct, 111 indirect) bytes in 5 blocks are definitely lost in loss record 49 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10A0B1: found_next_cmd (pars_utils.c:97)
+==3875493==    by 0x109DB6: parsing (parsing.c:136)
+==3875493==    by 0x109710: main (main.c:53)
+==3875493== 
+==3875493== 1,064 bytes in 78 blocks are still reachable in loss record 62 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x496E5CE: strndup (strndup.c:43)
+==3875493==    by 0x10B573: init_env (init.c:38)
+==3875493==    by 0x1095E3: main (main.c:26)
+==3875493== 
+==3875493== 1,872 bytes in 78 blocks are still reachable in loss record 65 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x10B50F: init_env (init.c:32)
+==3875493==    by 0x1095E3: main (main.c:26)
+==3875493== 
+==3875493== 3,119 bytes in 76 blocks are still reachable in loss record 68 of 93
+==3875493==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875493==    by 0x496E58E: strdup (strdup.c:42)
+==3875493==    by 0x10B58D: init_env (init.c:39)
+==3875493==    by 0x1095E3: main (main.c:26)
+==3875493== 
+==3875493== LEAK SUMMARY:
+==3875493==    definitely lost: 456 bytes in 33 blocks
+==3875493==    indirectly lost: 209 bytes in 25 blocks
+==3875493==      possibly lost: 0 bytes in 0 blocks
+==3875493==    still reachable: 6,150 bytes in 237 blocks
+==3875493==         suppressed: 209,032 bytes in 256 blocks
+==3875493== 
+==3875493== For lists of detected and suppressed errors, rerun with: -s
+==3875493== ERROR SUMMARY: 144 errors from 38 contexts (suppressed: 0 from 0)
+==3875492== Invalid write of size 8
+==3875492==    at 0x10C53C: exec_redir (redir.c:37)
+==3875492==    by 0x10BEF5: exec_process (pipe.c:58)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289d8 is 24 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10BEFA: exec_process (pipe.c:59)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10C218: get_args (pipe_utils.c:23)
+==3875492==    by 0x10BF32: exec_process (pipe.c:64)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10C26A: get_args (pipe_utils.c:33)
+==3875492==    by 0x10BF32: exec_process (pipe.c:64)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10C278: get_args (pipe_utils.c:34)
+==3875492==    by 0x10BF32: exec_process (pipe.c:64)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289d0 is 16 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10BDB9: found_path (pipe.c:33)
+==3875492==    by 0x10BF9A: exec_process (pipe.c:74)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3875492== Invalid read of size 8
+==3875492==    at 0x10BDB9: found_path (pipe.c:33)
+==3875492==    by 0x10BFD3: exec_process (pipe.c:79)
+==3875492==    by 0x10C199: exec_pipe (pipe.c:125)
+==3875492==    by 0x10AE97: exec_cmd_inter_exter (cmd_exec.c:71)
+==3875492==    by 0x109723: main (main.c:54)
+==3875492==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3875492==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x10973B: main (main.c:56)
+==3875492==  Block was alloc'd at
+==3875492==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3875492==    by 0x1095F1: main (main.c:27)
+==3875492== 
+==3871420== Invalid free() / delete / delete[] / realloc()
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1096B0: main (main.c:46)
+==3871420==  Address 0x4b289c0 is 0 bytes inside a block of size 48 free'd
+==3871420==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10973B: main (main.c:56)
+==3871420==  Block was alloc'd at
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x1095F1: main (main.c:27)
+==3871420== 
+==3871420== 
+==3871420== FILE DESCRIPTORS: 8 open (3 std) at exit.
+==3871420== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==3871420==    <inherited from parent>
+==3871420== 
+==3871420== Open file descriptor 44: /dev/ptmx
+==3871420==    <inherited from parent>
+==3871420== 
+==3871420== Open AF_UNIX socket 43: <unknown>
+==3871420==    <inherited from parent>
+==3871420== 
+==3871420== Open file descriptor 42: /home/nadahman/.config/Code/logs/20250311T133847/ptyhost.log
+==3871420==    <inherited from parent>
+==3871420== 
+==3871420== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
+==3871420==    <inherited from parent>
+==3871420== 
+==3871420== 
+==3871420== HEAP SUMMARY:
+==3871420==     in use at exit: 209,769 bytes in 316 blocks
+==3871420==   total heap usage: 1,035 allocs, 728 frees, 241,624 bytes allocated
+==3871420== 
+==3871420== 3 bytes in 1 blocks are indirectly lost in loss record 1 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
+==3871420==    by 0x10A46B: found_redirection (pars_utils.c:175)
+==3871420==    by 0x109D64: parsing (parsing.c:130)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 4 bytes in 1 blocks are indirectly lost in loss record 2 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
+==3871420==    by 0x1099B7: recup_token (parsing.c:53)
+==3871420==    by 0x10A571: found_redirection (pars_utils.c:186)
+==3871420==    by 0x109D64: parsing (parsing.c:130)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 15 bytes in 5 blocks are indirectly lost in loss record 13 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
+==3871420==    by 0x109F26: new_token (pars_utils.c:23)
+==3871420==    by 0x10A389: found_next_cmd (pars_utils.c:152)
+==3871420==    by 0x109DB6: parsing (parsing.c:136)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 15 bytes in 5 blocks are definitely lost in loss record 14 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
+==3871420==    by 0x1099B7: recup_token (parsing.c:53)
+==3871420==    by 0x10A372: found_next_cmd (pars_utils.c:150)
+==3871420==    by 0x109DB6: parsing (parsing.c:136)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 16 bytes in 5 blocks are indirectly lost in loss record 16 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
+==3871420==    by 0x1099B7: recup_token (parsing.c:53)
+==3871420==    by 0x10A212: found_next_cmd (pars_utils.c:121)
+==3871420==    by 0x109DB6: parsing (parsing.c:136)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 32 bytes in 2 blocks are indirectly lost in loss record 25 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x109F08: new_token (pars_utils.c:20)
+==3871420==    by 0x109E2D: parsing (parsing.c:152)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 39 (32 direct, 7 indirect) bytes in 1 blocks are definitely lost in loss record 26 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10A3EB: found_redirection (pars_utils.c:162)
+==3871420==    by 0x109D64: parsing (parsing.c:130)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 66 bytes in 8 blocks are indirectly lost in loss record 30 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10CAEB: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
+==3871420==    by 0x109F26: new_token (pars_utils.c:23)
+==3871420==    by 0x109E2D: parsing (parsing.c:152)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 80 bytes in 5 blocks are indirectly lost in loss record 33 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x109F08: new_token (pars_utils.c:20)
+==3871420==    by 0x10A389: found_next_cmd (pars_utils.c:152)
+==3871420==    by 0x109DB6: parsing (parsing.c:136)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 105 bytes in 17 blocks are definitely lost in loss record 37 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10D023: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
+==3871420==    by 0x1099B7: recup_token (parsing.c:53)
+==3871420==    by 0x109DFD: parsing (parsing.c:146)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 194 (96 direct, 98 indirect) bytes in 6 blocks are definitely lost in loss record 44 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x109F08: new_token (pars_utils.c:20)
+==3871420==    by 0x109E2D: parsing (parsing.c:152)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== 351 (240 direct, 111 indirect) bytes in 5 blocks are definitely lost in loss record 46 of 87
+==3871420==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3871420==    by 0x10A0B1: found_next_cmd (pars_utils.c:97)
+==3871420==    by 0x109DB6: parsing (parsing.c:136)
+==3871420==    by 0x109710: main (main.c:53)
+==3871420== 
+==3871420== LEAK SUMMARY:
+==3871420==    definitely lost: 488 bytes in 34 blocks
+==3871420==    indirectly lost: 216 bytes in 27 blocks
+==3871420==      possibly lost: 0 bytes in 0 blocks
+==3871420==    still reachable: 0 bytes in 0 blocks
+==3871420==         suppressed: 209,065 bytes in 255 blocks
+==3871420== 
+==3871420== For lists of detected and suppressed errors, rerun with: -s
+==3871420== ERROR SUMMARY: 136 errors from 31 contexts (suppressed: 0 from 0)
