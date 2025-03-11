@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/03/10 11:31:32 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:14:31 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void add_next_cmd(t_cmd *cmd, t_cmd *next_cmd)
     }
 }
 
-t_cmd *found_next_cmd(char *str, int *index)
+t_cmd *found_next_cmd(char *str, int *index, t_env *env)
 {
     t_cmd *next_cmd;
     t_redirection *new_redir;
@@ -118,7 +118,7 @@ t_cmd *found_next_cmd(char *str, int *index)
         free(next_cmd);
         return (NULL);
     }
-    next_cmd->cmd = recup_token(str, index);
+    next_cmd->cmd = recup_token(str, index, env);
     if (next_cmd->cmd == NULL)
     {
         free(next_cmd);
@@ -132,7 +132,7 @@ t_cmd *found_next_cmd(char *str, int *index)
             break ; 
         if (str[*index] == '<' || str[*index] == '>')
         {
-            new_redir = found_redirection(str, index);
+            new_redir = found_redirection(str, index, env);
             if (new_redir)
                 add_redirection(next_cmd, new_redir);
             else
@@ -140,14 +140,14 @@ t_cmd *found_next_cmd(char *str, int *index)
         }
         else if (str[*index] == '|')
         {
-            another_cmd = found_next_cmd(str, index);
+            another_cmd = found_next_cmd(str, index, env);
             if (another_cmd)
                 add_next_cmd(next_cmd, another_cmd);
             break ;
         }
         else
         {
-            token = recup_token(str, index);
+            token = recup_token(str, index, env);
             if (token)
                 add_token(&next_cmd->arg, new_token(token));
         }
@@ -157,7 +157,7 @@ t_cmd *found_next_cmd(char *str, int *index)
 
 
 // pour trouver une redirection, le *index c'est la position du caractere apres la redirection
-t_redirection *found_redirection(char *str, int *index)
+t_redirection *found_redirection(char *str, int *index, t_env *env)
 {
     t_redirection *redir = malloc(sizeof(t_redirection));
     
@@ -183,7 +183,7 @@ t_redirection *found_redirection(char *str, int *index)
                 free(redir);
                 return (NULL);
             }
-            redir->heredoc_delim = recup_token(str, index);
+            redir->heredoc_delim = recup_token(str, index, env);
             if (redir->heredoc_delim == NULL)
             {
                 free(redir->type);
@@ -225,7 +225,7 @@ t_redirection *found_redirection(char *str, int *index)
         free(redir);
         return (NULL);
     }
-    redir->file = recup_token(str, index);
+    redir->file = recup_token(str, index, env);
     if (redir->file == NULL)
     {
         free(redir->type);

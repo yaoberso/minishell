@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/03/10 12:35:59 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:20:43 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // la fonction qui va extraire toutes les commandes des arguments
-char *recup_token(char *str, int *index)
+char *recup_token(char *str, int *index, t_env *env)
 {
     int i;
     int start, end;
     char c;
     char *str_recup;
-
+    char *envexp;
+    char *arg;
+    char *env_value;
+    
     i = *index;
     while (str[i] && ft_isspace(str[i]))
         i++;
-    
     if (!str[i])
         return NULL;
     if (str[i] == '"' || str[i] == '\'')
@@ -49,11 +51,60 @@ char *recup_token(char *str, int *index)
     if (end <= start)
         return NULL;
     str_recup = ft_substr(str, start, end - start);
+    if (!str_recup)
+        return NULL;
+    i = 0;
+    while(str_recup[i] != '\0')
+    {
+        if (str_recup[i] == '$' && str_recup[i+1] != '\0')
+        {
+            start = i;
+            i++;
+            end = 0;
+            while(str_recup[i+end] != '\0' && str_recup[i+end] != ' ' &&
+                  str_recup[i+end] != '$' && str_recup[i+end] != '\'' &&
+                  str_recup[i+end] != '"')
+                end++;
+            if (end == 0)
+            {
+                i++;
+                continue;
+            }
+            envexp = ft_substr(str_recup, i, end);
+            if (!envexp)
+                return str_recup;
+            env_value = get_env_value(env, envexp);
+            free(envexp);
+            if (env_value)
+            {
+                int new_len = ft_strlen(str_recup) - end + ft_strlen(env_value) + 1;
+                arg = malloc(sizeof(char) * new_len);
+                if (!arg)
+                    return str_recup;
+                ft_memcpy(arg, str_recup, start);
+                arg[start] = '\0';
+                strcat(arg, env_value);
+                strcat(arg, str_recup + i + end);    
+                free(str_recup);
+                str_recup = arg;
+                i = start + ft_strlen(env_value);
+            }
+            else
+            {
+                ft_memmove(str_recup + start, str_recup + i + end,
+                         ft_strlen(str_recup + i + end) + 1);
+                i = start;
+            }
+        }
+        else
+            i++;
+    }
+    
     return str_recup;
 }
 
 // analyse, decoupe et rempli les structures en fonction de ce qu'on recupere
-void parsing(char *str, t_cmd *cmd)
+void parsing(char *str, t_cmd *cmd, t_env *env)
 {
     int i;
     char *token;
@@ -76,13 +127,13 @@ void parsing(char *str, t_cmd *cmd)
             break ;
         if (str[i] == '<' || str[i] == '>')
         {
-            new_redir = found_redirection(str, &i);
+            new_redir = found_redirection(str, &i, env);
             if (new_redir)
                 add_redirection(cmd, new_redir);
         }
         else if (str[i] == '|')
         {
-            next_cmd = found_next_cmd(str, &i);
+            next_cmd = found_next_cmd(str, &i, env);
             if (next_cmd)
             {
                 add_next_cmd(cmd, next_cmd);
@@ -92,7 +143,7 @@ void parsing(char *str, t_cmd *cmd)
         }
         else
         {
-            token = recup_token(str, &i);
+            token = recup_token(str, &i, env);
             if (token)
             {
                 if (cmd->cmd == NULL)
@@ -103,6 +154,3 @@ void parsing(char *str, t_cmd *cmd)
         }
     }
 }
-
-
-

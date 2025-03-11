@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/10 20:31:46 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/11 11:15:48 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int		is_cmd(char *cmd);
 // Fonctions de parsing
 void						add_token(t_token **head, t_token *new);
 t_token						*new_token(char *str);
-void						parsing(char *str, t_cmd *cmd);
-char						*recup_token(char *str, int *index);
-t_redirection				*found_redirection(char *str, int *index);
+void						parsing(char *str, t_cmd *cmd, t_env *env);
+char						*recup_token(char *str, int *index, t_env *env);
+t_redirection				*found_redirection(char *str, int *index, t_env *env);
 void						add_redirection(t_cmd *cmd,
 								t_redirection *new_redir);
-t_cmd						*found_next_cmd(char *str, int *index);
+t_cmd						*found_next_cmd(char *str, int *index, t_env *env);
 void						add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
 
 // pipe et redirection
