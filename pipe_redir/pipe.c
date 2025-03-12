@@ -165,7 +165,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 			perror("fork");
 			if (prev_pipe != -1)
 				close(prev_pipe);
-			if (fd[1] != 1)
+			if (fd[1] != -1)
 			{
 				close(fd[1]);
 				close(fd[0]);
