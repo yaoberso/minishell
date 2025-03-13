@@ -9,7 +9,6 @@
 
 
 
-- plusieurs pipes
+- faire marcher le &?
 - commande interne qui passe dans les pipes
-- $?
 - norminette et leaks

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/03/12 15:11:26 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/13 11:56:31 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ char *recup_token(char *str, int *index, t_env *env)
     {
         if (str_recup[i] == '$' && str_recup[i+1] != '\0')
         {
+            if(str_recup[i + 1] == '?')
+            {
+                printf("%i\n", val_ret);
+                return (NULL);
+            }
             start = i;
             i++;
             end = 0;
