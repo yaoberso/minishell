@@ -1,356 +1,164 @@
-==4085387== Memcheck, a memory error detector
-==4085387== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==4085387== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==4085387== Command: ./minishell
-==4085387== Parent PID: 4085386
-==4085387== 
-==4036668== 
-==4036668== Process terminating with default action of signal 1 (SIGHUP)
-==4036668==    at 0x49B03E8: wait4 (wait4.c:30)
-==4036668==    by 0x10C3F4: exec_pipe (pipe.c:234)
-==4036668==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4036668==    by 0x109723: main (main.c:54)
-==4036668== 
-==4036668== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==4036668== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==4036668==    <inherited from parent>
-==4036668== 
-==4036668== Open AF_UNIX socket 43: <unknown>
-==4036668==    <inherited from parent>
-==4036668== 
-==4036668== Open file descriptor 42: /home/nadahman/.config/Code/logs/20250313T095629/ptyhost.log
-==4036668==    <inherited from parent>
-==4036668== 
-==4036668== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
-==4036668==    <inherited from parent>
-==4036668== 
-==4036668== 
-==4036668== HEAP SUMMARY:
-==4036668==     in use at exit: 220,721 bytes in 493 blocks
-==4036668==   total heap usage: 681 allocs, 188 frees, 235,271 bytes allocated
-==4036668== 
-==4036668== 3 bytes in 1 blocks are still reachable in loss record 3 of 89
-==4036668==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4036668==    by 0x10D234: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4036668==    by 0x1099AB: recup_token (parsing.c:54)
-==4036668==    by 0x109DF1: parsing (parsing.c:147)
-==4036668==    by 0x109710: main (main.c:53)
-==4036668== 
-==4036668== 3 bytes in 1 blocks are definitely lost in loss record 4 of 89
-==4036668==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4036668==    by 0x10D234: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4036668==    by 0x1099AB: recup_token (parsing.c:54)
-==4036668==    by 0x109DF1: parsing (parsing.c:147)
-==4036668==    by 0x109710: main (main.c:53)
-==4036668== 
-==4036668== 48 bytes in 1 blocks are still reachable in loss record 29 of 89
-==4036668==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4036668==    by 0x1095F1: main (main.c:27)
-==4036668== 
-==4036668== 1,064 bytes in 78 blocks are still reachable in loss record 57 of 89
-==4036668==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd==4038075== 
-==4038075== Process terminating with default action of signal 1 (SIGHUP)
-==4038075==    at 0x49B03E8: wait4 (wait4.c:30)
-==4038075==    by 0x10C3FB: exec_pipe (pipe.c:238)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== FILE DESCRIPTORS: 21 open (3 std) at exit.
-==4038075== Open file descriptor 18:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 17:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 15:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 12:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 14:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 13:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 11:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 8:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 10:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 9:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 7:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 6:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 5:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 4:
-==4038075==    at 0x49DB07D: pipe (pipe.c:29)
-==4038075==    by 0x10C26A: exec_pipe (pipe.c:178)
-==4038075==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4038075==    by 0x109723: main (main.c:54)
-==4038075== 
-==4038075== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==4038075==    <inherited from parent>
-==4038075== 
-==4038075== Open AF_UNIX socket 43: <unknown>
-==4038075==    <inherited from parent>
-==4038075== 
-==4038075== Open file descriptor 42: /home/nadahman/.config/Code/logs/20250313T095629/ptyhost.log
-==4038075==    <inherited from parent>
-==4038075== 
-==4038075== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
-==4038075==    <inherited from parent>
-==4038075== 
-==4038075== 
-==4038075== HEAP SUMMARY:
-==4038075==     in use at exit: 221,899 bytes in 546 blocks
-==4038075==   total heap usage: 769 allocs, 223 frees, 237,201 bytes allocated
-==4038075== 
-==4038075== 3 bytes in 1 blocks are still reachable in loss record 3 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10D23B: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x1099AB: recup_token (parsing.c:54)
-==4038075==    by 0x109DF1: parsing (parsing.c:147)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 3 bytes in 1 blocks are still reachable in loss record 4 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10D23B: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x1099AB: recup_token (parsing.c:54)
-==4038075==    by 0x10A206: found_next_cmd (pars_utils.c:121)
-==4038075==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 3 bytes in 1 blocks are still reachable in loss record 5 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10CD03: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x109F1A: new_token (pars_utils.c:23)
-==4038075==    by 0x10A37D: found_next_cmd (pars_utils.c:152)
-==4038075==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 5 bytes in 1 blocks are still reachable in loss record 6 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10D23B: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x1099AB: recup_token (parsing.c:54)
-==4038075==    by 0x10A206: found_next_cmd (pars_utils.c:121)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 6 bytes in 1 blocks are still reachable in loss record 7 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10CD03: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x109F1A: new_token (pars_utils.c:23)
-==4038075==    by 0x10A37D: found_next_cmd (pars_utils.c:152)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 6 bytes in 2 blocks are indirectly lost in loss record 8 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10D23B: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x1099AB: recup_token (parsing.c:54)
-==4038075==    by 0x10A206: found_next_cmd (pars_utils.c:121)
-==4038075==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 6 bytes in 2 blocks are indirectly lost in loss record 9 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10CD03: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x109F1A: new_token (pars_utils.c:23)
-==4038075==    by 0x10A37D: found_next_cmd (pars_utils.c:152)
-==4038075==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 9 bytes in 3 blocks are definitely lost in loss record 15 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10D23B: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x1099AB: recup_token (parsing.c:54)
-==4038075==    by 0x10A366: found_next_cmd (pars_utils.c:150)
-==4038075==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 10 bytes in 3 blocks are indirectly lost in loss record 16 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10CD03: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x109F1A: new_token (pars_utils.c:23)
-==4038075==    by 0x10A37D: found_next_cmd (pars_utils.c:152)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 12 bytes in 4 blocks are definitely lost in loss record 20 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10D23B: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x1099AB: recup_token (parsing.c:54)
-==4038075==    by 0x109DF1: parsing (parsing.c:147)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 15 bytes in 3 blocks are indirectly lost in loss record 24 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10D23B: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x1099AB: recup_token (parsing.c:54)
-==4038075==    by 0x10A206: found_next_cmd (pars_utils.c:121)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 16 bytes in 1 blocks are still reachable in loss record 26 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x109EFC: new_token (pars_utils.c:20)
-==4038075==    by 0x10A37D: found_next_cmd (pars_utils.c:152)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 16 bytes in 1 blocks are still reachable in loss record 27 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x109EFC: new_token (pars_utils.c:20)
-==4038075==    by 0x10A37D: found_next_cmd (pars_utils.c:152)
-==4038075==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 16 bytes in 4 blocks are definitely lost in loss record 28 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10D23B: ft_substr (in /home/nadahman/Desktop/minishell/minishell)
-==4038075==    by 0x1099AB: recup_token (parsing.c:54)
-==4038075==    by 0x10A366: found_next_cmd (pars_utils.c:150)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 32 bytes in 2 blocks are indirectly lost in loss record 40 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x109EFC: new_token (pars_utils.c:20)
-==4038075==    by 0x10A37D: found_next_cmd (pars_utils.c:152)
-==4038075==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 48 bytes in 1 blocks are still reachable in loss record 46 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x1095F1: main (main.c:27)
-==4038075== 
-==4038075== 48 bytes in 1 blocks are still reachable in loss record 48 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10A0A5: found_next_cmd (pars_utils.c:97)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 48 bytes in 1 blocks are still reachable in loss record 49 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10A0A5: found_next_cmd (pars_utils.c:97)
-==4038075==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 48 bytes in 3 blocks are indirectly lost in loss record 51 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x109EFC: new_token (pars_utils.c:20)
-==4038075==    by 0x10A37D: found_next_cmd (pars_utils.c:152)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 96 bytes in 2 blocks are indirectly lost in loss record 59 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10A0A5: found_next_cmd (pars_utils.c:97)
-==4038075==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 357 (144 direct, 213 indirect) bytes in 3 blocks are definitely lost in loss record 69 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10A0A5: found_next_cmd (pars_utils.c:97)
-==4038075==    by 0x109DAA: parsing (parsing.c:137)
-==4038075==    by 0x109710: main (main.c:53)
-==4038075== 
-==4038075== 1,064 bytes in 78 blocks are still reachable in loss record 84 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x496E5CE: strndup (strndup.c:43)
-==4038075==    by 0x10B567: init_env (init.c:38)
-==4038075==    by 0x1095E3: main (main.c:26)
-==4038075== 
-==4038075== 1,872 bytes in 78 blocks are still reachable in loss record 87 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x10B503: init_env (init.c:32)
-==4038075==    by 0x1095E3: main (main.c:26)
-==4038075== 
-==4038075== 3,166 bytes in 78 blocks are still reachable in loss record 90 of 116
-==4038075==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4038075==    by 0x496E58E: strdup (strdup.c:42)
-==4038075==    by 0x10B581: init_env (init.c:39)
-==4038075==    by 0x1095E3: main (main.c:26)
-==4038075== 
-==4038075== LEAK SUMMARY:
-==4038075==    definitely lost: 181 bytes in 14 blocks
-==4038075==    indirectly lost: 213 bytes in 17 blocks
-==4038075==      possibly lost: 0 bytes in 0 blocks
-==4038075==    still reachable: 6,298 bytes in 244 blocks
-==4038075==         suppressed: 215,207 bytes in 271 blocks
-==4038075== 
-==4038075== For lists of detected and suppressed errors, rerun with: -s
-==4038075== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
-==4107126== Conditional jump or move depends on uninitialised value(s)
-==4107126==    at 0x10BEA9: exec_process (pipe.c:54)
-==4107126==    by 0x10C395: exec_pipe (pipe.c:220)
-==4107126==    by 0x10AE8B: exec_cmd_inter_exter (cmd_exec.c:71)
-==4107126==    by 0x109723: main (main.c:54)
-==4107126==  Uninitialised value was created by a heap allocation
-==4107126==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4107126==    by 0x10A0A5: found_next_cmd (pars_utils.c:97)
-==4107126==    by 0x10A32F: found_next_cmd (pars_utils.c:143)
-==4107126==    by 0x109DAA: parsing (parsing.c:137)
-==4107126==    by 0x109710: main (main.c:53)
-==4107126== 
+==8466== Memcheck, a memory error detector
+==8466== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==8466== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==8466== Command: ./minishell
+==8466== Parent PID: 8465
+==8466== 
+==8547== Conditional jump or move depends on uninitialised value(s)
+==8547==    at 0x10BCA8: exec_process (pipe.c:55)
+==8547==    by 0x10BF63: exec_pipe (pipe.c:154)
+==8547==    by 0x10AC88: exec_cmd_inter_exter (cmd_exec.c:71)
+==8547==    by 0x1094E3: main (main.c:55)
+==8547==  Uninitialised value was created by a heap allocation
+==8547==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8547==    by 0x109EA2: found_next_cmd (pars_utils.c:97)
+==8547==    by 0x10A12C: found_next_cmd (pars_utils.c:143)
+==8547==    by 0x109BA7: parsing (parsing.c:142)
+==8547==    by 0x1094D0: main (main.c:54)
+==8547== 
+==8466== 
+==8466== FILE DESCRIPTORS: 11 open (3 std) at exit.
+==8466== Open file descriptor 8:
+==8466==    at 0x49A9A79: pipe (pipe.c:29)
+==8466==    by 0x10BDFA: exec_pipe (pipe.c:106)
+==8466==    by 0x10AC88: exec_cmd_inter_exter (cmd_exec.c:71)
+==8466==    by 0x1094E3: main (main.c:55)
+==8466== 
+==8466== Open file descriptor 7:
+==8466==    at 0x49A9A79: pipe (pipe.c:29)
+==8466==    by 0x10BDFA: exec_pipe (pipe.c:106)
+==8466==    by 0x10AC88: exec_cmd_inter_exter (cmd_exec.c:71)
+==8466==    by 0x1094E3: main (main.c:55)
+==8466== 
+==8466== Open file descriptor 5:
+==8466==    at 0x49A9A79: pipe (pipe.c:29)
+==8466==    by 0x10BDFA: exec_pipe (pipe.c:106)
+==8466==    by 0x10AC88: exec_cmd_inter_exter (cmd_exec.c:71)
+==8466==    by 0x1094E3: main (main.c:55)
+==8466== 
+==8466== Open file descriptor 4:
+==8466==    at 0x49A9A79: pipe (pipe.c:29)
+==8466==    by 0x10BDFA: exec_pipe (pipe.c:106)
+==8466==    by 0x10AC88: exec_cmd_inter_exter (cmd_exec.c:71)
+==8466==    by 0x1094E3: main (main.c:55)
+==8466== 
+==8466== Open file descriptor 24: /home/nas/.vscode-server/data/logs/20250314T121110/remoteagent.log
+==8466==    <inherited from parent>
+==8466== 
+==8466== Open file descriptor 20: /home/nas/.vscode-server/data/logs/20250314T121110/remoteTelemetry.log
+==8466==    <inherited from parent>
+==8466== 
+==8466== Open file descriptor 19: /home/nas/.vscode-server/data/logs/20250314T121110/ptyhost.log
+==8466==    <inherited from parent>
+==8466== 
+==8466== Open file descriptor 3: /mnt/c/users/nasim/desktop/minishell/leaks.log
+==8466==    <inherited from parent>
+==8466== 
+==8466== 
+==8466== HEAP SUMMARY:
+==8466==     in use at exit: 232,532 bytes in 255 blocks
+==8466==   total heap usage: 730 allocs, 475 frees, 261,023 bytes allocated
+==8466== 
+==8466== 2 bytes in 1 blocks are indirectly lost in loss record 1 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x10C8BD: ft_strdup (in /mnt/c/users/nasim/desktop/minishell/minishell)
+==8466==    by 0x109D17: new_token (pars_utils.c:23)
+==8466==    by 0x10A17A: found_next_cmd (pars_utils.c:152)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 2 bytes in 1 blocks are definitely lost in loss record 2 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x10CDF5: ft_substr (in /mnt/c/users/nasim/desktop/minishell/minishell)
+==8466==    by 0x10976B: recup_token (parsing.c:54)
+==8466==    by 0x10A163: found_next_cmd (pars_utils.c:150)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 3 bytes in 1 blocks are indirectly lost in loss record 3 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x10CDF5: ft_substr (in /mnt/c/users/nasim/desktop/minishell/minishell)
+==8466==    by 0x10976B: recup_token (parsing.c:54)
+==8466==    by 0x10A003: found_next_cmd (pars_utils.c:121)
+==8466==    by 0x10A12C: found_next_cmd (pars_utils.c:143)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 3 bytes in 1 blocks are indirectly lost in loss record 4 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x10C8BD: ft_strdup (in /mnt/c/users/nasim/desktop/minishell/minishell)
+==8466==    by 0x109D17: new_token (pars_utils.c:23)
+==8466==    by 0x10A17A: found_next_cmd (pars_utils.c:152)
+==8466==    by 0x10A12C: found_next_cmd (pars_utils.c:143)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 3 bytes in 1 blocks are definitely lost in loss record 5 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x10CDF5: ft_substr (in /mnt/c/users/nasim/desktop/minishell/minishell)
+==8466==    by 0x10976B: recup_token (parsing.c:54)
+==8466==    by 0x10A163: found_next_cmd (pars_utils.c:150)
+==8466==    by 0x10A12C: found_next_cmd (pars_utils.c:143)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 5 bytes in 1 blocks are indirectly lost in loss record 6 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x10CDF5: ft_substr (in /mnt/c/users/nasim/desktop/minishell/minishell)
+==8466==    by 0x10976B: recup_token (parsing.c:54)
+==8466==    by 0x10A003: found_next_cmd (pars_utils.c:121)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 6 bytes in 2 blocks are definitely lost in loss record 7 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x10CDF5: ft_substr (in /mnt/c/users/nasim/desktop/minishell/minishell)
+==8466==    by 0x10976B: recup_token (parsing.c:54)
+==8466==    by 0x109BEE: parsing (parsing.c:152)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 16 bytes in 1 blocks are indirectly lost in loss record 18 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x109CF9: new_token (pars_utils.c:20)
+==8466==    by 0x10A17A: found_next_cmd (pars_utils.c:152)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 16 bytes in 1 blocks are indirectly lost in loss record 19 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x109CF9: new_token (pars_utils.c:20)
+==8466==    by 0x10A17A: found_next_cmd (pars_utils.c:152)
+==8466==    by 0x10A12C: found_next_cmd (pars_utils.c:143)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 38 bytes in 3 blocks are definitely lost in loss record 25 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x10CAAE: ft_strjoin (in /mnt/c/users/nasim/desktop/minishell/minishell)
+==8466==    by 0x10BBB7: found_path (pipe.c:33)
+==8466==    by 0x10BE46: exec_pipe (pipe.c:119)
+==8466==    by 0x10AC88: exec_cmd_inter_exter (cmd_exec.c:71)
+==8466==    by 0x1094E3: main (main.c:55)
+==8466== 
+==8466== 48 bytes in 1 blocks are indirectly lost in loss record 32 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x109EA2: found_next_cmd (pars_utils.c:97)
+==8466==    by 0x10A12C: found_next_cmd (pars_utils.c:143)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== 141 (48 direct, 93 indirect) bytes in 1 blocks are definitely lost in loss record 37 of 89
+==8466==    at 0x48407B4: malloc (vg_replace_malloc.c:381)
+==8466==    by 0x109EA2: found_next_cmd (pars_utils.c:97)
+==8466==    by 0x109BA7: parsing (parsing.c:142)
+==8466==    by 0x1094D0: main (main.c:54)
+==8466== 
+==8466== LEAK SUMMARY:
+==8466==    definitely lost: 97 bytes in 8 blocks
+==8466==    indirectly lost: 93 bytes in 7 blocks
+==8466==      possibly lost: 0 bytes in 0 blocks
+==8466==    still reachable: 0 bytes in 0 blocks
+==8466==         suppressed: 232,342 bytes in 240 blocks
+==8466== 
+==8466== For lists of detected and suppressed errors, rerun with: -s
+==8466== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 0 from 0)

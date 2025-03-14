@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/13 12:11:45 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:49:33 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2], t_env *env)
 
 	if (is_cmd(cur_cmd->cmd) == 1 && cur_cmd->prev_cmd)
 	{
-   		printf("%s: fonctionne pas dans un pipe\n", cur_cmd->cmd);    // a voir si j e garde selon le comprortement de bash
+   		printf("%s: fonctionne pas dans un pipe\n", cur_cmd->cmd);    // a voir si je garde selon le comprortement de bash
 		val_ret = 1;
     	exit(1);
 	}
@@ -63,7 +63,6 @@ void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2], t_env *env)
 		cmd_exec(cur_cmd, env);  // poour executer sans utiliser fork sinon c'est chelouuuu
 		exit(1);
 	}
-	
 	args = get_args(cur_cmd); // convertie la liste chainé en tavleau d'arguments pour execve
 	if (args == NULL)
 	{
@@ -74,11 +73,12 @@ void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2], t_env *env)
 		close(fd[1]);
 	if (fd[0] != -1)
 		close(fd[0]);
-	if (found_path(cur_cmd) == NULL)
-	{
-		printf("command not found: %s\n", cur_cmd->cmd);
-		exit(127);
-	}
+	// if (found_path(cur_cmd) == NULL)
+	// {
+	// 	printf("command not found: %s\n", cur_cmd->cmd);
+	// 	val_ret = 127;
+	// 	exit(127);
+	// }
 	execve(found_path(cur_cmd), args, NULL); // execute la commande en la cherchant dans le path
 	perror("execve");
 	exit(127);
@@ -116,7 +116,12 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 		}
 		else
 			fd[1] = -1;
-		
+		if (found_path(cur_cmd) == NULL)
+		{
+			printf("command no88t found: %s\n", cur_cmd->cmd);
+			val_ret = 127;
+			return ;
+		}
 		pid = fork();  // cree un processus
 		if (pid < 0)
 		{
