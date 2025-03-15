@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/11 11:51:02 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:11:14 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,22 @@ void	exec_cmd_inter_exter(t_cmd *cmd, t_env *env)
 	{
 		return ;
 	}
-	if (is_cmd(cmd->cmd) == 1)
-		cmd_exec(cmd, env);
+	// le soucis vien surement d ici car j'execute sans prendre en compte les pipes j ai suppr l autre au cas ou
+	exec_pipe(cmd, env);
+}
+
+int	cmd_in_pipe(char *cmd)  // les commandes qui doivent pas fonctionner dans un pipe
+{
+	if (cmd == NULL)
+		return (0);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
 	else
-		exec_pipe(cmd, env);
+		return (0);	
 }

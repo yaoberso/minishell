@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/14 12:13:25 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/15 16:24:57 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_cmd						*found_next_cmd(char *str, int *index, t_env *env);
 void						add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
 
 // pipe et redirection
+int	cmd_in_pipe(char *cmd);
 void						exec_pipe(t_cmd *cmd, t_env *env);
 void						exec_redir(t_cmd *cmd);
 void						redir_stdout(int fd[2], t_cmd *next_cmd);
@@ -102,8 +103,7 @@ void						create_pipe(int fd[2], t_cmd *next_cmd);
 void						gerer_process(pid_t pid, int fd[2],
 								t_cmd **cur_cmd);
 void						exec_process(t_cmd *cur_cmd, t_cmd *next_cmd,
-								int fd[2], t_env *env);
-void						redir_stdout(int fd[2], t_cmd *next_cmd);
+								int fd[2]);
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
 void						redir_heredoc(t_cmd *cmd, int heredoc_fd[2]);
