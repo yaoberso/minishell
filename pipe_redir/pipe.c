@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/16 17:17:53 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/16 20:36:37 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ char	*found_path(t_cmd *cmd)
 void exec_process(t_cmd *cur_cmd, int fd[2])
 {
 	char **args;
+	char *cmd_path;
 
+	cmd_path = found_path(cur_cmd);
 	if (cur_cmd->redirection) // si il y a une redirection il l'execute
 		exec_redir(cur_cmd);
 	args = get_args(cur_cmd); // convertie la liste chainé en tavleau d'arguments pour execve
@@ -64,7 +66,7 @@ void exec_process(t_cmd *cur_cmd, int fd[2])
 		close(fd[0]);
 	execve(found_path(cur_cmd), args, NULL); // execute la commande en la cherchant dans le path
 	perror("execve");
-	free(found_path(cur_cmd));
+	free(cmd_path); // test de free ici a voir si ca amrche 
 	free_tab(args);
 	exit(127);
 }
@@ -116,7 +118,6 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 			}
 			return ;	
 		}
-		free(cmd_path); // test de free ici a voir si ca amrche 
 		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1 && cur_cmd->next_cmd == NULL)  // si cest une commande interne seul
 		{
 			if (cur_cmd->redirection)     // la il faut faire fonctionner la redirection
@@ -174,7 +175,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 				close(fd[1]);
 				close(fd[0]);
 			}
-			exec_process(cur_cmd, fd);		
+			exec_process(cur_cmd, fd);
+			exit (1);	
 		}
 		if (pipe_precedent != -1)
 		{
