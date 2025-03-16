@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/15 21:03:03 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/16 11:10:07 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,12 @@ char	*found_path(t_cmd *cmd)
 	return (NULL);
 }
 
-void exec_process(t_cmd *cur_cmd, t_cmd *next_cmd, int fd[2])
+void exec_process(t_cmd *cur_cmd, int fd[2])
 {
 	char **args;
 
-
-	if (cur_cmd->prev_cmd) // si il y a une commande avant il redirige l'entree vers stdin
-		redir_stdin(fd);
-	if (next_cmd) // si il y a une commande apres il redirige la sortie vers stdout
-		redir_stdout(fd, next_cmd);
 	if (cur_cmd->redirection) // si il y a une redirection il l'execute
 		exec_redir(cur_cmd);
-	// if (is_cmd(cur_cmd->cmd) == 1) // si c'est une commande interne il l'execute
-	// {	
-	// 	cmd_exec(cur_cmd, env);  // poour executer sans utiliser fork sinon c'est chelouuuu
-	// 	exit(0);
-	// }
 	args = get_args(cur_cmd); // convertie la liste chainé en tavleau d'arguments pour execve
 	if (args == NULL)
 	{
@@ -118,7 +108,16 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 			return ;	
 		}
 		
-		
+		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1 && cur_cmd->next_cmd == NULL)
+		{
+			cmd_exec(cur_cmd, env);
+			return ;
+		}
+		if (cmd_in_pipe(cur_cmd->cmd) == 1 && (cur_cmd->next_cmd != NULL || pipe_precedent != -1))
+		{
+			printf("ici je dois gerer l erreur pour ce cas\n");
+			return ;
+		}
 		pid = fork();  // cree un processus
 		if (pid < 0)
 		{
@@ -132,6 +131,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 			}
 			return ;
 		}
+		
+		
 		if (pid == 0) // le processus enfant ou vont s executer les commandes
 		{
 			if (cmd->redirection)
@@ -147,48 +148,24 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 				close(fd[1]);
 				close(fd[0]);
 			}
-			if (is_cmd(cur_cmd->cmd))
-			{
-				if (cur_cmd->next_cmd)
-				{
-					dup2(fd[1], STDOUT_FILENO);
-					close(fd[0]);
-					close(fd[1]);
-				}
-				if (cmd_in_pipe(cur_cmd->cmd) == 1)
-				{
-					printf("cmd qui ne fonctionne pas dans un pipe\n");
-					exit (1);
-				}
-				if (cur_cmd->next_cmd && pipe_precedent != -1)
-				{
-					pid = fork();
-					if (pid == 0)
-					{
-						if (cur_cmd->next_cmd)
-						{
-							dup2(fd[1], STDOUT_FILENO);
-							close(fd[1]);
-							close(fd[0]);
-						}
-						if (pipe_precedent != -1)
-						{
-							dup2(pipe_precedent, STDIN_FILENO);
-							close(pipe_precedent);
-						}
-						cmd_exec(cur_cmd, env);
-						exit(0);
-					}
-					wait(NULL);
-				}
-				else
-					cmd_exec(cur_cmd, env);
-				exit(0);
-			}
-			else
-			{ 
-				exec_process(cur_cmd, cur_cmd->next_cmd, fd);
-			}			
+			// if (is_cmd(cur_cmd->cmd))
+			// {
+			// 	if (cur_cmd->next_cmd)
+			// 	{
+			// 		dup2(fd[1], STDOUT_FILENO);
+			// 		close(fd[0]);
+			// 		close(fd[1]);
+			// 	}
+			// 	if (cmd_in_pipe(cur_cmd->cmd) == 1 && (cur_cmd->next_cmd || pipe_precedent == -1)) // ici faut arranger pour que les fonctions de Yann fonctionne tout seul
+			// 	{
+			// 		printf("cmd qui ne fonctionne pas dans un pipe\n");
+			// 		exit (1);
+			// 	}
+			// 	cmd_exec(cur_cmd, env);
+			// 	exit(0);
+			// }
+			// else
+				exec_process(cur_cmd, fd);		
 		}
 		if (pipe_precedent != -1)
 		{
@@ -218,3 +195,4 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 	
 // le echo hello | wc -c doit me donner 6 mais j obtiens 134 ??????? mais enft jsuis trop bete j avais des printf mtn faut verifier et tester
 // le soucis vien peut etre de la maniere dont est implementé echo ou alors un probleme dans la redirection des fd !
+

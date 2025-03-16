@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/15 16:24:57 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/15 21:19:13 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void						redir_append(t_cmd *cmd, int fd);
 void						create_pipe(int fd[2], t_cmd *next_cmd);
 void						gerer_process(pid_t pid, int fd[2],
 								t_cmd **cur_cmd);
-void						exec_process(t_cmd *cur_cmd, t_cmd *next_cmd,
+void						exec_process(t_cmd *cur_cmd,
 								int fd[2]);
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
