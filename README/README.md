@@ -8,4 +8,5 @@
 
 
 
-- regler le soucis de sa  echo hello > hebfzlbielefzfefzefezfz.txt qui ne fonctionne pas 
+- regler le soucis de sa  echo hello > hebfzlbielefzfefzefezfz.txt qui ne fonctionne pas
+- j avais regler le soucis mais ca ne fonctionne plus et je sais plus ce que j avais fais
