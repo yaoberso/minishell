@@ -8,7 +8,4 @@
 
 
 
-
-- faire marcher le &?
-- commande interne qui passe dans les pipes
-- norminette et leaks
+- regler le soucis de sa  echo hello > hebfzlbielefzfefzefezfz.txt qui ne fonctionne pas 

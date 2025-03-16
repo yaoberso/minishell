@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/03/11 14:11:30 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:18:33 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,32 @@ int heredoc_parent(pid_t pid, int heredoc_fd[2])
         close(heredoc_fd[0]);
         return (1);
     }
-    if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
-    {
-        perror("dup2");
-        close(heredoc_fd[0]);
-        exit(1);
-    }
-    close(heredoc_fd[0]);
+    // if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
+    // {
+    //     perror("dup2");
+    //     close(heredoc_fd[0]);
+    //     exit(1);
+    // }
+    // close(heredoc_fd[0]);
     return (0);
 }
 
 void redir_heredoc(t_cmd *cmd, int heredoc_fd[2])
 {
     pid_t pid;
+    int save_stdin;
     
+    save_stdin = dup(STDIN_FILENO);
+    if (save_stdin == -1)
+    {
+        perror("dup");
+        exit(1);
+    }
     if (heredoc_pipe(heredoc_fd) != 0)
     {
         close(heredoc_fd[0]);
         close(heredoc_fd[1]);
+        close(save_stdin);
         exit(1);
     }
     pid = fork();
@@ -89,15 +97,29 @@ void redir_heredoc(t_cmd *cmd, int heredoc_fd[2])
         perror("fork");
         close(heredoc_fd[0]);
         close(heredoc_fd[1]);
+        close(save_stdin);
         exit(1);
     }
     if (pid == 0)
     {
+        close(save_stdin);
         heredoc_child(cmd, heredoc_fd);
     }
     else
     {
         if (heredoc_parent(pid, heredoc_fd) != 0)
+        {
+            close(save_stdin);
             return;
+        }
+        if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
+        {
+            perror("dup2");
+            close(heredoc_fd[0]);
+            close(save_stdin);
+            exit(1);
+        }
+        close(heredoc_fd[0]);
+        cmd->save_stdin = save_stdin; // stock le stdin pour le fermer plus tatd par la fonction qui l'appel
     }
 }

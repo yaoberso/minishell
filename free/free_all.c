@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:01:37 by nas               #+#    #+#             */
-/*   Updated: 2025/03/09 11:49:22 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/16 12:26:45 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void free_redirection(t_redirection *redir)
             free(redir->file);
         if (redir->type)
             free(redir->type);
+        if (redir->heredoc_delim)
+            free(redir->heredoc_delim);
         free(redir);
         redir = temp;
     }

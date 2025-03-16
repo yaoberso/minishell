@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/03/11 14:15:52 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:31:49 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,24 @@ t_cmd *found_next_cmd(char *str, int *index, t_env *env)
             if (new_redir)
                 add_redirection(next_cmd, new_redir);
             else
-                break ;
+            {
+                free_cmd(next_cmd);
+                return (NULL);
+            }
         }
         else if (str[*index] == '|')
         {
             another_cmd = found_next_cmd(str, index, env);
             if (another_cmd)
+            {
                 add_next_cmd(next_cmd, another_cmd);
+                another_cmd->prev_cmd = next_cmd;
+            }
+            else
+            {
+                free_cmd(next_cmd);
+                return (NULL);
+            }
             break ;
         }
         else
@@ -150,6 +161,11 @@ t_cmd *found_next_cmd(char *str, int *index, t_env *env)
             token = recup_token(str, index, env);
             if (token)
                 add_token(&next_cmd->arg, new_token(token));
+            else
+            {
+                free_cmd(next_cmd);
+                return (NULL);
+            }
         }
     }
     return (next_cmd);

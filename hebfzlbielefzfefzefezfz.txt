@@ -1,0 +1,4 @@
+hello
+[?2004h/mnt/c/users/nasim/desktop/minishell$ echo hello > hebfzlbielefzfefzefezfz.txt[?2004l
+/mnt/c/users/nasim/desktop/minishell$ [?2004h[?2004l
+exit

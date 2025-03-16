@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/15 21:19:13 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/16 17:15:22 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_cmd
 	t_redirection   *redirection; // liste chainé qui va contenir les redirections
     struct s_cmd *next_cmd; // structure cree des qu un pipe est trouve
 	struct s_cmd *prev_cmd; // structure cree des qu un pipe est trouve
+	int save_stdin;
 } t_cmd;
 
 // Fonction pour l'environement

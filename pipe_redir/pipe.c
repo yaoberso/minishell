@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/16 11:10:07 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/16 17:17:53 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ char	*found_path(t_cmd *cmd)
 		tmp = ft_strjoin(paths[i], "/");
 		full_path = ft_strjoin(tmp, cmd->cmd);
 		free(tmp);
+		if (!full_path)
+        {
+            free_tab(paths);
+            return (NULL);
+        }
 		if (access(full_path, F_OK | X_OK) == 0) 
 			return (free_tab(paths), full_path);
 		free(full_path);
@@ -72,6 +77,9 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 	t_cmd	*cur_cmd;
 	int pipe_precedent;
 	int status;
+	char *cmd_path;
+	int	save_stdin;
+	int save_stdout;
 
 	cur_cmd = cmd;
 	pipe_precedent = -1;
@@ -94,7 +102,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 			fd[1] = -1;
 			fd[0] = -1;
 		}
-		if (found_path(cur_cmd) == NULL && is_cmd(cur_cmd->cmd) == 0)
+		cmd_path = found_path(cur_cmd);
+		if (cmd_path == NULL && is_cmd(cur_cmd->cmd) == 0)
 		{
 			printf("command not found: %s\n", cur_cmd->cmd);
 			val_ret = 127;
@@ -107,13 +116,30 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 			}
 			return ;	
 		}
-		
-		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1 && cur_cmd->next_cmd == NULL)
+		free(cmd_path); // test de free ici a voir si ca amrche 
+		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1 && cur_cmd->next_cmd == NULL)  // si cest une commande interne seul
 		{
-			cmd_exec(cur_cmd, env);
+			if (cur_cmd->redirection)     // la il faut faire fonctionner la redirection
+			{
+				save_stdout = dup(STDOUT_FILENO); // sauvegarde les descripteurs avant de les rediriger sinon le prompt s ecris dans le fichier
+        		save_stdin = dup(STDIN_FILENO);
+				exec_redir(cur_cmd);
+				cmd_exec(cur_cmd, env);
+				dup2(save_stdin, STDIN_FILENO); // on remet les descripteurs de base pour que le prompt s affiche correctement
+				dup2(save_stdout, STDOUT_FILENO);
+				close(save_stdin);
+				close(save_stdout);
+				if (cur_cmd->save_stdin > 0) // si on a utilisé un heredoc on ferme le fd sauvegardé
+				{
+					close(cur_cmd->save_stdin);
+					cur_cmd->save_stdin = -1; // et on reinitialise
+				}
+			}
+			else
+				cmd_exec(cur_cmd, env);
 			return ;
 		}
-		if (cmd_in_pipe(cur_cmd->cmd) == 1 && (cur_cmd->next_cmd != NULL || pipe_precedent != -1))
+		if (cmd_in_pipe(cur_cmd->cmd) == 1 && (cur_cmd->next_cmd != NULL || pipe_precedent != -1)) // si c'est certaines commande interne avec des pipes
 		{
 			printf("ici je dois gerer l erreur pour ce cas\n");
 			return ;
@@ -131,11 +157,11 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 			}
 			return ;
 		}
-		
+		// tester echo ls
 		
 		if (pid == 0) // le processus enfant ou vont s executer les commandes
 		{
-			if (cmd->redirection)
+			if (cur_cmd->redirection)
 				exec_redir(cur_cmd);
 			if (pipe_precedent != -1)
 			{
@@ -148,24 +174,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 				close(fd[1]);
 				close(fd[0]);
 			}
-			// if (is_cmd(cur_cmd->cmd))
-			// {
-			// 	if (cur_cmd->next_cmd)
-			// 	{
-			// 		dup2(fd[1], STDOUT_FILENO);
-			// 		close(fd[0]);
-			// 		close(fd[1]);
-			// 	}
-			// 	if (cmd_in_pipe(cur_cmd->cmd) == 1 && (cur_cmd->next_cmd || pipe_precedent == -1)) // ici faut arranger pour que les fonctions de Yann fonctionne tout seul
-			// 	{
-			// 		printf("cmd qui ne fonctionne pas dans un pipe\n");
-			// 		exit (1);
-			// 	}
-			// 	cmd_exec(cur_cmd, env);
-			// 	exit(0);
-			// }
-			// else
-				exec_process(cur_cmd, fd);		
+			exec_process(cur_cmd, fd);		
 		}
 		if (pipe_precedent != -1)
 		{
@@ -192,7 +201,4 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 		}
 	}
 }
-	
-// le echo hello | wc -c doit me donner 6 mais j obtiens 134 ??????? mais enft jsuis trop bete j avais des printf mtn faut verifier et tester
-// le soucis vien peut etre de la maniere dont est implementé echo ou alors un probleme dans la redirection des fd !
 

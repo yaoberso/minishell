@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/03/13 11:56:31 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:39:55 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char *recup_token(char *str, int *index, t_env *env)
             if(str_recup[i + 1] == '?')
             {
                 printf("%i\n", val_ret);
+                free(str_recup);
                 return (NULL);
             }
             start = i;
@@ -78,15 +79,24 @@ char *recup_token(char *str, int *index, t_env *env)
             }
             envexp = ft_substr(str_recup, i, end);
             if (!envexp)
-                return str_recup;
+            {
+                // return str_recup;
+                free(str_recup);
+                return (NULL);
+            }
             env_value = get_env_value(env, envexp);
             free(envexp);
+            envexp = NULL;
             if (env_value)
             {
                 int new_len = ft_strlen(str_recup) - end + ft_strlen(env_value) + 1;
                 arg = malloc(sizeof(char) * new_len);
                 if (!arg)
-                    return str_recup;
+                {
+                    // return str_recup;
+                    free(str_recup);
+                    return (NULL);
+                }
                 ft_memcpy(arg, str_recup, start);
                 arg[start] = '\0';
                 strcat(arg, env_value);
