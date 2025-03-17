@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/13 11:56:20 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:15:51 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ int	main(int argc, char **argv, char **envp)
     cmd->redirection = NULL;
     cmd->next_cmd = NULL;
 	cmd->prev_cmd = NULL;
-	cmd->env = NULL;
+	cmd->heredoc_fd = -1;
 	while (1)
 	{
-        // Créer l'invite en utilisant le chemin courant
 		prompt = creat_prompt(env_list);
         input = readline(prompt);
 		free(prompt);
@@ -52,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*input)
 			add_history(input);
 		parsing(input, cmd, env_list);
-		exec_cmd_inter_exter(cmd, env_list);
+		exec_pipe(cmd, env_list, envp);
 		free(input);
 	}
 	return (0);

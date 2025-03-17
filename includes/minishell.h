@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/16 17:15:22 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/17 13:52:50 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 extern int val_ret;
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <readline/readline.h>
@@ -55,12 +56,12 @@ typedef struct s_redirection
 typedef struct s_cmd
 {
 	char *cmd;  // pour les commandes
-    t_env *env;  //stock le chemin actuelle et l ancien
 	t_token *arg; // liste chainé qui va contenir les arguments
 	t_redirection   *redirection; // liste chainé qui va contenir les redirections
     struct s_cmd *next_cmd; // structure cree des qu un pipe est trouve
 	struct s_cmd *prev_cmd; // structure cree des qu un pipe est trouve
 	int save_stdin;
+	int heredoc_fd;
 } t_cmd;
 
 // Fonction pour l'environement
@@ -93,7 +94,7 @@ void						add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
 
 // pipe et redirection
 int	cmd_in_pipe(char *cmd);
-void						exec_pipe(t_cmd *cmd, t_env *env);
+void						exec_pipe(t_cmd *cmd, t_env *env, char **envp);
 void						exec_redir(t_cmd *cmd);
 void						redir_stdout(int fd[2], t_cmd *next_cmd);
 void						redir_stdin(int fd[2]);
@@ -104,11 +105,12 @@ void						create_pipe(int fd[2], t_cmd *next_cmd);
 void						gerer_process(pid_t pid, int fd[2],
 								t_cmd **cur_cmd);
 void						exec_process(t_cmd *cur_cmd,
-								int fd[2]);
+								int fd[2], t_env *env, char **envp);
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
 void						redir_heredoc(t_cmd *cmd, int heredoc_fd[2]);
 char						*found_path(t_cmd *cmd);
+void 						apply_redirections(t_cmd *cmd);
 
 // free
 void						free_token(t_token *token);

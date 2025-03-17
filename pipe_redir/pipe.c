@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/16 20:36:37 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/17 13:50:16 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*found_path(t_cmd *cmd)
 	return (NULL);
 }
 
-void exec_process(t_cmd *cur_cmd, int fd[2])
+void exec_process(t_cmd *cur_cmd, int fd[2], t_env *env, char **envp)
 {
 	char **args;
 	char *cmd_path;
@@ -54,6 +54,11 @@ void exec_process(t_cmd *cur_cmd, int fd[2])
 	cmd_path = found_path(cur_cmd);
 	if (cur_cmd->redirection) // si il y a une redirection il l'execute
 		exec_redir(cur_cmd);
+	if (is_cmd(cur_cmd->cmd) == 1)
+	{
+		cmd_exec(cur_cmd, env);
+		return ;
+	}
 	args = get_args(cur_cmd); // convertie la liste chainé en tavleau d'arguments pour execve
 	if (args == NULL)
 	{
@@ -64,7 +69,7 @@ void exec_process(t_cmd *cur_cmd, int fd[2])
 		close(fd[1]);
 	if (fd[0] != -1)
 		close(fd[0]);
-	execve(found_path(cur_cmd), args, NULL); // execute la commande en la cherchant dans le path
+	execve(found_path(cur_cmd), args, envp); // execute la commande en la cherchant dans le path
 	perror("execve");
 	free(cmd_path); // test de free ici a voir si ca amrche 
 	free_tab(args);
@@ -72,7 +77,7 @@ void exec_process(t_cmd *cur_cmd, int fd[2])
 }
 
 
-void	exec_pipe(t_cmd *cmd, t_env *env)
+void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 {
 	int fd[2];
 	pid_t pid;
@@ -80,8 +85,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 	int pipe_precedent;
 	int status;
 	char *cmd_path;
-	int	save_stdin;
-	int save_stdout;
+
 
 	cur_cmd = cmd;
 	pipe_precedent = -1;
@@ -118,27 +122,12 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 			}
 			return ;	
 		}
-		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1 && cur_cmd->next_cmd == NULL)  // si cest une commande interne seul
+		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1 && cur_cmd->next_cmd == NULL)	
 		{
-			if (cur_cmd->redirection)     // la il faut faire fonctionner la redirection
-			{
-				save_stdout = dup(STDOUT_FILENO); // sauvegarde les descripteurs avant de les rediriger sinon le prompt s ecris dans le fichier
-        		save_stdin = dup(STDIN_FILENO);
+    		if (cur_cmd->redirection)
 				exec_redir(cur_cmd);
-				cmd_exec(cur_cmd, env);
-				dup2(save_stdin, STDIN_FILENO); // on remet les descripteurs de base pour que le prompt s affiche correctement
-				dup2(save_stdout, STDOUT_FILENO);
-				close(save_stdin);
-				close(save_stdout);
-				if (cur_cmd->save_stdin > 0) // si on a utilisé un heredoc on ferme le fd sauvegardé
-				{
-					close(cur_cmd->save_stdin);
-					cur_cmd->save_stdin = -1; // et on reinitialise
-				}
-			}
-			else
-				cmd_exec(cur_cmd, env);
-			return ;
+    		cmd_exec(cur_cmd, env);
+    		return;
 		}
 		if (cmd_in_pipe(cur_cmd->cmd) == 1 && (cur_cmd->next_cmd != NULL || pipe_precedent != -1)) // si c'est certaines commande interne avec des pipes
 		{
@@ -175,7 +164,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env)
 				close(fd[1]);
 				close(fd[0]);
 			}
-			exec_process(cur_cmd, fd);
+			exec_process(cur_cmd, fd, env, envp);
 			exit (1);	
 		}
 		if (pipe_precedent != -1)

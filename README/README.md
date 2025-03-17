@@ -9,4 +9,5 @@
 
 
 - regler le soucis de sa  echo hello > hebfzlbielefzfefzefezfz.txt qui ne fonctionne pas
-- regarder les commits pck le soucis etait regler
+- les quotes
+- /bin/ls
