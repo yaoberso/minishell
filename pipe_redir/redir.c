@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
-/*   Updated: 2025/03/10 10:01:44 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:58:41 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	exec_redir(t_cmd *cmd)
 {
 	int fd;
-	int heredoc_fd[2];
 	t_redirection *current;
 	t_redirection *tmp;
 	
@@ -33,7 +32,7 @@ void	exec_redir(t_cmd *cmd)
 		{
 			tmp = cmd->redirection;
 			cmd->redirection = current;
-			redir_heredoc(cmd, heredoc_fd);
+			redir_heredoc(cmd);
 			cmd->redirection = tmp;
 		}
 		current = current->next;

@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/17 13:52:50 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:47:55 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void						exec_process(t_cmd *cur_cmd,
 								int fd[2], t_env *env, char **envp);
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
-void						redir_heredoc(t_cmd *cmd, int heredoc_fd[2]);
+int						redir_heredoc(t_cmd *cmd);
 char						*found_path(t_cmd *cmd);
 void 						apply_redirections(t_cmd *cmd);
 

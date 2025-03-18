@@ -8,6 +8,7 @@
 
 
 
-- regler le soucis de sa  echo hello > hebfzlbielefzfefzefezfz.txt qui ne fonctionne pas
 - les quotes
-- /bin/ls
+- segfault quand j utilise une redirection seul du genre >> be.txt
+- les heredocs !!!!
+- la egstion des erreurs quqnd il ya  des quotes du style : ech'o salut

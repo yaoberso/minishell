@@ -1,0 +1,3 @@
+salut
+[?2004h/home/nadahman/Desktop/minishell$ [?2004l
+exit

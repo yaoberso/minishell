@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/17 13:50:16 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:58:03 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,25 @@ char	*found_path(t_cmd *cmd)
 	char *tmp;
 	int i;
 	
-	path = getenv("PATH");
-	if (path == NULL)
+	path = getenv("PATH"); // recupere l environnement PATH
+	if (path == NULL || cmd->cmd == NULL)
 		return (NULL);
-	paths = ft_split(path, ':');
+	paths = ft_split(path, ':'); // separe en liste separe
+	if (cmd->cmd[0] == '/' || cmd->cmd[0] == '.')
+	{
+		if (access(cmd->cmd, F_OK | X_OK) == 0)
+		{
+			return (ft_strdup(cmd->cmd));
+		}
+		return (NULL);
+		
+	}
 	if (paths == NULL)
 		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
-		tmp = ft_strjoin(paths[i], "/");
+		tmp = ft_strjoin(paths[i], "/"); // ajoute un / entre le nom du dossier et la commande
 		full_path = ft_strjoin(tmp, cmd->cmd);
 		free(tmp);
 		if (!full_path)
@@ -37,7 +46,7 @@ char	*found_path(t_cmd *cmd)
             free_tab(paths);
             return (NULL);
         }
-		if (access(full_path, F_OK | X_OK) == 0) 
+		if (access(full_path, F_OK | X_OK) == 0) // verifie si le fichier existe et si il est executable
 			return (free_tab(paths), full_path);
 		free(full_path);
 		i++;
@@ -45,6 +54,7 @@ char	*found_path(t_cmd *cmd)
 	free_tab(paths);
 	return (NULL);
 }
+
 
 void exec_process(t_cmd *cur_cmd, int fd[2], t_env *env, char **envp)
 {
@@ -85,9 +95,14 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 	int pipe_precedent;
 	int status;
 	char *cmd_path;
+	int	her_fd;
+	int save_stdin;
+	int save_stdout;
+	
 
 
 	cur_cmd = cmd;
+	her_fd = redir_heredoc(cur_cmd);
 	pipe_precedent = -1;
 	while (cur_cmd)
 	{
@@ -124,9 +139,22 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 		}
 		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1 && cur_cmd->next_cmd == NULL)	
 		{
+			save_stdin = dup(STDIN_FILENO);
+			save_stdout = dup(STDOUT_FILENO);
     		if (cur_cmd->redirection)
+			{
+				if (her_fd != -1)
+				{
+					dup2(her_fd, STDIN_FILENO);
+					close(her_fd);
+				}
 				exec_redir(cur_cmd);
-    		cmd_exec(cur_cmd, env);
+			}
+			cmd_exec(cur_cmd, env);
+			dup2(save_stdin, STDIN_FILENO);
+			dup2(save_stdout, STDOUT_FILENO);
+			close(save_stdin);
+			close(save_stdout);
     		return;
 		}
 		if (cmd_in_pipe(cur_cmd->cmd) == 1 && (cur_cmd->next_cmd != NULL || pipe_precedent != -1)) // si c'est certaines commande interne avec des pipes

@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/03/17 11:04:18 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:51:21 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,14 @@ int heredoc_parent(pid_t pid, int heredoc_fd[2])
         close(heredoc_fd[0]);
         return (1);
     }
-    if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
-    {
-        perror("dup2");
-        close(heredoc_fd[0]);
-        exit(1);
-    }
-    close(heredoc_fd[0]);
     return (0);
 }
 
-void redir_heredoc(t_cmd *cmd, int heredoc_fd[2])
+int redir_heredoc(t_cmd *cmd)
 {
     pid_t pid;
+    int heredoc_fd[2];
+
     
     if (heredoc_pipe(heredoc_fd) != 0)
         exit(1);
@@ -84,13 +79,14 @@ void redir_heredoc(t_cmd *cmd, int heredoc_fd[2])
         close(heredoc_fd[1]);
         exit(1);
     }
+    
     if (pid == 0)
-    {
         heredoc_child(cmd, heredoc_fd);
-    }
     else
     {
         if (heredoc_parent(pid, heredoc_fd) != 0)
-            return;
+            return (0);
+        return(heredoc_fd[0]);
     }
+    return (-1);
 }
