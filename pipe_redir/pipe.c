@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/18 12:58:03 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:39:59 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,13 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 	int pipe_precedent;
 	int status;
 	char *cmd_path;
-	int	her_fd;
+	// int	her_fd;
 	int save_stdin;
 	int save_stdout;
 	
 
-
 	cur_cmd = cmd;
-	her_fd = redir_heredoc(cur_cmd);
+	// her_fd = redir_heredoc(cur_cmd);
 	pipe_precedent = -1;
 	while (cur_cmd)
 	{
@@ -143,11 +142,6 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 			save_stdout = dup(STDOUT_FILENO);
     		if (cur_cmd->redirection)
 			{
-				if (her_fd != -1)
-				{
-					dup2(her_fd, STDIN_FILENO);
-					close(her_fd);
-				}
 				exec_redir(cur_cmd);
 			}
 			cmd_exec(cur_cmd, env);

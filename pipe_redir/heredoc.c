@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/03/18 12:51:21 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:08:32 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void read_heredoc(t_cmd *cmd, int fd)
     while (1)
     {
         line = readline("> "); //pour cree un prompt
-        if (!line || ft_strcmp(line, cmd->redirection->heredoc_delim) == 0) 
+        if (!line)
+            break ;
+        if (ft_strcmp(line, cmd->redirection->heredoc_delim) == 0) 
         {
             free(line);
             break;
@@ -54,12 +56,25 @@ int heredoc_parent(pid_t pid, int heredoc_fd[2])
     int status;
     
     close(heredoc_fd[1]);
-    waitpid(pid, &status, 0);
+    if (waitpid(pid, &status, 0) == -1)
+    {
+        perror("waitpid");
+        close(heredoc_fd[0]);
+        return (1);
+    }
     if (WIFSIGNALED(status) || (WIFEXITED(status) && WEXITSTATUS(status) == 130))
     {
         close(heredoc_fd[0]);
         return (1);
     }
+    if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
+    {
+        perror("dup2");
+        close(heredoc_fd[0]);
+        exit(1);
+    }
+
+    close(heredoc_fd[0]);
     return (0);
 }
 
@@ -70,14 +85,14 @@ int redir_heredoc(t_cmd *cmd)
 
     
     if (heredoc_pipe(heredoc_fd) != 0)
-        exit(1);
+        return (-1);
     pid = fork();
     if (pid == -1)
     {
         perror("fork");
         close(heredoc_fd[0]);
         close(heredoc_fd[1]);
-        exit(1);
+        return (-1);
     }
     
     if (pid == 0)
@@ -85,8 +100,8 @@ int redir_heredoc(t_cmd *cmd)
     else
     {
         if (heredoc_parent(pid, heredoc_fd) != 0)
-            return (0);
-        return(heredoc_fd[0]);
+            return (-1);
     }
-    return (-1);
+    return (0);
 }
+
