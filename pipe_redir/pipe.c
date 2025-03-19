@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/19 13:39:59 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/19 18:00:32 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void exec_process(t_cmd *cur_cmd, int fd[2], t_env *env, char **envp)
 	char *cmd_path;
 
 	cmd_path = found_path(cur_cmd);
-	if (cur_cmd->redirection) // si il y a une redirection il l'execute
+	if (cur_cmd->redirection) // ici j execute deux fois la redirection
 		exec_redir(cur_cmd);
 	if (is_cmd(cur_cmd->cmd) == 1)
 	{
@@ -95,13 +95,11 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 	int pipe_precedent;
 	int status;
 	char *cmd_path;
-	// int	her_fd;
 	int save_stdin;
 	int save_stdout;
 	
 
 	cur_cmd = cmd;
-	// her_fd = redir_heredoc(cur_cmd);
 	pipe_precedent = -1;
 	while (cur_cmd)
 	{
@@ -173,7 +171,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 		
 		if (pid == 0) // le processus enfant ou vont s executer les commandes
 		{
-			if (cur_cmd->redirection)
+			if (cur_cmd->redirection) // ici j execute une fois // tester de supprimer ici et garder l autre !!!!!!!!!!
 				exec_redir(cur_cmd);
 			if (pipe_precedent != -1)
 			{

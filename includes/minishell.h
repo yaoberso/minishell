@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/19 12:59:14 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:38:10 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void						exec_process(t_cmd *cur_cmd,
 								int fd[2], t_env *env, char **envp);
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
-int						redir_heredoc(t_cmd *cmd);
+int 		redir_heredoc(t_cmd *cmd);
 char						*found_path(t_cmd *cmd);
 void 						apply_redirections(t_cmd *cmd);
 
