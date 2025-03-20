@@ -4,22 +4,21 @@
 
 
 
-- les quotes
-- segfault quand j utilise une redirection seul du genre >> be.txt
-- les heredocs !!!!
-{
-	le soucis vient du fait que je l'execute 2 fois, une fois dans le process enfant une fois dans le parent
-	a voir pourquoi je l ai rajouter dans exec_process
-}
-- le "cd .. | ls" doit executer ls mais pas cd
-- la egstion des erreurs quqnd il ya  des quotes du style : ech'o salut
-- mettre les valeurs de retour partout !
+- valeur de retour
 - faire la gestion des signaux selon la ou on se trouve et adapte
 - afficher le conitrole C quqnd on quitte
+- exit code au milieu des signaux qui doit donner une autre valeur je crois
+qund tu control c dans un cat par exemple tu dois avoir un exit code different
+
+
+tests speciaux
+
+cat | cat | ls
+
+export PIPE="|"
+echo $PIPE
 
 
 
 
 pouvoir executer minishell dans minishell et faire controle c
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/19 18:00:32 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/20 10:50:31 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 		}
 		if (cmd_in_pipe(cur_cmd->cmd) == 1 && (cur_cmd->next_cmd != NULL || pipe_precedent != -1)) // si c'est certaines commande interne avec des pipes
 		{
-			printf("ici je dois gerer l erreur pour ce cas\n");
-			return ;
+			cur_cmd = cur_cmd->next_cmd;
+			continue;
 		}
 		pid = fork();  // cree un processus
 		if (pid < 0)
@@ -171,8 +171,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 		
 		if (pid == 0) // le processus enfant ou vont s executer les commandes
 		{
-			if (cur_cmd->redirection) // ici j execute une fois // tester de supprimer ici et garder l autre !!!!!!!!!!
-				exec_redir(cur_cmd);
+			// if (cur_cmd->redirection) // ici j execute une fois // tester de supprimer ici et garder l autre !!!!!!!!!!
+			// 	exec_redir(cur_cmd);
 			if (pipe_precedent != -1)
 			{
 				dup2(pipe_precedent, STDIN_FILENO);
