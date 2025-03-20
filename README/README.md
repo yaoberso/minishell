@@ -22,3 +22,25 @@ echo $PIPE
 
 
 pouvoir executer minishell dans minishell et faire controle c
+
+
+derniere version
+- commande vide ca net un message pareil pour espace et tab il faut enlever     nas
+- gerer cd avec plusieurs arguments pareil pour les autres commandes internes a voir ya
+- ajouter les valeurs de retour fonction interne ya
+- regler la double sortie "/home/nadahman/Desktop/minishell$ /home/nadahman/Desktop/minishell$" quqnd je ctrl c ou autre nas
+- controle heredoc ya
+- faire que controle z ne fasse rien ya
+- gerer les quotes /home/nadahman/Desktop/minishell$ ech""o ya
+  command not found: ech""o
+- gerer les commandes avec des arguments vide ou incorrect comme sa : cat > "" nas
+- gerer variable expansion guillemet simple : echo '$USER' ya
+- gerer ca export VAL="|" nas
+- regarder Set the $PATH to a multiple directory value (directory1:directory2) and ensure that directories are checked in order from left to right. nas
+- tester bien les pipes et les redirections nas
+- les sorties d erreeurs doivent etre bien ecris et gerer 
+- faire la gestion des signaux selon la ou on se trouve et adapter en fonction
+- lancer minishell dans minishell sans tout casser et control c
+
+-leaks
+-norminette
