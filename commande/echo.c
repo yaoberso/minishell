@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:23 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/11 12:03:28 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:26:14 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ void	ft_echo(t_token *current)
 			break ;
 	}
 	ft_print_echo(arg, newline);
+	val_ret = 0;
 }

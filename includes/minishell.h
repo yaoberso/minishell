@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/19 17:38:10 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/20 12:16:43 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -91,6 +92,12 @@ void						add_redirection(t_cmd *cmd,
 								t_redirection *new_redir);
 t_cmd						*found_next_cmd(char *str, int *index, t_env *env);
 void						add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
+char						*sup_cote(char *str);
+char						*sup_exp(char *str);
+int							double_quote_with_simple_quote(char *str, int double_quote);
+void						checkif2(char *str, char c);
+void						gestionnaire2();
+void						config_signals2();
 
 // pipe et redirection
 int	cmd_in_pipe(char *cmd);

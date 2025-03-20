@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:31 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/11 12:14:19 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:26:56 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ void	ft_unset(t_token *arg, t_env **env)
 		}
 		current_arg = current_arg->next;
 	}
+	val_ret = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:58 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/11 13:28:40 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:26:41 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,4 +138,5 @@ void	ft_export(t_token *arg, t_env **env)
 		}
 		current_arg = current_arg->next;
 	}
+	val_ret = 0;
 }
