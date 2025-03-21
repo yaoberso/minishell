@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:32:07 by nas               #+#    #+#             */
-/*   Updated: 2025/03/20 12:05:39 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:58:03 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ char *sup_exp(char *str)
     return (new_str);
 }
 
-int double_quote_with_simple_quote(char *str, int double_quote)
+int only_simple_quote(char *str, int double_quote)
 {
     int i = 0;
     
-	if (double_quote == 1)
+	if (double_quote == 0)
 	{
     	while (str[i])
     	{

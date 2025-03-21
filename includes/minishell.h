@@ -6,7 +6,7 @@
 /*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/21 13:40:54 by yann             ###   ########.fr       */
+/*   Updated: 2025/03/21 13:58:33 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_cmd						*found_next_cmd(char *str, int *index, t_env *env);
 void						add_next_cmd(t_cmd *cmd, t_cmd *next_cmd);
 char						*sup_cote(char *str);
 char						*sup_exp(char *str);
-int							double_quote_with_simple_quote(char *str, int double_quote);
+int							only_simple_quote(char *str, int double_quote);
 void						checkif2(char *str, char c);
 void						gestionnaire2(int sig);
 void						config_signals2();
