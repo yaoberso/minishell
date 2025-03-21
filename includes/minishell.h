@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/20 12:16:43 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:40:54 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char						*sup_cote(char *str);
 char						*sup_exp(char *str);
 int							double_quote_with_simple_quote(char *str, int double_quote);
 void						checkif2(char *str, char c);
-void						gestionnaire2();
+void						gestionnaire2(int sig);
 void						config_signals2();
 
 // pipe et redirection
