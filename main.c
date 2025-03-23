@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/20 12:18:23 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/23 12:47:41 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,12 @@ int	main(int argc, char **argv, char **envp)
 		if (*input)
 			add_history(input);
 		parsing(input, cmd, env_list);
-		exec_pipe(cmd, env_list, envp);
+		if (val_ret == 1)   // pour eviter d executer une commande et reouvir un prompt, a voir si ca gene ailleurs
+        {
+            val_ret = 0;
+        }
+		else
+			exec_pipe(cmd, env_list, envp);
 		free(input);
 	}
 	return (0);

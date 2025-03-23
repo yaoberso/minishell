@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:38:40 by nas               #+#    #+#             */
-/*   Updated: 2025/03/08 11:16:48 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/22 10:27:51 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	redir_out(t_cmd *cmd, int fd)
 	if (fd == -1)
 	{
 		perror("open");
-		exit(1);
+		val_ret = 1;
+		return ;
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
@@ -30,6 +31,7 @@ void	redir_in(t_cmd *cmd, int fd)
 	if (fd == -1)
 	{
 		perror("open");
+		val_ret = 1;
 		exit(1);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -42,6 +44,7 @@ void	redir_append(t_cmd *cmd, int fd)
 	if (fd == -1)
 	{
 		perror("open");
+		val_ret = 1;
 		exit(1);
 	}
 	dup2(fd, STDOUT_FILENO);

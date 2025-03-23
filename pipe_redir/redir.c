@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
-/*   Updated: 2025/03/20 12:21:30 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/23 11:56:55 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	exec_redir(t_cmd *cmd)
 			redir_heredoc(cmd);
 			cmd->redirection = tmp;
 		}
+		if (val_ret != 0)
+			return ;
 		current = current->next;
 	}
 }

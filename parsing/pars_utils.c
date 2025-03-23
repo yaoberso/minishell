@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/03/16 12:31:49 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/23 12:45:51 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,7 @@ t_redirection *found_redirection(char *str, int *index, t_env *env)
     if (str[*index] == '\0' || ft_isspace(str[*index]) || str[*index] == '>' || str[*index] == '<' || str[*index] == '|')
     {
         printf("Error : apres la redirection\n");
+        // val_ret = 1;
         free(redir->type);
         free(redir);
         return (NULL);

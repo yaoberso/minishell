@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/20 12:18:06 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/23 12:06:21 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,25 +61,29 @@ void exec_process(t_cmd *cur_cmd, int fd[2], t_env *env, char **envp)
 	char **args;
 	char *cmd_path;
 
+	if (cur_cmd->cmd == NULL || cur_cmd == NULL)
+		return ;
 	cmd_path = found_path(cur_cmd);
-	if (cur_cmd->redirection) // ici j execute deux fois la redirection
+	if (cur_cmd->redirection && cur_cmd->cmd != NULL && cur_cmd->redirection != NULL) // ici j execute deux fois la redirection
 		exec_redir(cur_cmd);
 	if (is_cmd(cur_cmd->cmd) == 1)
 	{
 		cmd_exec(cur_cmd, env);
+		free(cmd_path);
 		return ;
 	}
 	args = get_args(cur_cmd); // convertie la liste chainé en tavleau d'arguments pour execve
 	if (args == NULL)
 	{
 		perror("get_args");
+		free(cmd_path);
 		exit(1);
 	}
 	if (fd[1] != -1)
 		close(fd[1]);
 	if (fd[0] != -1)
 		close(fd[0]);
-	execve(found_path(cur_cmd), args, envp); // execute la commande en la cherchant dans le path
+	execve(cmd_path, args, envp); // execute la commande en la cherchant dans le path
 	perror("execve");
 	free(cmd_path); // test de free ici a voir si ca amrche 
 	free_tab(args);
@@ -121,7 +125,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 			fd[0] = -1;
 		}
 		cmd_path = found_path(cur_cmd);
-		if (cmd_path == NULL && is_cmd(cur_cmd->cmd) == 0)
+		if (cmd_path == NULL && is_cmd(cur_cmd->cmd) == 0 && cur_cmd->cmd != NULL)
 		{
 			printf("command not found: %s\n", cur_cmd->cmd);
 			val_ret = 127;
@@ -138,7 +142,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 		{
 			save_stdin = dup(STDIN_FILENO);
 			save_stdout = dup(STDOUT_FILENO);
-    		if (cur_cmd->redirection)
+    		if (cur_cmd->redirection && cur_cmd->cmd != NULL && cur_cmd->redirection != NULL)
 			{
 				exec_redir(cur_cmd);
 			}

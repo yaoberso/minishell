@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/03/20 12:33:50 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/23 12:46:58 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,10 @@ char *recup_token(char *str, int *index, t_env *env)
                 strcat(arg, val_ret_str);
                 strcat(arg, str_recup + i + 2);
                 free(val_ret_str);
-                free(str_recup);
+                // free(str_recup);   // je dois remettre ici pck ca bug chez moi
                 str_recup = arg;
-                i += ft_strlen(val_ret_str);
+                // i += ft_strlen(val_ret_str);
+                free(str_recup);
                 continue;
             }
             start = i;
@@ -190,6 +191,11 @@ void parsing(char *str, t_cmd *cmd, t_env *env)
             new_redir = found_redirection(str, &i, env);
             if (new_redir)
                 add_redirection(cmd, new_redir);
+            else
+            {
+                val_ret = 1;   // ajout de ca ici 
+            }
+            
         }
         else if (str[i] == '|')
         {
