@@ -18,7 +18,7 @@ void config_signals2(void)
     sa.sa_handler = gestionnaire2;
     sa.sa_flags = 0;
     sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
     sa.sa_handler = SIG_IGN;
     sigaction(SIGQUIT, &sa, NULL);
 }
@@ -49,35 +49,27 @@ void checkif2(char *str, char c)
         while(!g_interrupt)
         {
             if (c == 1)
-            {
                 break;
-            }
-            
             tcgetattr(STDIN_FILENO, &term);
             term.c_lflag &= ~ECHOCTL;
             tcsetattr(STDIN_FILENO, TCSANOW, &term);
-            
             line = readline("> ");
-            
             if (g_interrupt)
             {
                 if (line)
                     free(line);
                 break;
             }
-            
             if (line == NULL)
             {
                 printf("\n");
                 break;
             }
-            
             if (line[0] == '\0')
             {
                 free(line);
                 continue;
             }
-            
             free(line);
         }
     }

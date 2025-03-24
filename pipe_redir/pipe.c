@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/20 12:18:06 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:01:28 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 			fd[0] = -1;
 		}
 		cmd_path = found_path(cur_cmd);
+		if(cmd_path == NULL)
+			return ;
 		if (cmd_path == NULL && is_cmd(cur_cmd->cmd) == 0)
 		{
 			printf("command not found: %s\n", cur_cmd->cmd);

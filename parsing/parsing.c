@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/03/21 14:13:30 by yann             ###   ########.fr       */
+/*   Updated: 2025/03/24 11:11:23 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,6 @@ char *expand_var_at_position(char *str, int *pos, t_env *env)
     char *var_value;
     char *result;
     int len_before, len_var, len_after;
-    
-    // Traitement spécial pour $?
     if (str[end] == '?')
     {
         char *val_ret_str = ft_itoa(val_ret);
@@ -197,51 +195,35 @@ char *expand_var_at_position(char *str, int *pos, t_env *env)
         free(val_ret_str);
         return result;
     }
-    
-    // Avancer jusqu'à la fin du nom de variable
     while (str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
         end++;
-    
-    // Extraire le nom de la variable
     len_var = end - start - 1;
     if (len_var == 0)
-        return ft_strdup(str); // $ seul sans variable
+        return ft_strdup(str);
     
     var_name = ft_substr(str, start + 1, len_var);
     if (!var_name)
         return NULL;
-    
-    // Récupérer la valeur de la variable
     var_value = get_env_value(env, var_name);
     free(var_name);
-    
     if (!var_value)
-        var_value = ""; // Variable non définie
-    
-    // Calculer les tailles pour la nouvelle chaîne
+        var_value = "";
     len_before = start;
     len_after = ft_strlen(str + end);
-    
-    // Allouer la nouvelle chaîne
     result = malloc(len_before + ft_strlen(var_value) + len_after + 1);
     if (!result)
         return NULL;
-    
-    // Copier les parties avant, valeur et après
     ft_memcpy(result, str, len_before);
     strcpy(result + len_before, var_value);
     strcpy(result + len_before + ft_strlen(var_value), str + end);
-    
-    // Mettre à jour la position
     *pos = len_before + ft_strlen(var_value);
-    
     return result;
 }
 
 char *expand_variables(char *str, t_env *env)
 {
     int i = 0;
-    char quote_state = 0; // 0 = pas de quote, '\'' = simple quote, '"' = double quote
+    char quote_state = 0;
     char *result = ft_strdup(str);
     
     if (!result)
@@ -249,7 +231,6 @@ char *expand_variables(char *str, t_env *env)
     
     while (result[i])
     {
-        // Gestion de l'état des quotes
         if (result[i] == '\'')
         {
             if (quote_state == 0)
@@ -264,8 +245,6 @@ char *expand_variables(char *str, t_env *env)
             else if (quote_state == '"')
                 quote_state = 0;
         }
-        
-        // Expansion de variables seulement si on n'est pas dans des simples quotes
         if (result[i] == '$' && quote_state != '\'')
         {
             char *expanded = expand_var_at_position(result, &i, env);
@@ -303,7 +282,7 @@ char *process_quotes(char *str)
             else if (quote_state == '\'')
                 quote_state = 0;
             else if (quote_state == '"')
-                result[j++] = str[i]; // Préserver les simples quotes à l'intérieur des doubles quotes
+                result[j++] = str[i];
         }
         else if (str[i] == '"')
         {
@@ -312,19 +291,14 @@ char *process_quotes(char *str)
             else if (quote_state == '"')
                 quote_state = 0;
             else if (quote_state == '\'')
-                result[j++] = str[i]; // Préserver les doubles quotes à l'intérieur des simples quotes
+                result[j++] = str[i];
         }
         else
-        {
             result[j++] = str[i];
-        }
-        
         i++;
     }
-    
     result[j] = '\0';
     free(str);
-    
     return (result);
 }
 
@@ -360,6 +334,8 @@ char *recup_token(char *str, int *index, t_env *env)
     str_recup = ft_substr(str, start, end - start);
     if (!str_recup)
         return (NULL);
+    checkif2(str_recup, '"');
+    checkif2(str_recup, '\'');
     // Traitement des variables d'environnement en tenant compte des quotes
     result = expand_variables(str_recup, env);
     free(str_recup);
