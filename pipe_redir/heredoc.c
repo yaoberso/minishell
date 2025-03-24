@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/03/19 17:46:04 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/24 12:51:07 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,12 @@ void read_heredoc(t_cmd *cmd, int fd)
 
 void heredoc_child(t_cmd *cmd, int heredoc_fd[2])
 {
-    config_signals();
+    struct sigaction sa;
+    sa.sa_handler = gestion_heredoc;
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
     close(heredoc_fd[0]);
     read_heredoc(cmd, heredoc_fd[1]);
     close(heredoc_fd[1]);

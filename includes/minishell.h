@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/22 10:12:28 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/24 12:51:32 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ extern int val_ret;
 #include <sys/types.h>
 #include <fcntl.h>
 
+
+typedef struct s_signal
+{
+	int mode;
+	int heredoc_fd[2];
+	char *line;
+} t_signal;
 
 // structur qui ce met a jour a chaque deplasement dans les fichier
 typedef struct s_env
@@ -134,4 +141,5 @@ int    ft_isspace(char c);
 extern void					rl_replace_line(const char *text, int clear_undo);
 void						config_signals(void);
 void						gestionnaire(int sig);
+void	gestion_heredoc(int sig);
 #endif
