@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/24 12:51:32 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:12:50 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,5 @@ int    ft_isspace(char c);
 extern void					rl_replace_line(const char *text, int clear_undo);
 void						config_signals(void);
 void						gestionnaire(int sig);
-void	gestion_heredoc(int sig);
+void gestion_heredoc(int sig, int heredoc_fd[2]);
 #endif

@@ -21,3 +21,5 @@ char *creat_prompt(t_env *env)
     strcat(prompt, "$ ");
     return prompt;
 }
+
+

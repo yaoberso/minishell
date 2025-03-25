@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/03/23 12:45:51 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/25 12:56:08 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,12 @@ t_cmd *found_next_cmd(char *str, int *index, t_env *env)
         (*index)++;
     if (str[*index] == '\0' || str[*index] == '|' || str[*index] == '<' || str[*index] == '>')
     {
-        printf("Error: apres le `|'\n");
+        printf("bash: syntax error near unexpected token `|'\n");
         free(next_cmd);
         return (NULL);
     }
     next_cmd->cmd = recup_token(str, index, env);
-    if (next_cmd->cmd == NULL)
+    if (next_cmd->cmd == NULL)     // ajoute la les conitions des espaces iu du vide entre guillemet
     {
         free(next_cmd);
         return (NULL);
@@ -151,6 +151,7 @@ t_cmd *found_next_cmd(char *str, int *index, t_env *env)
             }
             else
             {
+                
                 free_cmd(next_cmd);
                 return (NULL);
             }
@@ -194,7 +195,7 @@ t_redirection *found_redirection(char *str, int *index, t_env *env)
                 (*index)++;
             if (!str[*index] || str[*index] == '>' || str[*index] == '<' || str[*index] == '|')
             {
-                printf("Error : délimiteur de heredoc manquant après `<<`\n");
+                printf("bash: syntax error near unexpected token `newline'\n");
                 free(redir->type);
                 free(redir);
                 return (NULL);
@@ -236,7 +237,7 @@ t_redirection *found_redirection(char *str, int *index, t_env *env)
         (*index)++;
     if (str[*index] == '\0' || ft_isspace(str[*index]) || str[*index] == '>' || str[*index] == '<' || str[*index] == '|')
     {
-        printf("Error : apres la redirection\n");
+        printf("bash: syntax error near unexpected token `newline'\n");
         // val_ret = 1;
         free(redir->type);
         free(redir);
@@ -251,7 +252,7 @@ t_redirection *found_redirection(char *str, int *index, t_env *env)
     }
     if (redir->file[0] == '>' || redir->file[0] == '<' || redir->file[0] == '|')
     {
-        printf("Error : Nom de fichier invalide\n");
+        printf("bash: : No such file or directory\n");
         free(redir->type);
         free(redir->file);
         free(redir);

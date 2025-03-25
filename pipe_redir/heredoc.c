@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/03/24 12:51:07 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:27:49 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,7 @@ void read_heredoc(t_cmd *cmd, int fd)
 
 void heredoc_child(t_cmd *cmd, int heredoc_fd[2])
 {
-    struct sigaction sa;
-    sa.sa_handler = gestion_heredoc;
-    sa.sa_flags = 0;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGQUIT, &sa, NULL);
+    // config_signals_heredoc(heredoc_fd);
     close(heredoc_fd[0]);
     read_heredoc(cmd, heredoc_fd[1]);
     close(heredoc_fd[1]);
