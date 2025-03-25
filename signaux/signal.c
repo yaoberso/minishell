@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:22:52 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/24 13:20:28 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:31:42 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_signal g_signal_info;
 
 // Signal handler pour le mode interactif (prompt)
 void	gestionnaire(int sig)
@@ -32,10 +30,7 @@ void	gestion_heredoc(int sig)
 {
 	if (sig == SIGINT || sig == SIGQUIT)
 	{
-		write(STDOUT_FILENO, "\n", 1);
 		val_ret = 130;
-		close(g_signal_info.heredoc_fd[0]);
-		close(g_signal_info.heredoc_fd[1]);
 		exit(130);
 	}
 }
@@ -60,7 +55,6 @@ void	config_signals(void)
 {
 	struct sigaction	sa;
 
-	g_signal_info.mode = 0; // Mode interactif
 	sa.sa_handler = gestionnaire;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
@@ -74,7 +68,6 @@ void	config_signals_exec(void)
 {
 	struct sigaction	sa;
 
-	g_signal_info.mode = 1; // Mode exécution
 	sa.sa_handler = gestion_exec;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
@@ -83,13 +76,10 @@ void	config_signals_exec(void)
 }
 
 // Configuration des signaux pour le mode heredoc
-void	config_signals_heredoc(int fd[2])
+void	config_signals_heredoc()
 {
 	struct sigaction	sa;
 
-	g_signal_info.mode = 2; // Mode heredoc
-	g_signal_info.heredoc_fd[0] = fd[0];
-	g_signal_info.heredoc_fd[1] = fd[1];
 	sa.sa_handler = gestion_heredoc;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);

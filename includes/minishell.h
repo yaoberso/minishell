@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/24 12:51:32 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:30:33 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,4 +142,7 @@ extern void					rl_replace_line(const char *text, int clear_undo);
 void						config_signals(void);
 void						gestionnaire(int sig);
 void	gestion_heredoc(int sig);
+void	config_signals_exec(void);
+void	restore_signals(void);
+void	config_signals_heredoc(void);
 #endif
