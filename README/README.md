@@ -32,8 +32,8 @@ pouvoir executer minishell dans minishell et faire controle c
 
 - controle heredoc ya
 - faire que controle z ne fasse rien ya
-- gerer les quotes /home/nadahman/Desktop/minishell$ ech""o ya
-  command not found: ech""o
+
+
 
 - gerer variable expansion guillemet simple : echo '$USER' ya
 
@@ -47,6 +47,13 @@ pouvoir executer minishell dans minishell et faire controle c
 -norminette
 
 
-25\03
 
-- faire marcher comme bash "ls |" et "| ls"
+
+27-03
+
+- /home/nadahman/Desktop/minishell$ cat |
+bash: syntax error near unexpected token `|'
+faire comme pour les redirections
+
+- regarder le parsing pour "|" quqnd y a un caractere avant les guillemets
+

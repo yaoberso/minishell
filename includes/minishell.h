@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/25 12:12:50 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:50:24 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,11 @@ char						**get_args(t_cmd *cmd);
 int 		redir_heredoc(t_cmd *cmd);
 char						*found_path(t_cmd *cmd);
 void 						apply_redirections(t_cmd *cmd);
+
+// pipe utils
+void	create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent);
+int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2]);
+void	create_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2]);
 
 // free
 void						free_token(t_token *token);

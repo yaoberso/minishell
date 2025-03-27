@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/24 11:49:20 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:51:29 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,23 +108,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 	pipe_precedent = -1;
 	while (cur_cmd)
 	{
-		if (cur_cmd->next_cmd)
-		{
-			if (pipe(fd) == -1) // pour cree un pipe
-			{
-				perror("pipe");
-				if (pipe_precedent != -1)
-				{
-					close(pipe_precedent);
-				}
-				return ;
-			}
-		}
-		else
-		{
-			fd[1] = -1;
-			fd[0] = -1;
-		}
+		create_pipe_in_exec(cur_cmd, fd, pipe_precedent);
+		
 		cmd_path = found_path(cur_cmd);
 		if (cmd_path == NULL && is_cmd(cur_cmd->cmd) == 0 && cur_cmd->cmd != NULL)
 		{
@@ -172,6 +157,9 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 			}
 			return ;
 		}
+		
+		
+		
 		// tester echo ls
 		
 		if (pid == 0) // le processus enfant ou vont s executer les commandes
@@ -217,4 +205,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 		}
 	}
 }
+
+
+
 
