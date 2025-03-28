@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:22:13 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/27 10:34:10 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:29:19 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,3 @@ int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2])
 // 	}
 // }
 
-
-// 5 3 1
-// 8 1
-// 9 0

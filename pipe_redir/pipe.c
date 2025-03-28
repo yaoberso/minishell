@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/26 11:51:29 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:38:55 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ char	*found_path(t_cmd *cmd)
 	{
 		if (access(cmd->cmd, F_OK | X_OK) == 0)
 		{
+			free_tab(paths);
 			return (ft_strdup(cmd->cmd));
 		}
+		free_tab(paths);
 		return (NULL);
 		
 	}
@@ -65,7 +67,7 @@ void exec_process(t_cmd *cur_cmd, int fd[2], t_env *env, char **envp)
 	if (cur_cmd->cmd == NULL || cur_cmd == NULL)
 		return ;
 	cmd_path = found_path(cur_cmd);
-	if (cur_cmd->redirection && cur_cmd->cmd != NULL && cur_cmd->redirection != NULL) // ici j execute deux fois la redirection
+	if (cur_cmd->redirection && cur_cmd->cmd != NULL) // ici j execute deux fois la redirection
 		exec_redir(cur_cmd);
 	if (is_cmd(cur_cmd->cmd) == 1)
 	{
@@ -122,6 +124,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 				close(fd[0]);
 				close(fd[1]);
 			}
+			free(cmd_path);
 			return ;	
 		}
 		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1 && cur_cmd->next_cmd == NULL)	
@@ -137,6 +140,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 			dup2(save_stdout, STDOUT_FILENO);
 			close(save_stdin);
 			close(save_stdout);
+			free(cmd_path);
     		return;
 		}
 		if (cmd_in_pipe(cur_cmd->cmd) == 1 && (cur_cmd->next_cmd != NULL || pipe_precedent != -1)) // si c'est certaines commande interne avec des pipes
