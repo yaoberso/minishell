@@ -57,3 +57,6 @@ faire comme pour les redirections
 
 - regarder le parsing pour "|" quqnd y a un caractere avant les guillemets
 
+
+echo $? ne fonctionne plus
+le cat ne fonctionne plus 

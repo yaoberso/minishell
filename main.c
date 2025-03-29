@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/28 12:13:51 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/29 12:37:04 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	main(int argc, char **argv, char **envp)
 	env_list = init_env(envp);
 	cmd = malloc(sizeof(t_cmd));
 	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;   // ca ici qui n affiche pas les ^C
+	// term.c_lflag &= ~ECHOCTL;   // ca ici qui n affiche pas les ^C
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	// config_signals();
+	config_signals();
 	cmd->cmd = NULL;
     cmd->arg = NULL;
     cmd->redirection = NULL;
@@ -58,7 +58,10 @@ int	main(int argc, char **argv, char **envp)
             val_ret = 0;
         }
 		else
+		{	
 			exec_pipe(cmd, env_list, envp);
+			restore_signals();
+		}
 		free(input);
 	}
 	return (0);

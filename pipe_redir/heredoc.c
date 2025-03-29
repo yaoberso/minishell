@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/03/25 12:27:49 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:14:23 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,19 @@ void read_heredoc(t_cmd *cmd, int fd)
     
     while (1)
     {
-        line = readline("> "); //pour cree un prompt
+        line = readline("> ");
         if (!line)
             break ;
+        if (!line)
+        {
+            write(STDOUT_FILENO, "\n", 1);
+            break;
+        }
+        if (val_ret == 130)
+        {
+            free(line);
+            break;
+        }
         if (ft_strcmp(line, cmd->redirection->heredoc_delim) == 0) 
         {
             free(line);
@@ -34,8 +44,8 @@ void read_heredoc(t_cmd *cmd, int fd)
 
 void heredoc_child(t_cmd *cmd, int heredoc_fd[2])
 {
-    // config_signals_heredoc(heredoc_fd);
-    close(heredoc_fd[0]);
+    close(heredoc_fd[0]); 
+    config_signals_heredoc();
     read_heredoc(cmd, heredoc_fd[1]);
     close(heredoc_fd[1]);
     exit(0);
@@ -83,7 +93,7 @@ int redir_heredoc(t_cmd *cmd)
     pid_t pid;
     int heredoc_fd[2];
 
-    
+    config_signals_heredoc();
     if (heredoc_pipe(heredoc_fd) != 0)
         return (-1);
     pid = fork();
@@ -96,12 +106,19 @@ int redir_heredoc(t_cmd *cmd)
     }
     
     if (pid == 0)
-        heredoc_child(cmd, heredoc_fd);
+    {
+        close(heredoc_fd[0]); 
+        config_signals_heredoc();
+        read_heredoc(cmd, heredoc_fd[1]);
+        close(heredoc_fd[1]);
+        exit(0);
+    }
     else
     {
         if (heredoc_parent(pid, heredoc_fd) != 0)
             return (-1);
     }
+    restore_signals();
     return (0);
 }
 

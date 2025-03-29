@@ -3,29 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:22:52 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/25 12:28:09 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/03/29 10:41:40 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
-
-
-void gestionnaire(int sig)
+// Signal handler pour le mode interactif (prompt)
+void	gestionnaire(int sig)
 {
-	if (sig == SIGINT) // CTRL+C
+	if (sig == SIGINT)
 	{
-		write(STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);    // c est ici que ca affiche le deuxieme prompt a chaque fois
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -33,76 +26,73 @@ void gestionnaire(int sig)
 	}
 }
 
+// Signal handler pour le mode heredoc
+void	gestion_heredoc(int sig)
+{
+	if (sig == SIGINT || sig == SIGQUIT)
+	{
+		val_ret = 130;
+		exit(130);
+	}
+}
 
-// void gestion_heredoc(int sig, int heredoc_fd[2])
-// {
-// 	if (sig == SIGINT || sig == SIGQUIT) // CTRL+C ou CTRL+
-// 	{
-// 		write(STDOUT_FILENO, "\n", 1);
-// 		val_ret = 130;
-// 		close(heredoc_fd[0]);
-// 		close(heredoc_fd[1]);
-// 		exit(130);
-// 	}
-// }
+// Signal handler pour les commandes en exécution
+void	gestion_exec(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		val_ret = 130;
+	}
+	else if (sig == SIGQUIT)
+	{
+		write(STDERR_FILENO, "Quit (core dumped)\n", 19);
+		val_ret = 131;
+	}
+}
 
+// Configuration des signaux pour le mode interactif
+void	config_signals(void)
+{
+	struct sigaction	sa;
 
-// void gestion_exec(int sig)
-// {
-// 	if (sig == SIGINT) // CTRL+C
-// 	{
-// 		write(STDOUT_FILENO, "\n", 1);
-// 		val_ret = 130;
-// 	}
-// 	else if (sig == SIGQUIT) // CTRL+
-// 	{
-// 		write(STDERR_FILENO, "Quit (core dumped)\n", 19);
-// 		val_ret = 131;
-// 	}
-// }
+	sa.sa_handler = gestionnaire;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
+}
 
+// Configuration des signaux pour le mode d'exécution
+void	config_signals_exec(void)
+{
+	struct sigaction	sa;
 
-// void config_signals(void)
-// {
-// 	struct sigaction sa;
+	sa.sa_handler = gestion_exec;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+}
 
-// 	sa.sa_handler = gestionnaire;
-// 	sa.sa_flags = 0;
-// 	sigemptyset(&sa.sa_mask);
-// 	sigaction(SIGINT, &sa, NULL);
-// 	sa.sa_handler = SIG_IGN; // Ignorer SIGQUIT
-// 	sigaction(SIGQUIT, &sa, NULL);
-// }
+// Configuration des signaux pour le mode heredoc
+void	config_signals_heredoc()
+{
+	struct sigaction	sa;
 
-// void config_signals_exec(void)
-// {
-// 	struct sigaction sa;
+	sa.sa_handler = gestion_heredoc;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+}
 
-// 	sa.sa_handler = gestion_exec;
-// 	sa.sa_flags = 0;
-// 	sigemptyset(&sa.sa_mask);
-// 	sigaction(SIGINT, &sa, NULL);
-// 	sigaction(SIGQUIT, &sa, NULL);
-// }
+// Restauration des signaux au mode interactif
+void	restore_signals(void)
+{
+	config_signals();
 
-
-// void config_signals_heredoc(int heredoc_fd[2])
-// {
-//     struct sigaction sa;
-//     static t_signal signal; 
-
-//     signal.heredoc_fd[0] = heredoc_fd[0];
-//     signal.heredoc_fd[1] = heredoc_fd[1];
-
-//     sa.sa_flags = SA_SIGINFO;
-//     sa.sa_sigaction = gestion_heredoc;
-//     sigemptyset(&sa.sa_mask);
-//     sigaction(SIGINT, &sa, NULL);
-//     sigaction(SIGQUIT, &sa, NULL);
-// }
-
-
-// void restore_signals(void)
-// {
-// 	config_signals();
-// }
+	// rl_on_new_line();
+    // rl_replace_line("", 0);
+}

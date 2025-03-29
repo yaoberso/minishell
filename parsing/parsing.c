@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/03/28 12:12:13 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/29 11:25:03 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,10 @@ void parsing(char *str, t_cmd *cmd, t_env *env)
             {
                 add_next_cmd(cmd, next_cmd);
                 next_cmd->prev_cmd = cmd;
+            }
+            else
+            {
+                val_ret = 1;   // ajout de ca ici
             }
             break ;
         }

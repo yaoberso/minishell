@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/03/28 12:38:55 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/29 12:42:55 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 	pid_t pid;
 	t_cmd	*cur_cmd;
 	int pipe_precedent;
-	int status;
+	int status = -1;
 	char *cmd_path;
 	int save_stdin;
 	int save_stdout;
@@ -111,22 +111,9 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 	while (cur_cmd)
 	{
 		create_pipe_in_exec(cur_cmd, fd, pipe_precedent);
-		
+		if (command_not_found(cur_cmd, pipe_precedent, fd) == 1)
+			return ;
 		cmd_path = found_path(cur_cmd);
-		if (cmd_path == NULL && is_cmd(cur_cmd->cmd) == 0 && cur_cmd->cmd != NULL)
-		{
-			printf("command not found: %s\n", cur_cmd->cmd);
-			val_ret = 127;
-			if (pipe_precedent != -1)
-				close(pipe_precedent);
-			if (cur_cmd->next_cmd)
-			{
-				close(fd[0]);
-				close(fd[1]);
-			}
-			free(cmd_path);
-			return ;	
-		}
 		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1 && cur_cmd->next_cmd == NULL)	
 		{
 			save_stdin = dup(STDIN_FILENO);
@@ -149,45 +136,14 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 			continue;
 		}
 		pid = fork();  // cree un processus
-		if (pid < 0)
-		{
-			perror("fork");
-			if (pipe_precedent != -1)
-				close(pipe_precedent);
-			if (cur_cmd->next_cmd)
-			{
-				close(fd[0]);
-				close(fd[1]);
-			}
-			return ;
-		}
-		
-		
-		
-		// tester echo ls
-		
+		check_fork(pid, pipe_precedent, cur_cmd, fd);
 		if (pid == 0) // le processus enfant ou vont s executer les commandes
 		{
-			// if (cur_cmd->redirection) // ici j execute une fois // tester de supprimer ici et garder l autre !!!!!!!!!!
-			// 	exec_redir(cur_cmd);
-			if (pipe_precedent != -1)
-			{
-				dup2(pipe_precedent, STDIN_FILENO);
-				close(pipe_precedent);
-			}
-			if (cur_cmd->next_cmd)
-			{
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-				close(fd[0]);
-			}
+			dup_and_close_in_child(cur_cmd, fd, pipe_precedent);
 			exec_process(cur_cmd, fd, env, envp);
 			exit (1);	
 		}
-		if (pipe_precedent != -1)
-		{
-			close(pipe_precedent);
-		}
+		close_pipe_precedent(pipe_precedent);
 		if (cur_cmd->next_cmd)
 		{
 			close(fd[1]);
@@ -195,19 +151,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 		}
 		cur_cmd = cur_cmd->next_cmd;
 	}
-	if (pipe_precedent != -1)
-	{
-		close(pipe_precedent);
-	}
-	while (wait(&status) > 0)  // attend que tout les process se termine, retourne -1 quand les process finissent
-	{
-		if (WIFEXITED(status)) // si les process se sont terminé normalement
-			val_ret = (WEXITSTATUS(status)); 
-		else if (WIFSIGNALED(status)) // si ils se sont stoppé a cause d un signal
-		{
-			val_ret = 128 + WTERMSIG(status); // id du selon le signal
-		}
-	}
+	close_pipe_precedent(pipe_precedent);
+	exit_status_process(status);
 }
 
 

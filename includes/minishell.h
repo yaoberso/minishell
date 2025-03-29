@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/28 12:37:52 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/29 11:13:52 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,13 @@ void 						apply_redirections(t_cmd *cmd);
 void	create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent);
 int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2]);
 void	create_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2]);
+void exit_status_process(int status);
+void	check_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2]);
+void	dup_and_close_in_child(t_cmd *cur_cmd, int fd[2], int pipe_precedent);
+void	close_pipe_precedent(int pipe_precedent);
+void	check_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2]);
+void	create_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent, pid_t pid);
+
 
 // free
 void						free_token(t_token *token);
@@ -146,5 +153,10 @@ int    ft_isspace(char c);
 extern void					rl_replace_line(const char *text, int clear_undo);
 void						config_signals(void);
 void						gestionnaire(int sig);
-void gestion_heredoc(int sig, int heredoc_fd[2]);
+void						config_signals_exec(void);
+void						gestion_exec(int sig);
+void						config_signals_heredoc(void);
+void						gestion_heredoc(int sig);
+void	restore_signals(void);
+
 #endif
