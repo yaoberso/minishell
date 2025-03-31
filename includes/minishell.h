@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/29 11:13:52 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/31 10:56:07 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ extern int val_ret;
 #include <sys/types.h>
 #include <fcntl.h>
 
+typedef struct s_data
+{
+
+
+} t_data;
 
 typedef struct s_signal
 {
@@ -68,6 +73,7 @@ typedef struct s_cmd
 	t_redirection   *redirection; // liste chainé qui va contenir les redirections
     struct s_cmd *next_cmd; // structure cree des qu un pipe est trouve
 	struct s_cmd *prev_cmd; // structure cree des qu un pipe est trouve
+	t_env *env; // pour l'environnement
 	int save_stdin;
 	int heredoc_fd;
 } t_cmd;
@@ -136,6 +142,14 @@ void	dup_and_close_in_child(t_cmd *cur_cmd, int fd[2], int pipe_precedent);
 void	close_pipe_precedent(int pipe_precedent);
 void	check_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2]);
 void	create_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent, pid_t pid);
+void	exec_simple_cmd(t_cmd *cur_cmd, t_env *env);
+void child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent, char **envp);
+int	parent_process(int *fd, int pipe_precedent, t_cmd *cur_cmd);
+void	close_pipes(int fd[2]);
+void	exec_builtin(t_cmd *cur_cmd, t_env *env, char *cmd_path);
+char	*check_absolute_path(t_cmd *cmd, char **paths);
+char *search_in_directory(char **paths, char *cmd);
+
 
 
 // free

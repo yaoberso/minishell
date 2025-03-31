@@ -57,6 +57,10 @@ faire comme pour les redirections
 
 - regarder le parsing pour "|" quqnd y a un caractere avant les guillemets
 
+tester tout ca et faire fonctionner correctement, ou attendre d etre a lecole pour tester sur l ordi labas
+echo salut | exit
+echo salut | export
 
-echo $? ne fonctionne plus
-le cat ne fonctionne plus 
+avec l ancienne versiion ca fonctionne, a voir ce que j ai fais
+
+il faudra allouer la structure data 

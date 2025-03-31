@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/03/28 13:14:23 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/29 13:21:26 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@ void read_heredoc(t_cmd *cmd, int fd)
         line = readline("> ");
         if (!line)
             break ;
-        if (!line)
-        {
-            write(STDOUT_FILENO, "\n", 1);
-            break;
-        }
         if (val_ret == 130)
         {
             free(line);
