@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/17 11:50:22 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:45:57 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,22 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 	else if (ft_strcmp(cmd->cmd, "exit") == 0)
 	{
 		printf("exit\n");
-		exit (1);
+		exit(1);
 	}
 }
 
-int	cmd_in_pipe(char *cmd)  // les commandes qui doivent pas fonctionner dans un pipe
+int	cmd_in_pipe(char *cmd)
 {
 	if (cmd == NULL)
 		return (0);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
-	// else if (ft_strcmp(cmd, "export") == 0)
-	// 	return (1);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (1);
 	else if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
 	else if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
 	else
-		return (0);	
+		return (0);
 }

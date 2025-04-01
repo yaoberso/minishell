@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:23 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/31 09:48:23 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/01 12:43:45 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_print_echo(t_token *arg, int newline)
 		write(1, "\n", 1);
 }
 
-int check_arg_null(t_token *arg)
+int	check_arg_null(t_token *arg)
 {
 	if (!arg)
 	{
