@@ -6,13 +6,12 @@
 /*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/04/01 09:59:56 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/01 10:06:00 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* replace_exit_status */
 char *replace_exit_status(char *str, int start)
 {
 	char	*val_ret_str;
@@ -38,7 +37,6 @@ char *replace_exit_status(char *str, int start)
 	return (result);
 }
 
-/* extract_var_name */
 char *extract_var_name(char *str, int start, int *end)
 {
 	*end = start + 1;
@@ -48,7 +46,6 @@ char *extract_var_name(char *str, int start, int *end)
 		ft_substr(str, start + 1, *end - start - 1) : NULL);
 }
 
-/* replace_var_in_str */
 char *replace_var_in_str(char *str, int start, char *var_value, int end)
 {
 	int		len_before;
@@ -66,7 +63,6 @@ char *replace_var_in_str(char *str, int start, char *var_value, int end)
 	return (result);
 }
 
-/* expand_var_at_position */
 char *expand_var_at_position(char *str, int *pos, t_env *env)
 {
 	int		start;
@@ -92,7 +88,6 @@ char *expand_var_at_position(char *str, int *pos, t_env *env)
 	return (result);
 }
 
-/* update_quote_state */
 char update_quote_state(char current_char, char quote_state)
 {
 	if (current_char == '\'')
@@ -112,7 +107,6 @@ char update_quote_state(char current_char, char quote_state)
 	return (quote_state);
 }
 
-/* expand_variables */
 char *expand_variables(char *str, t_env *env)
 {
 	int		i;
@@ -142,7 +136,6 @@ char *expand_variables(char *str, t_env *env)
 	return (result);
 }
 
-/* initialize_process_quotes */
 char *initialize_process_quotes(char *str, int *j)
 {
 	char	*result;
@@ -154,7 +147,6 @@ char *initialize_process_quotes(char *str, int *j)
 	return (result);
 }
 
-/* handle_quote_chars */
 void handle_quote_chars(char current_char, char *quote_state, 
 						char *result, int *j)
 {
@@ -180,7 +172,6 @@ void handle_quote_chars(char current_char, char *quote_state,
 		result[(*j)++] = current_char;
 }
 
-/* process_quotes */
 char *process_quotes(char *str)
 {
 	int		i;
@@ -203,7 +194,6 @@ char *process_quotes(char *str)
 	return (result);
 }
 
-/* find_token_bounds */
 void find_token_bounds(char *str, int *start, int *end, int *index)
 {
 	int		i;
@@ -234,7 +224,6 @@ void find_token_bounds(char *str, int *start, int *end, int *index)
 	*index = i;
 }
 
-/* process_token */
 char *process_token(char *str_recup, t_env *env)
 {
 	char	*result;
@@ -251,7 +240,6 @@ char *process_token(char *str_recup, t_env *env)
 	return (result);
 }
 
-/* recup_token */
 char *recup_token(char *str, int *index, t_env *env)
 {
 	int		start;
@@ -265,7 +253,6 @@ char *recup_token(char *str, int *index, t_env *env)
 	return (process_token(str_recup, env));
 }
 
-/* initialize_cmd */
 void initialize_cmd(t_cmd *cmd)
 {
 	if (cmd == NULL)
@@ -277,7 +264,6 @@ void initialize_cmd(t_cmd *cmd)
 	config_signals_exec();
 }
 
-/* process_single_token */
 void process_single_token(char *token, t_cmd *cmd)
 {
 	if (token)
@@ -289,7 +275,6 @@ void process_single_token(char *token, t_cmd *cmd)
 	}
 }
 
-/* process_parsing_char */
 int process_parsing_char(char *str, int *i, t_cmd *cmd, t_env *env)
 {
 	t_redirection	*new_redir;
@@ -320,7 +305,6 @@ int process_parsing_char(char *str, int *i, t_cmd *cmd, t_env *env)
 	return (0);
 }
 
-/* parsing */
 void parsing(char *str, t_cmd *cmd, t_env *env)
 {
 	int	i;
