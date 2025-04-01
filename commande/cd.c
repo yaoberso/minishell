@@ -6,7 +6,7 @@
 /*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:30 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/16 13:24:55 by yann             ###   ########.fr       */
+/*   Updated: 2025/03/31 09:44:30 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_cd(t_token *arg, t_env *env)
 		home = get_env_value(env, "HOME");
 		if (!home)
 		{
-			printf("cd: HOME not set\n");
 			return ;
 		}
 		old_pwd = get_env_value(env, "PWD");

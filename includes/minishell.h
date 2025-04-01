@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/29 11:13:52 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/01 09:57:37 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ void    ft_unset(t_token *arg, t_env **env);
 void	cmd_exec(t_cmd *cmd, t_env *env);
 void	exec_cmd_inter_exter(t_cmd *cmd, t_env *env);
 int		is_cmd(char *cmd);
+void	print_env(t_env *env);
+void	update_or_add_env(t_env **env, char *var_name, char *var_value);
+void	add_env_variable(t_env **env, char *var_name, char *var_value);
+
 
 // Fonctions de parsing
 void						add_token(t_token **head, t_token *new);
@@ -103,8 +107,19 @@ char						*sup_cote(char *str);
 char						*sup_exp(char *str);
 int							double_quote_with_simple_quote(char *str, int double_quote);
 void						checkif2(char *str, char c);
-void						gestionnaire2();
-void						config_signals2();
+char *replace_exit_status(char *str, int start);
+char *extract_var_name(char *str, int start, int *end);
+char *replace_var_in_str(char *str, int start, char *var_value, int end);
+char *expand_var_at_position(char *str, int *pos, t_env *env);
+// static char update_quote_state(char current_char, char quote_state);
+// char *expand_variables(char *str, t_env *env);
+// static char *initialize_process_quotes(char *str, int *j);
+// static void handle_quote_chars(char current_char, char *quote_state, 
+// 	char *result, int *j);
+// char *process_quotes(char *str);
+// static void find_token_bounds(char *str, int *start, int *end, int *index);
+// static char *process_token(char *str_recup, t_env *env);
+
 
 // pipe et redirection
 int	cmd_in_pipe(char *cmd);

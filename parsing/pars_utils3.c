@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:32:07 by nas               #+#    #+#             */
-/*   Updated: 2025/03/20 12:05:39 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:37:31 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ char *sup_cote(char *str)
             j++;
         i++;
     }
-    
     new_str = malloc(sizeof(char) * (j + 1));
     if (!new_str)
         return (str);
-    
     i = 0;
     j = 0;
     while (str[i])
@@ -64,7 +62,6 @@ char *sup_exp(char *str)
             i++;
         }
     }
-    
     new_str = malloc(sizeof(char) * (copy_chars + 1));
     if (!new_str)
         return (str);

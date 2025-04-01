@@ -6,7 +6,7 @@
 /*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:21 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/16 12:46:12 by yann             ###   ########.fr       */
+/*   Updated: 2025/03/31 10:01:46 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,32 @@ void	set_env_value(t_env *env, const char *name, const char *new_value)
 		}
 		env = env->next;
 	}
+}
+
+void print_env(t_env *env)
+{
+    t_env *current;
+
+    current = env;
+    while (current)
+    {
+        printf("declare -x %s=\"%s\"\n", current->name, current->value);
+        current = current->next;
+    }
+}
+
+void update_or_add_env(t_env **env, char *var_name, char *var_value)
+{
+    t_env *current;
+
+    current = *env;
+    while (current && ft_strcmp(current->name, var_name) != 0)
+        current = current->next;
+    if (current)
+    {
+        free(current->value);
+        current->value = var_value;
+    }
+    else
+        add_env_variable(env, var_name, var_value);
 }

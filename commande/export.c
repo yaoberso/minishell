@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:58 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/22 10:41:03 by nas              ###   ########.fr       */
+/*   Updated: 2025/03/31 10:02:37 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,23 @@ char	*extract_arg_name(char *arg)
 	return (name);
 }
 
+char *copy_value(int i, char *value, char *arg, int len)
+{
+	int j;
+
+	j = 0;
+	while (j < len)
+	{
+		value[j] = arg[i + j];
+		j++;
+	}
+	value[j] = '\0';
+	return (value);
+}
+
 char	*extract_arg_value(char *arg)
 {
 	int		i;
-	int		j;
 	int		len;
 	char	*value;
 
@@ -60,13 +73,7 @@ char	*extract_arg_value(char *arg)
 	value = malloc(sizeof(char) * (len + 1));
 	if (!value)
 		return (NULL);
-	j = 0;
-	while (j < len)
-	{
-		value[j] = arg[i + j];
-		j++;
-	}
-	value[j] = '\0';
+	value = copy_value(i, value, arg, len);
 	return (value);
 }
 
@@ -92,51 +99,27 @@ void	add_env_variable(t_env **env, char *var_name, char *var_value)
 	temp->next = new_var;
 }
 
-void	ft_export(t_token *arg, t_env **env)
+void ft_export(t_token *arg, t_env **env)
 {
-	t_env	*current;
-	t_token	*current_arg;
-	char	*var_name;
-	char	*var_value;
+    t_token *current_arg;
+    char    *var_name;
+    char    *var_value;
 
-	if (!arg)
-	{
-		current = *env;
-		while (current)
-		{
-			printf("declare -x %s=\"%s\"\n", current->name, current->value);
-			current = current->next;
-		}
-		return ;
-	}
-	current_arg = arg;
-	while (current_arg)
-	{
-		var_name = extract_arg_name(current_arg->value);
-		var_value = extract_arg_value(current_arg->value);
-		if (!var_name)
-		{
-			printf("export: `%s': not a valid identifier\n",
-				current_arg->value);
-			current_arg = current_arg->next;
-			continue ;
-		}
-		current = *env;
-		while (current)
-		{
-			if (ft_strcmp(current->name, var_name) == 0)
-			{
-				free(current->value);
-				current->value = var_value;
-				break ;
-			}
-			current = current->next;
-		}
-		if (!current)
-		{
-			add_env_variable(env, var_name, var_value);
-		}
-		current_arg = current_arg->next;
-	}
-	val_ret = 0;
+    if (!arg)
+    {
+        print_env(*env);
+        return ;
+    }
+    current_arg = arg;
+    while (current_arg)
+    {
+        var_name = extract_arg_name(current_arg->value);
+        var_value = extract_arg_value(current_arg->value);
+        if (!var_name)
+            printf("export: `%s': not a valid identifier\n", current_arg->value);
+        else
+            update_or_add_env(env, var_name, var_value);
+        current_arg = current_arg->next;
+    }
+    val_ret = 0;
 }

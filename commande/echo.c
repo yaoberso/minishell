@@ -6,7 +6,7 @@
 /*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:23 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/16 13:26:14 by yann             ###   ########.fr       */
+/*   Updated: 2025/03/31 09:48:23 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ void	ft_print_echo(t_token *arg, int newline)
 		write(1, "\n", 1);
 }
 
+int check_arg_null(t_token *arg)
+{
+	if (!arg)
+	{
+		write(1, "\n", 1);
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_echo(t_token *current)
 {
 	int		newline;
@@ -33,11 +43,8 @@ void	ft_echo(t_token *current)
 
 	newline = 1;
 	arg = current;
-	if (!arg)
-	{
-		write(1, "\n", 1);
+	if (check_arg_null(arg) == 1)
 		return ;
-	}
 	while (arg && ft_strncmp(arg->value, "-n", 2) == 0)
 	{
 		i = 2;
