@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/01 13:57:55 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/02 18:54:11 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ void						free_tab(char **tab);
 char	*creat_prompt(t_env *env);
 void 	print_arguments(t_token *arg);
 int    ft_isspace(char c);
+int is_only_spaces(const char *str);
 
 // signaux
 extern void					rl_replace_line(const char *text, int clear_undo);
