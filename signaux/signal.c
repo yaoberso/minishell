@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:22:52 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/29 10:41:40 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:46:30 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	gestionnaire(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(STDOUT_FILENO, "\n", 1);    // c est ici que ca affiche le deuxieme prompt a chaque fois
+		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -92,7 +92,5 @@ void	config_signals_heredoc()
 void	restore_signals(void)
 {
 	config_signals();
-
-	// rl_on_new_line();
-    // rl_replace_line("", 0);
 }
+

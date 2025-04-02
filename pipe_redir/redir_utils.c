@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:38:40 by nas               #+#    #+#             */
-/*   Updated: 2025/03/22 10:27:51 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:11:02 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	redir_out(t_cmd *cmd, int fd)
 {
-	fd = open(cmd->redirection->file, O_WRONLY | O_CREAT | O_TRUNC, 0644); // ouvre le fichier, le cree si il faut et l'ecrase si il est deja
+	fd = open(cmd->redirection->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		perror("open");
@@ -27,7 +27,7 @@ void	redir_out(t_cmd *cmd, int fd)
 
 void	redir_in(t_cmd *cmd, int fd)
 {
-	fd = open(cmd->redirection->file, O_RDONLY); // ouvre le fichier en lecture
+	fd = open(cmd->redirection->file, O_RDONLY);
 	if (fd == -1)
 	{
 		perror("open");
@@ -40,7 +40,7 @@ void	redir_in(t_cmd *cmd, int fd)
 
 void	redir_append(t_cmd *cmd, int fd)
 {
-	fd = open(cmd->redirection->file, O_WRONLY | O_CREAT | O_APPEND, 0644); // ouvre le fichier, le cree si il faut et ecrit a la fin
+	fd = open(cmd->redirection->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		perror("open");

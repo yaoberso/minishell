@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:17 by nas               #+#    #+#             */
-/*   Updated: 2025/03/15 13:57:09 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:10:37 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// pour convertir la liste chainé des arguments en tableau de chaine de caracteres pour utuiliser execve
+/*pour convertir la liste chainé des arguments en tableau de 
+chaine de caracteres pour utuiliser execve*/
 char	**get_args(t_cmd *cmd)
 {
-	t_token *token;
-	char **args;
-	int count;
-	int	i;
+	t_token	*token;
+	char	**args;
+	int		count;
+	int		i;
 
 	token = cmd->arg;
 	count = 0;
@@ -47,7 +48,7 @@ void	free_tab(char **tab)
 	int	i;
 
 	if (tab == NULL)
-		return;
+		return ;
 	i = 0;
 	while (tab[i])
 	{
@@ -72,7 +73,6 @@ int	count_cmd(t_cmd *cmd)
 	return (count);
 }
 
-
 void	redir_stdout(int fd[2], t_cmd *next_cmd)
 {
 	if (next_cmd)
@@ -83,10 +83,9 @@ void	redir_stdout(int fd[2], t_cmd *next_cmd)
 	}
 }
 
-void redir_stdin(int fd[2])
+void	redir_stdin(int fd[2])
 {
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 }
-

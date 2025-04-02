@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/31 10:56:07 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/01 13:57:55 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int	parent_process(int *fd, int pipe_precedent, t_cmd *cur_cmd);
 void	close_pipes(int fd[2]);
 void	exec_builtin(t_cmd *cur_cmd, t_env *env, char *cmd_path);
 char	*check_absolute_path(t_cmd *cmd, char **paths);
-char *search_in_directory(char **paths, char *cmd);
+char	*search_in_paths(char **paths, char *cmd);
 
 
 
@@ -172,5 +172,7 @@ void						gestion_exec(int sig);
 void						config_signals_heredoc(void);
 void						gestion_heredoc(int sig);
 void	restore_signals(void);
+void	disable_signals(void);
+void ignore_signals();
 
 #endif

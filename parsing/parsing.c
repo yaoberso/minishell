@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/03/29 11:25:03 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/01 10:48:40 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ char *recup_token(char *str, int *index, t_env *env)
                 arg[i] = '\0';
                 strcat(arg, val_ret_str);
                 strcat(arg, str_recup + i + 2);
-                // free(val_ret_str);   // a remettre pck chez moi ca amrche aps
+                free(val_ret_str);
                 free(str_recup);
                 str_recup = arg;
-                // i += ft_strlen(val_ret_str);
+                i += ft_strlen(val_ret_str);
                 free(str_recup);
                 continue;
             }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/29 12:37:04 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:44:07 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ int	main(int argc, char **argv, char **envp)
 	env_list = init_env(envp);
 	cmd = malloc(sizeof(t_cmd));
 	tcgetattr(STDIN_FILENO, &term);
-	// term.c_lflag &= ~ECHOCTL;   // ca ici qui n affiche pas les ^C
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	config_signals();
+	// config_signals();
 	cmd->cmd = NULL;
     cmd->arg = NULL;
     cmd->redirection = NULL;
@@ -40,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd->heredoc_fd = -1;
 	while (1)
 	{
+		config_signals();
 		prompt = creat_prompt(env_list);
         input = readline(prompt);
 		free(prompt);
@@ -49,6 +49,10 @@ int	main(int argc, char **argv, char **envp)
 			free_env(env_list);
 			printf("exit\n");
 			break ;
+		}
+		if (input[0] == '\0') {
+            free(input);
+            continue;  // Ignore la commande vide et demande à nouveau une entrée
 		}
 		if (*input)
 			add_history(input);
@@ -63,6 +67,7 @@ int	main(int argc, char **argv, char **envp)
 			restore_signals();
 		}
 		free(input);
+		restore_signals();
 	}
 	return (0);
 }
