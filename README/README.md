@@ -64,3 +64,14 @@ echo salut | export
 avec l ancienne versiion ca fonctionne, a voir ce que j ai fais
 
 il faudra allouer la structure data 
+
+
+
+
+02-04
+
+- gerer espace
+- mettre un message d erreur qund on exit avec des arguments
+- gerer la valeur de retour pou commande interne
+- export | ls et ls | export a gerer
+- la variable PATH ne se suprime pas avec unset
