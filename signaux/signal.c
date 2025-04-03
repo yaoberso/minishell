@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:22:52 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/03 12:19:54 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:41:40 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	gestionnaire(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(STDOUT_FILENO, "\n", 1);    // c est ici que ca affiche le deuxieme prompt a chaque fois
+		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -26,15 +26,14 @@ void	gestionnaire(int sig)
 	}
 }
 
-void gestion_heredoc(int sig)
+// Signal handler pour le mode heredoc
+void	gestion_heredoc(int sig)
 {
-    if (sig == SIGINT)
-    {
-        // Ne pas appeler exit() ici, cela cause des problèmes avec les descripteurs
-        write(STDOUT_FILENO, "\n", 1);
-        val_ret = 130;
-        // Signaler l'interruption mais laisser le processus terminer naturellement
-    }
+	if (sig == SIGINT || sig == SIGQUIT)
+	{
+		val_ret = 130;
+		exit(130);
+	}
 }
 
 // Signal handler pour les commandes en exécution
@@ -77,24 +76,20 @@ void	config_signals_exec(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void config_signals_heredoc(void)
+// Configuration des signaux pour le mode heredoc
+void	config_signals_heredoc()
 {
-    struct sigaction sa;
-    
-    sa.sa_handler = SIG_DFL;  // Comportement par défaut pour SIGINT
-    sa.sa_flags = 0;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);
-    
-    sa.sa_handler = SIG_IGN;  // Ignorer SIGQUIT
-    sigaction(SIGQUIT, &sa, NULL);
+	struct sigaction	sa;
+
+	sa.sa_handler = gestion_heredoc;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
 // Restauration des signaux au mode interactif
 void	restore_signals(void)
 {
 	config_signals();
-
-	// rl_on_new_line();
-    // rl_replace_line("", 0);
 }

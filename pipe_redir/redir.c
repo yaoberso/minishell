@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
-/*   Updated: 2025/04/02 11:09:13 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:11:39 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,4 @@ void	exec_redir(t_cmd *cmd)
 		current = current->next;
 	}
 }
+

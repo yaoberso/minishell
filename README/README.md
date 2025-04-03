@@ -74,10 +74,7 @@ il faudra allouer la structure data
 
 03-04
 - voir si c est export ou non le probleme
+- pareil pour env "ls | env" est cense donne env
 - faire le path
 - heredoc doit s ouvrir avec << et rien avant
-- double free ici 
-	/home/nadahman/Desktop/minishell$ cat >
-	bash: syntax error near unexpected token `newline'
-	free(): double free detected in tcache 2
-	[4]    3388042 IOT instruction (core dumped)  ./minishell
+

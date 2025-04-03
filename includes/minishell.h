@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/03 12:16:59 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:58:36 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ extern int					val_ret;
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-#include <errno.h>
 
 typedef struct s_signal
 {
