@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/02 13:45:39 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:16:59 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ extern int					val_ret;
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+#include <errno.h>
 
 typedef struct s_signal
 {
@@ -182,14 +183,14 @@ void						exec_process(t_cmd *cur_cmd, int fd[2], t_env *env,
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
 int							redir_heredoc(t_cmd *cmd);
-char						*found_path(t_cmd *cmd, t_env *env);
+char						*found_path(t_cmd *cmd);
 void						apply_redirections(t_cmd *cmd);
 
 // pipe utils
 void						create_pipe_in_exec(t_cmd *cur_cmd, int fd[2],
 								int pipe_precedent);
 int							command_not_found(t_cmd *cur_cmd,
-								int pipe_precedent, int fd[2], t_env *env);
+								int pipe_precedent, int fd[2]);
 void						create_fork(pid_t pid, int pipe_precedent,
 								t_cmd *cur_cmd, int fd[2]);
 void						exit_status_process(int status);
@@ -223,6 +224,7 @@ void						free_tab(char **tab);
 char						*creat_prompt(t_env *env);
 void						print_arguments(t_token *arg);
 int							ft_isspace(char c);
+int is_only_spaces(const char *str);
 
 // signaux
 extern void					rl_replace_line(const char *text, int clear_undo);

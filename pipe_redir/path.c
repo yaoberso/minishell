@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:55:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/02 13:47:09 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:44:30 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,13 @@ char	*search_in_paths(char **paths, char *cmd)
 	return (NULL);
 }
 
-char	*found_path(t_cmd *cmd, t_env *env)
+char	*found_path(t_cmd *cmd)
 {
 	char	*path;
 	char	**paths;
 	char	*result;
 
-	path = get_env_value(env, "PATH");
-	// printf("path : %s\n", path);
+	path = getenv("PATH");
 	if (path == NULL || cmd->cmd == NULL)
 		return (NULL);
 	paths = ft_split(path, ':');

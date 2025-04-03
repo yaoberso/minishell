@@ -21,3 +21,16 @@ char	*creat_prompt(t_env *env)
 	strcat(prompt, "$ ");
 	return (prompt);
 }
+int is_only_spaces(const char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        if (!ft_isspace(str[i]))
+            return (0);
+        i++;
+    }
+    return (1);
+}

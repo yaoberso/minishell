@@ -49,14 +49,35 @@ pouvoir executer minishell dans minishell et faire controle c
 
 
 
+
 27-03
 
-- /home/nadahman/Desktop/minishell$ cat |
-bash: syntax error near unexpected token `|'
-faire comme pour les redirections
+    /home/nadahman/Desktop/minishell$ cat | bash: syntax error near unexpected token `|' faire comme pour les redirections
 
-- regarder le parsing pour "|" quqnd y a un caractere avant les guillemets
+    regarder le parsing pour "|" quqnd y a un caractere avant les guillemets
+
+tester tout ca et faire fonctionner correctement, ou attendre d etre a lecole pour tester sur l ordi labas echo salut | exit echo salut | export
+
+avec l ancienne versiion ca fonctionne, a voir ce que j ai fais
+
+il faudra allouer la structure data
+
+02-04
+
+    gerer espace
+    mettre un message d erreur qund on exit avec des arguments
+    gerer la valeur de retour pou commande interne
+    export | ls et ls | export a gerer
+    la variable PATH ne se suprime pas avec unset
 
 
-echo $? ne fonctionne plus
-le cat ne fonctionne plus 
+
+03-04
+- voir si c est export ou non le probleme
+- faire le path
+- heredoc doit s ouvrir avec << et rien avant
+- double free ici 
+	/home/nadahman/Desktop/minishell$ cat >
+	bash: syntax error near unexpected token `newline'
+	free(): double free detected in tcache 2
+	[4]    3388042 IOT instruction (core dumped)  ./minishell

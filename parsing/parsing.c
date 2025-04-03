@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/04/01 12:37:55 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:06:37 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	process_parsing_char(char *str, int *i, t_cmd *cmd, t_env *env)
 		new_redir = found_redirection(str, i, env);
 		if (new_redir)
 			add_redirection(cmd, new_redir);
+		else
+			val_ret = 1;
 	}
 	else if (str[*i] == '|')
 	{
@@ -65,6 +67,8 @@ int	process_parsing_char(char *str, int *i, t_cmd *cmd, t_env *env)
 			add_next_cmd(cmd, next_cmd);
 			next_cmd->prev_cmd = cmd;
 		}
+		else
+			val_ret = 1;
 		return (1);
 	}
 	else

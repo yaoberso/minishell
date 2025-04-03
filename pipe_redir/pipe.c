@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/04/02 13:45:21 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:45:36 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 	while (cur_cmd)
 	{
 		create_pipe_in_exec(cur_cmd, fd, pipe_precedent);
-		cmd_path = found_path(cur_cmd, env);
-		if (command_not_found(cur_cmd, pipe_precedent, fd, env) == 1)
+		cmd_path = found_path(cur_cmd);
+		if (command_not_found(cur_cmd, pipe_precedent, fd) == 1)
 			return ;
 		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1
 			&& cur_cmd->next_cmd == NULL)

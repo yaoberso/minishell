@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:22:52 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/29 10:41:40 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/03 12:19:54 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ void	gestionnaire(int sig)
 	}
 }
 
-// Signal handler pour le mode heredoc
-void	gestion_heredoc(int sig)
+void gestion_heredoc(int sig)
 {
-	if (sig == SIGINT || sig == SIGQUIT)
-	{
-		val_ret = 130;
-		exit(130);
-	}
+    if (sig == SIGINT)
+    {
+        // Ne pas appeler exit() ici, cela cause des problèmes avec les descripteurs
+        write(STDOUT_FILENO, "\n", 1);
+        val_ret = 130;
+        // Signaler l'interruption mais laisser le processus terminer naturellement
+    }
 }
 
 // Signal handler pour les commandes en exécution
@@ -76,16 +77,17 @@ void	config_signals_exec(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-// Configuration des signaux pour le mode heredoc
-void	config_signals_heredoc()
+void config_signals_heredoc(void)
 {
-	struct sigaction	sa;
-
-	sa.sa_handler = gestion_heredoc;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+    struct sigaction sa;
+    
+    sa.sa_handler = SIG_DFL;  // Comportement par défaut pour SIGINT
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGINT, &sa, NULL);
+    
+    sa.sa_handler = SIG_IGN;  // Ignorer SIGQUIT
+    sigaction(SIGQUIT, &sa, NULL);
 }
 
 // Restauration des signaux au mode interactif

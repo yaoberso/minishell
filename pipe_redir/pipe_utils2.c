@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:22:13 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/02 13:46:13 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:47:43 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,18 @@ void	create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
 	}
 }
 
-int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
+int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2])
 {
 	char	*cmd_path;
 
-	cmd_path = found_path(cur_cmd, env);
+	cmd_path = found_path(cur_cmd);
 	if (!cmd_path && is_cmd(cur_cmd->cmd) == 0 && cur_cmd->cmd)
 	{
+		if (cur_cmd->cmd && is_only_spaces(cur_cmd->cmd))
+		{
+    		free(cmd_path);
+    		return (0);
+		}
 		printf("command not found: %s\n", cur_cmd->cmd);
 		val_ret = 127;
 		if (pipe_precedent != -1)
