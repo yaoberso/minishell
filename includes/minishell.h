@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/01 12:47:33 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/02 13:45:39 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_cmd
 	struct s_cmd *prev_cmd;     // structure cree des qu un pipe est trouve
 	int						save_stdin;
 	int						heredoc_fd;
+	t_env					*env;
 }							t_cmd;
 
 // Fonction pour l'environement
@@ -108,7 +109,7 @@ char						*sup_cote(char *str);
 char						*sup_exp(char *str);
 int							double_quote_with_simple_quote(char *str,
 								int double_quote);
-void						checkif2(char *str, char c);
+int						checkif2(char *str, char c);
 char						*replace_exit_status(char *str, int start);
 char						*extract_var_name(char *str, int start, int *end);
 char						*replace_var_in_str(char *str, int start,
@@ -181,14 +182,14 @@ void						exec_process(t_cmd *cur_cmd, int fd[2], t_env *env,
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
 int							redir_heredoc(t_cmd *cmd);
-char						*found_path(t_cmd *cmd);
+char						*found_path(t_cmd *cmd, t_env *env);
 void						apply_redirections(t_cmd *cmd);
 
 // pipe utils
 void						create_pipe_in_exec(t_cmd *cur_cmd, int fd[2],
 								int pipe_precedent);
 int							command_not_found(t_cmd *cur_cmd,
-								int pipe_precedent, int fd[2]);
+								int pipe_precedent, int fd[2], t_env *env);
 void						create_fork(pid_t pid, int pipe_precedent,
 								t_cmd *cur_cmd, int fd[2]);
 void						exit_status_process(int status);
@@ -201,6 +202,16 @@ void						check_fork(pid_t pid, int pipe_precedent,
 								t_cmd *cur_cmd, int fd[2]);
 void						create_process(t_cmd *cur_cmd, int fd[2],
 								int pipe_precedent, pid_t pid);
+void						exec_simple_cmd(t_cmd *cur_cmd, t_env *env);
+void						child_process(t_cmd *cur_cmd, int fd[2],
+								int pipe_precedent, char **envp);
+int							parent_process(int *fd, int pipe_precedent,
+								t_cmd *cur_cmd);
+void						close_pipes(int fd[2]);
+void						exec_builtin(t_cmd *cur_cmd, t_env *env,
+								char *cmd_path);
+char						*check_absolute_path(t_cmd *cmd, char **paths);
+char						*search_in_paths(char **paths, char *cmd);
 
 // free
 void						free_token(t_token *token);

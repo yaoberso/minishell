@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
-/*   Updated: 2025/03/23 11:56:55 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/02 11:09:13 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	exec_redir(t_cmd *cmd)
 {
-	int fd;
-	t_redirection *current;
-	t_redirection *tmp;
-	
+	int				fd;
+	t_redirection	*current;
+	t_redirection	*tmp;
+
 	current = cmd->redirection;
 	while (current)
 	{
 		fd = -1;
 		if (ft_strcmp(current->type, ">") == 0)
 			redir_out(cmd, fd);
-		else if (ft_strcmp(current->type, "<") == 0)	
+		else if (ft_strcmp(current->type, "<") == 0)
 			redir_in(cmd, fd);
 		else if (ft_strcmp(current->type, ">>") == 0)
 			redir_append(cmd, fd);

@@ -6,13 +6,13 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:40 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/01 12:26:09 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:17:52 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	checkif2(char *str, char c)
+int	checkif2(char *str, char c)
 {
 	int	i;
 	int	count;
@@ -29,8 +29,10 @@ void	checkif2(char *str, char c)
 	}
 	if (count % 2 != 0)
 	{
-		perror("quotes");
+		printf("synthax error : quote\n");
+		return (0);
 	}
+	return (1);
 }
 
 char	*replace_exit_status(char *str, int start)

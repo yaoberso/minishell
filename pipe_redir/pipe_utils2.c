@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:22:13 by nadahman          #+#    #+#             */
-/*   Updated: 2025/03/29 11:14:58 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/02 13:46:13 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
 	}
 }
 
-int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2])
+int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
 {
-	char *cmd_path;
+	char	*cmd_path;
 
-	cmd_path = found_path(cur_cmd);
+	cmd_path = found_path(cur_cmd, env);
 	if (!cmd_path && is_cmd(cur_cmd->cmd) == 0 && cur_cmd->cmd)
 	{
 		printf("command not found: %s\n", cur_cmd->cmd);
@@ -48,22 +48,20 @@ int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2])
 			close(fd[1]);
 		}
 		free(cmd_path);
-		return (1);	
+		return (1);
 	}
 	return (0);
 }
 
-
-
-void exit_status_process(int status)
+void	exit_status_process(int status)
 {
-	while (wait(&status) > 0)  // attend que tout les process se termine, retourne -1 quand les process finissent
+	while (wait(&status) > 0)
 	{
-		if (WIFEXITED(status)) // si les process se sont terminé normalement
-			val_ret = (WEXITSTATUS(status)); 
-		else if (WIFSIGNALED(status)) // si ils se sont stoppé a cause d un signal
+		if (WIFEXITED(status))
+			val_ret = (WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
 		{
-			val_ret = 128 + WTERMSIG(status); // id du selon le signal
+			val_ret = 128 + WTERMSIG(status);
 		}
 	}
 }
@@ -83,33 +81,10 @@ void	dup_and_close_in_child(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
 	}
 }
 
-void	close_pipe_precedent(int pipe_precedent)
+void	close_pipes(int fd[2])
 {
-	if (pipe_precedent != -1)
-		close(pipe_precedent);
+	if (fd[0] != -1)
+		close(fd[0]);
+	if (fd[1] != -1)
+		close(fd[1]);
 }
-
-
-void	check_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2])
-{
-	if (pid < 0)
-	{
-		perror("fork");
-		if (pipe_precedent != -1)
-			close(pipe_precedent);
-		if (cur_cmd->next_cmd)
-		{
-			close(fd[0]);
-			close(fd[1]);
-		}
-		return ;
-	}
-}
-
-
-
-
-
-
-
-
