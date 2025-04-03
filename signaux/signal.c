@@ -6,14 +6,12 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:22:52 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/03 12:41:40 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:03:59 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-// Signal handler pour le mode interactif (prompt)
 void	gestionnaire(int sig)
 {
 	if (sig == SIGINT)
@@ -26,7 +24,6 @@ void	gestionnaire(int sig)
 	}
 }
 
-// Signal handler pour le mode heredoc
 void	gestion_heredoc(int sig)
 {
 	if (sig == SIGINT || sig == SIGQUIT)
@@ -36,7 +33,6 @@ void	gestion_heredoc(int sig)
 	}
 }
 
-// Signal handler pour les commandes en exécution
 void	gestion_exec(int sig)
 {
 	if (sig == SIGINT)
@@ -51,7 +47,6 @@ void	gestion_exec(int sig)
 	}
 }
 
-// Configuration des signaux pour le mode interactif
 void	config_signals(void)
 {
 	struct sigaction	sa;
@@ -64,7 +59,6 @@ void	config_signals(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-// Configuration des signaux pour le mode d'exécution
 void	config_signals_exec(void)
 {
 	struct sigaction	sa;
@@ -76,7 +70,6 @@ void	config_signals_exec(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-// Configuration des signaux pour le mode heredoc
 void	config_signals_heredoc()
 {
 	struct sigaction	sa;
@@ -88,7 +81,7 @@ void	config_signals_heredoc()
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-// Restauration des signaux au mode interactif
+
 void	restore_signals(void)
 {
 	config_signals();

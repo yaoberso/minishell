@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 10:43:49 by nas               #+#    #+#             */
-/*   Updated: 2025/04/03 12:41:59 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:04:24 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ int heredoc_parent(pid_t pid, int heredoc_fd[2])
         close(heredoc_fd[0]);
         return (1);
     }
+    if (val_ret == 130)
+    {
+        exit (1);
+    }
     if (WIFSIGNALED(status) || (WIFEXITED(status) && WEXITSTATUS(status) == 130))
     {
         close(heredoc_fd[0]);
@@ -106,13 +110,7 @@ int redir_heredoc(t_cmd *cmd)
     }
     
     if (pid == 0)
-    {
-        close(heredoc_fd[0]); 
-        config_signals_heredoc();
-        read_heredoc(cmd, heredoc_fd[1]);
-        close(heredoc_fd[1]);
-        exit(0);
-    }
+        heredoc_child(cmd, heredoc_fd);
     else
     {
         if (heredoc_parent(pid, heredoc_fd) != 0)
@@ -121,4 +119,3 @@ int redir_heredoc(t_cmd *cmd)
     restore_signals();
     return (0);
 }
-
