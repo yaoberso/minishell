@@ -73,8 +73,8 @@ il faudra allouer la structure data
 
 
 03-04
-- voir si c est export ou non le probleme
-- pareil pour env "ls | env" est cense donne env
+<!-- - voir si c est export ou non le probleme -->
+<!-- - pareil pour env "ls | env" est cense donne env    -->
 - faire le path
 - heredoc doit s ouvrir avec << et rien avant faire en sorte de rajouter cat devant si il n yest pas deja 
 

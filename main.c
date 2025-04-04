@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/03 13:02:35 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/04 11:32:33 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minishell.h"
 
 int val_ret = 0;
+t_signal	g_signal = {0, 0};  // Initialisation avec le nouveau champ
 
 
 int main(int argc, char **argv, char **envp)
@@ -30,7 +31,7 @@ int main(int argc, char **argv, char **envp)
     tcgetattr(STDIN_FILENO, &term);
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
     while (1)
-    {
+    {   
         config_signals();
         prompt = creat_prompt(env_list);
         input = readline(prompt);
@@ -61,7 +62,6 @@ int main(int argc, char **argv, char **envp)
             exec_pipe(cmd, env_list, envp);
         free(input);
         free_cmd(cmd);
-        val_ret = 0;
     }
     
     return (0);

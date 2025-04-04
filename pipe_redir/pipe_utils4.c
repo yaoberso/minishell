@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/02 11:08:57 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/04 11:40:57 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	exec_simple_cmd(t_cmd *cur_cmd, t_env *env)
 }
 
 void	child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
-		char **envp)
+		char **envp, t_env *env)
 {
 	if (pipe_precedent != -1)
 	{
@@ -67,7 +67,12 @@ void	child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 		close(fd[1]);
 		close(fd[0]);
 	}
-	exec_process(cur_cmd, fd, cur_cmd->env, envp);
+	if (is_cmd(cur_cmd->cmd))
+	{
+		cmd_exec(cur_cmd, env);
+		exit(0);
+	}
+	exec_process(cur_cmd, fd, env, envp);
 	exit(1);
 }
 

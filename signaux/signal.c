@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/24 12:22:52 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/03 14:03:59 by nadahman         ###   ########.fr       */
+/*   Created: 2025/04/04 10:14:01 by nas               #+#    #+#             */
+/*   Updated: 2025/04/04 11:09:11 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Signal handler pour le mode interactif (prompt)
 void	gestionnaire(int sig)
 {
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
+		printf("controle C detecte en mode normal\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -24,15 +26,19 @@ void	gestionnaire(int sig)
 	}
 }
 
+
+// Signal handler pour le mode heredoc
 void	gestion_heredoc(int sig)
 {
 	if (sig == SIGINT || sig == SIGQUIT)
 	{
+		printf("controle C detecte dans un heredoc\n");
 		val_ret = 130;
 		exit(130);
 	}
 }
 
+// Signal handler pour les commandes en exécution
 void	gestion_exec(int sig)
 {
 	if (sig == SIGINT)
@@ -47,6 +53,7 @@ void	gestion_exec(int sig)
 	}
 }
 
+// Configuration des signaux pour le mode interactif
 void	config_signals(void)
 {
 	struct sigaction	sa;
@@ -59,6 +66,7 @@ void	config_signals(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
+// Configuration des signaux pour le mode d'exécution
 void	config_signals_exec(void)
 {
 	struct sigaction	sa;
@@ -70,9 +78,11 @@ void	config_signals_exec(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
+// Configuration des signaux pour le mode heredoc
 void	config_signals_heredoc()
 {
 	struct sigaction	sa;
+
 
 	sa.sa_handler = gestion_heredoc;
 	sa.sa_flags = 0;
@@ -81,7 +91,7 @@ void	config_signals_heredoc()
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-
+// Restauration des signaux au mode interactif
 void	restore_signals(void)
 {
 	config_signals();

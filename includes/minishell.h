@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/03 12:58:36 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/04 11:35:39 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ extern int					val_ret;
 # include <termios.h>
 # include <unistd.h>
 
+# include <setjmp.h>
 typedef struct s_signal
 {
-	int						mode;
-	int						heredoc_fd[2];
-	char					*line;
-}							t_signal;
+	int	in_heredoc;
+	int in_execution;
+}						t_signal;
 
 // structur qui ce met a jour a chaque deplasement dans les fichier
 typedef struct s_env
@@ -204,7 +204,7 @@ void						create_process(t_cmd *cur_cmd, int fd[2],
 								int pipe_precedent, pid_t pid);
 void						exec_simple_cmd(t_cmd *cur_cmd, t_env *env);
 void						child_process(t_cmd *cur_cmd, int fd[2],
-								int pipe_precedent, char **envp);
+								int pipe_precedent, char **envp, t_env *env);
 int							parent_process(int *fd, int pipe_precedent,
 								t_cmd *cur_cmd);
 void						close_pipes(int fd[2]);

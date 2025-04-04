@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/04/03 12:52:10 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/04 11:35:28 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 		pid = fork();
 		check_fork(pid, pipe_precedent, cur_cmd, fd);
 		if (pid == 0)
-			child_process(cur_cmd, fd, pipe_precedent, envp);
+			child_process(cur_cmd, fd, pipe_precedent, envp, env);
 		pipe_precedent = parent_process(fd, pipe_precedent, cur_cmd);
 		cur_cmd = cur_cmd->next_cmd;
 	}
