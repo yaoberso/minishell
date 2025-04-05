@@ -78,3 +78,24 @@ il faudra allouer la structure data
 - faire le path
 - heredoc doit s ouvrir avec << et rien avant faire en sorte de rajouter cat devant si il n yest pas deja 
 
+<!-- - corriger les segfaults /mnt/c/users/nasim/desktop/minishell$ <
+bash: syntax error near unexpected token `newline'
+/mnt/c/users/nasim/desktop/minishell$ < ls
+[34]    117184 segmentation fault (core dumped)  ./minishell                    // a cause du malloc dans le main 
+revoir comment je l avais corriger avant
+et tester ducoup commande avec redirections etc
+- Test << redirection (il n'est pas nécessaire de mettre à jour l'historique). -->
+
+- quand je test des espaces vides ou tabs et qu ensuite je fais entree lorsque je test une commande ca ne l execute pas
+
+- expr $? + $
+
+- controle C dans les cat sans arguments grep qqchose ou redirection
+
+- ca "ls | grep c | wc -l" ne fait rien mais en bash il ecris command not found dans le notre
+
+<!-- - ls | export doit fonctionner et montrer export -->
+
+<!-- - tester redirection dans pipe et comparer avec bash -->
+
+- quand je fais entrer ca ecris un M retester cat cat ls

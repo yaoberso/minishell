@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/02 13:22:55 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/05 10:45:43 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	cmd_in_pipe(char *cmd)
 		return (0);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (1);
+	// else if (ft_strcmp(cmd, "export") == 0)
+	// 	return (1);
 	else if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
 	else if (ft_strcmp(cmd, "exit") == 0)

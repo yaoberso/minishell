@@ -6,19 +6,19 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/04 11:40:57 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/05 10:59:02 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_pipe_precedent(int pipe_precedent)
+void close_pipe_precedent(int pipe_precedent)
 {
 	if (pipe_precedent != -1)
 		close(pipe_precedent);
 }
 
-void	check_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2])
+void check_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2])
 {
 	if (pid < 0)
 	{
@@ -30,19 +30,18 @@ void	check_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2])
 			close(fd[0]);
 			close(fd[1]);
 		}
-		return ;
+		return;
 	}
 }
 
-void	exec_simple_cmd(t_cmd *cur_cmd, t_env *env)
+void exec_simple_cmd(t_cmd *cur_cmd, t_env *env)
 {
-	int	save_stdin;
-	int	save_stdout;
+	int save_stdin;
+	int save_stdout;
 
 	save_stdin = dup(STDIN_FILENO);
 	save_stdout = dup(STDOUT_FILENO);
-	if (cur_cmd->redirection && cur_cmd->cmd != NULL
-		&& cur_cmd->redirection != NULL)
+	if (cur_cmd->redirection && cur_cmd->cmd != NULL)
 	{
 		exec_redir(cur_cmd);
 	}
@@ -53,20 +52,39 @@ void	exec_simple_cmd(t_cmd *cur_cmd, t_env *env)
 	close(save_stdout);
 }
 
-void	child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
-		char **envp, t_env *env)
+int has_stdout_redirection(t_cmd *cmd)
+{
+	t_redirection *redir = cmd->redirection;
+
+	while (redir)
+	{
+		if (redir->type && (ft_strcmp(redir->type, ">") == 0 || ft_strcmp(redir->type, ">>") == 0))
+			return (1);
+		redir = redir->next;
+	}
+	return (0);
+}
+
+void child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
+				   char **envp, t_env *env)
 {
 	if (pipe_precedent != -1)
 	{
 		dup2(pipe_precedent, STDIN_FILENO);
 		close(pipe_precedent);
 	}
-	if (cur_cmd->next_cmd)
-	{
+
+	// rediriger la sortie vers le pipe SEULEMENT si pas de redirection explicite
+	if (cur_cmd->next_cmd && !has_stdout_redirection(cur_cmd))
 		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-		close(fd[0]);
-	}
+
+	close(fd[1]);
+	close(fd[0]);
+
+	// exécuter les redirections (après les dup2 pour que les fichiers soient en dernier)
+	if (cur_cmd->redirection)
+		exec_redir(cur_cmd);
+
 	if (is_cmd(cur_cmd->cmd))
 	{
 		cmd_exec(cur_cmd, env);
@@ -76,7 +94,7 @@ void	child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 	exit(1);
 }
 
-int	parent_process(int *fd, int pipe_precedent, t_cmd *cur_cmd)
+int parent_process(int *fd, int pipe_precedent, t_cmd *cur_cmd)
 {
 	close_pipe_precedent(pipe_precedent);
 	if (cur_cmd->next_cmd)
