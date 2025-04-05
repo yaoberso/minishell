@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/04/04 11:35:28 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/05 13:16:16 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 	while (cur_cmd)
 	{
 		create_pipe_in_exec(cur_cmd, fd, pipe_precedent);
-		cmd_path = found_path(cur_cmd);
-		if (command_not_found(cur_cmd, pipe_precedent, fd) == 1)
+		cmd_path = found_path(cur_cmd, env);
+		if (command_not_found(cur_cmd, pipe_precedent, fd, env) == 1)
 			return ;
 		if (is_cmd(cur_cmd->cmd) == 1 && pipe_precedent == -1
 			&& cur_cmd->next_cmd == NULL)

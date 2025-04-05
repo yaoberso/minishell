@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/04 11:35:39 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/05 13:15:53 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,14 +182,14 @@ void						exec_process(t_cmd *cur_cmd, int fd[2], t_env *env,
 void						redir_stdin(int fd[2]);
 char						**get_args(t_cmd *cmd);
 int							redir_heredoc(t_cmd *cmd);
-char						*found_path(t_cmd *cmd);
+char						*found_path(t_cmd *cmd, t_env *env);
 void						apply_redirections(t_cmd *cmd);
 
 // pipe utils
 void						create_pipe_in_exec(t_cmd *cur_cmd, int fd[2],
 								int pipe_precedent);
 int							command_not_found(t_cmd *cur_cmd,
-								int pipe_precedent, int fd[2]);
+								int pipe_precedent, int fd[2], t_env *env);
 void						create_fork(pid_t pid, int pipe_precedent,
 								t_cmd *cur_cmd, int fd[2]);
 void						exit_status_process(int status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:59:02 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/03 11:44:47 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:14:24 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	exec_process(t_cmd *cur_cmd, int fd[2], t_env *env, char **envp)
 
 	if (!cur_cmd || !cur_cmd->cmd)
 		return ;
-	cmd_path = found_path(cur_cmd);
+	if (!cur_cmd->env)
+		cur_cmd->env = env;
+	cmd_path = found_path(cur_cmd, env);
 	if (is_cmd(cur_cmd->cmd) == 1)
 	{
 		handle_builtin(cur_cmd, env, cmd_path);

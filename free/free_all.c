@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:01:37 by nas               #+#    #+#             */
-/*   Updated: 2025/03/16 12:26:45 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/05 13:44:25 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void free_cmd(t_cmd *cmd)
             free(cmd->cmd);
         if (cmd->redirection)
             free_redirection(cmd->redirection);
+        if (cmd->heredoc_fd != -1)
+			close(cmd->heredoc_fd);
         free(cmd);
         cmd = next;
-        if (next && next->prev_cmd)
-            next->prev_cmd = NULL;
     }
 }
 

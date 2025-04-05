@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:55:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/03 11:44:30 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:13:28 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ char	*search_in_paths(char **paths, char *cmd)
 	return (NULL);
 }
 
-char	*found_path(t_cmd *cmd)
+char	*found_path(t_cmd *cmd, t_env *env)
 {
 	char	*path;
 	char	**paths;
 	char	*result;
 
-	path = getenv("PATH");
+	path = get_env_value(env, "PATH");
 	if (path == NULL || cmd->cmd == NULL)
 		return (NULL);
 	paths = ft_split(path, ':');

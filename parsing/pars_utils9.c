@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils9.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:57 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/03 13:05:30 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:52:33 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	get_redir_file(t_redirection *redir, char *str, int *index, t_env *env)
 	{
 		printf("bash: syntax error near unexpected token `newline'\n");
 		free(redir->type);
-		// free(redir);
+		free(redir);
 		return (0);
 	}
 	redir->file = recup_token(str, index, env);

@@ -3,39 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:22:13 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/03 11:47:43 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:24:34 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
+// void	create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
+// {
+// 	if (cur_cmd->next_cmd)
+// 	{
+// 		if (pipe(fd) == -1)
+// 		{
+// 			perror("pipe");
+// 			if (pipe_precedent != -1)
+// 				close(pipe_precedent);
+// 			return ;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		fd[1] = -1;
+// 		fd[0] = -1;
+// 	}
+// }
+
+void create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
 {
-	if (cur_cmd->next_cmd)
-	{
-		if (pipe(fd) == -1)
-		{
-			perror("pipe");
-			if (pipe_precedent != -1)
-				close(pipe_precedent);
-			return ;
-		}
-	}
-	else
-	{
-		fd[1] = -1;
-		fd[0] = -1;
-	}
+    if (!cur_cmd)
+        return;
+    if (cur_cmd->next_cmd)
+    {
+        if (pipe(fd) == -1)
+        {
+            perror("pipe");
+            if (pipe_precedent != -1)
+                close(pipe_precedent);
+            return;
+        }
+        if (cur_cmd->next_cmd && !cur_cmd->next_cmd->env && cur_cmd->env)
+            cur_cmd->next_cmd->env = cur_cmd->env;
+    }
+    else
+    {
+        fd[1] = -1;
+        fd[0] = -1;
+    }
+    if (pipe_precedent != -1)
+    {
+        if (!cur_cmd->env && cur_cmd->prev_cmd && cur_cmd->prev_cmd->env)
+            cur_cmd->env = cur_cmd->prev_cmd->env;
+    }
 }
 
-int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2])
+int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
 {
 	char	*cmd_path;
 
-	cmd_path = found_path(cur_cmd);
+	cmd_path = found_path(cur_cmd, env);
 	if (!cmd_path && is_cmd(cur_cmd->cmd) == 0 && cur_cmd->cmd)
 	{
 		if (cur_cmd->cmd && is_only_spaces(cur_cmd->cmd))

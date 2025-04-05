@@ -64,18 +64,18 @@ il faudra allouer la structure data
 
 02-04
 
-    gerer espace
+    <!-- gerer espace -->
     mettre un message d erreur qund on exit avec des arguments
     gerer la valeur de retour pou commande interne
-    export | ls et ls | export a gerer
-    la variable PATH ne se suprime pas avec unset
+    <!-- export | ls et ls | export a gerer -->
+    <!-- la variable PATH ne se suprime pas avec unset -->
 
 
 
 03-04
 <!-- - voir si c est export ou non le probleme -->
 <!-- - pareil pour env "ls | env" est cense donne env    -->
-- faire le path
+<!-- - faire le path -->
 - heredoc doit s ouvrir avec << et rien avant faire en sorte de rajouter cat devant si il n yest pas deja 
 
 <!-- - corriger les segfaults /mnt/c/users/nasim/desktop/minishell$ <
@@ -86,7 +86,7 @@ revoir comment je l avais corriger avant
 et tester ducoup commande avec redirections etc
 - Test << redirection (il n'est pas nécessaire de mettre à jour l'historique). -->
 
-- quand je test des espaces vides ou tabs et qu ensuite je fais entree lorsque je test une commande ca ne l execute pas
+<!-- - quand je test des espaces vides ou tabs et qu ensuite je fais entree lorsque je test une commande ca ne l execute pas -->
 
 - expr $? + $
 
@@ -98,4 +98,4 @@ et tester ducoup commande avec redirections etc
 
 <!-- - tester redirection dans pipe et comparer avec bash -->
 
-- quand je fais entrer ca ecris un M retester cat cat ls
+<!-- - quand je fais entrer ca ecris un M retester cat cat ls -->
