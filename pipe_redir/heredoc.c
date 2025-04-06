@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/04 11:09:39 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/06 13:20:49 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,15 @@ void read_heredoc(t_cmd *cmd, int fd)
     {
         line = readline("> ");
         if (!line)
-            break ;
-        if (!line)
         {
             write(STDOUT_FILENO, "\n", 1);
             break;
         }
-        if (val_ret == 130)
-        {
-            free(line);
-            break;
-        }
+        // if (val_ret == 130)
+        // {
+        //     free(line);
+        //     break;
+        // }
         if (ft_strcmp(line, cmd->redirection->heredoc_delim) == 0) 
         {
             free(line);
@@ -74,7 +72,6 @@ int heredoc_parent(pid_t pid, int heredoc_fd[2])
     }
     if (WIFSIGNALED(status) || (WIFEXITED(status) && WEXITSTATUS(status) == 130))
     {
-        restore_signals();
         close(heredoc_fd[0]);
         return (1);
     }

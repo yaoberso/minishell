@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/04/05 13:16:16 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/06 12:24:30 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ void	exec_pipe(t_cmd *cmd, t_env *env, char **envp)
 	int		status;
 	char	*cmd_path;
 
+	cur_cmd = cmd;
+	while (cur_cmd)
+	{
+		if (cur_cmd->redirection)
+			exec_heredocs(cur_cmd);
+		cur_cmd = cur_cmd->next_cmd;
+	}
 	status = -1;
 	cur_cmd = cmd;
 	pipe_precedent = -1;

@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/05 13:15:53 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/06 12:16:42 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ char						**get_args(t_cmd *cmd);
 int							redir_heredoc(t_cmd *cmd);
 char						*found_path(t_cmd *cmd, t_env *env);
 void						apply_redirections(t_cmd *cmd);
+void	exec_heredocs(t_cmd *cmd);
 
 // pipe utils
 void						create_pipe_in_exec(t_cmd *cur_cmd, int fd[2],

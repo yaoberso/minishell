@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:57 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/05 13:52:33 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/06 12:34:11 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_redirection(t_redirection *redir)
 	redir->type = NULL;
 	redir->file = NULL;
 	redir->next = NULL;
+	redir->heredoc_delim = NULL;
 }
 
 int	handle_heredoc(t_redirection *redir, char *str, int *index, t_env *env)
