@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/06 12:43:54 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/07 16:00:09 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **envp)
     cmd->next_cmd = NULL;
 	cmd->prev_cmd = NULL;
 	cmd->heredoc_fd = -1;
+	cmd->save_stdin = -1;
 	cmd->env = env_list;
 	while (1)
 	{
@@ -130,12 +131,16 @@ int	main(int argc, char **argv, char **envp)
 // 		}
 // 		ft_memset(cmd, 0, sizeof(t_cmd));
 // 		cmd->heredoc_fd = -1;
+// 		cmd->save_stdin = -1;
 // 		cmd->env = env_list;
 
 // 		parsing(input, cmd, env_list);
 
 // 		if (val_ret != 1)
+// 		{	
 // 			exec_pipe(cmd, env_list, envp);
+// 			printf("JE SUIS DANS LE PARENT\n");
+// 		}
 // 		else
 // 			val_ret = 0;
 

@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 12:44:12 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/07 15:58:22 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ int redir_heredoc(t_cmd *cmd)
         close(saved_stdin);
         return (-1);
     }
-    
-    printf("DEBUG: Avant fork pour heredoc\n");
     pid = fork();
     if (pid == -1)
     {
@@ -123,17 +121,12 @@ int redir_heredoc(t_cmd *cmd)
     if (pid == 0)
     {
         // Processus enfant
-        printf("DEBUG: Processus enfant heredoc (PID: %d)\n", getpid());
-        close(saved_stdin); // On n'a pas besoin du stdin sauvegardé dans l'enfant
+        close(saved_stdin);
         heredoc_child(cmd, heredoc_fd);
-        // Ne devrait jamais arriver ici, mais par sécurité:
-        printf("DEBUG: ERREUR - L'enfant heredoc n'a pas quitté correctement\n");
         exit(1);
     }
     else
     {
-        // Processus parent
-        printf("DEBUG: Processus parent (PID: %d) attend heredoc (PID: %d)\n", getpid(), pid);
         close(heredoc_fd[1]); // Fermer le côté écriture du pipe
         
         if (waitpid(pid, &status, 0) == -1)
@@ -144,13 +137,8 @@ int redir_heredoc(t_cmd *cmd)
             close(saved_stdin);
             return (-1);
         }
-        
-        printf("DEBUG: Enfant heredoc (PID: %d) terminé avec statut: %d\n", pid, status);
-        
-        // Vérifier si l'enfant s'est terminé normalement
         if (WIFSIGNALED(status))
         {
-            printf("DEBUG: Enfant heredoc terminé par signal: %d\n", WTERMSIG(status));
             val_ret = 130; // Signalé
             close(heredoc_fd[0]);
             dup2(saved_stdin, STDIN_FILENO);
@@ -159,16 +147,12 @@ int redir_heredoc(t_cmd *cmd)
         }
         else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
         {
-            printf("DEBUG: Enfant heredoc a quitté avec code: %d\n", WEXITSTATUS(status));
             val_ret = WEXITSTATUS(status);
             close(heredoc_fd[0]);
             dup2(saved_stdin, STDIN_FILENO);
             close(saved_stdin);
             return (-1);
         }
-        
-        // Rediriger STDIN vers le pipe
-        printf("DEBUG: Redirection de STDIN vers le pipe heredoc\n");
         if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
         {
             perror("dup2");
@@ -178,13 +162,10 @@ int redir_heredoc(t_cmd *cmd)
             return (-1);
         }
         
-        close(heredoc_fd[0]); // Plus besoin après dup2
+        close(heredoc_fd[0]);
     }
     
     restore_signals();
-    // Nous conservons saved_stdin pour pouvoir restaurer plus tard
-    cmd->save_stdin = saved_stdin; // Tu devras ajouter ce champ à la structure t_cmd
-    
-    printf("DEBUG: Heredoc terminé avec succès\n");
+    cmd->save_stdin = saved_stdin;
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 12:46:53 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/07 16:02:10 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,14 @@ int parent_process(int *fd, int pipe_precedent, t_cmd *cur_cmd)
 
 void restore_heredoc_stdin(t_cmd *cmd)
 {
-    if (cmd->save_stdin != -1)
-    {
-        printf("DEBUG: Restauration de stdin à partir de saved_stdin\n");
-        dup2(cmd->save_stdin, STDIN_FILENO);
-        close(cmd->save_stdin);
-        cmd->save_stdin = -1;
-    }
+	if (cmd && cmd->save_stdin >= 0)
+	{
+		if (dup2(cmd->save_stdin, STDIN_FILENO) == -1)
+			perror("dup2 (restore_heredoc_stdin)");
+		close(cmd->save_stdin);
+		cmd->save_stdin = -1;
+	}
 }
+
+
+

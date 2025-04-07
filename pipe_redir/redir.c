@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 12:49:24 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/07 16:06:36 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	exec_heredocs(t_cmd *cmd)
 {
 	t_redirection	*current;
 	t_redirection	*tmp;
+	int heredoc_found;
 
 	current = cmd->redirection;
 	while (current)
@@ -76,11 +77,15 @@ int	exec_heredocs(t_cmd *cmd)
 			cmd->redirection = current;
 			redir_heredoc(cmd);
 			cmd->redirection = tmp;
+			heredoc_found = 1;
 		}
 		if (val_ret != 0)
 			return (-1);
 		current = current->next;
 	}
-	return (0);
+	if (heredoc_found == 1)
+		return (0);
+	else
+		return (-1);	
 }
 
