@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 15:58:22 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/07 16:57:40 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,40 +92,47 @@ int redir_heredoc(t_cmd *cmd)
     pid_t pid;
     int heredoc_fd[2];
     int status;
-    int saved_stdin;
-
+    
     // Sauvegarder l'entrée standard
-    saved_stdin = dup(STDIN_FILENO);
-    if (saved_stdin == -1)
+    cmd->save_stdin = dup(STDIN_FILENO);
+    if (cmd->save_stdin == -1)
     {
         perror("dup");
         return (-1);
     }
 
-    config_signals_heredoc();
+    // Configurer les signaux pour le heredoc dans le processus parent
+    signal(SIGINT, SIG_IGN); // Ignorer SIGINT temporairement dans le parent
+    
     if (heredoc_pipe(heredoc_fd) != 0)
     {
-        close(saved_stdin);
+        close(cmd->save_stdin);
+        cmd->save_stdin = -1;
         return (-1);
     }
+    
     pid = fork();
     if (pid == -1)
     {
         perror("fork");
         close(heredoc_fd[0]);
         close(heredoc_fd[1]);
-        close(saved_stdin);
+        close(cmd->save_stdin);
+        cmd->save_stdin = -1;
+        restore_signals(); // Restaurer les signaux en cas d'erreur
         return (-1);
     }
     
-    if (pid == 0)
+    if (pid == 0) // Processus enfant
     {
-        // Processus enfant
-        close(saved_stdin);
+        // Restaurer le comportement par défaut de SIGINT dans l'enfant
+        signal(SIGINT, SIG_DFL);
+        signal(SIGQUIT, SIG_IGN);
+        close(cmd->save_stdin);
         heredoc_child(cmd, heredoc_fd);
-        exit(1);
+        // Ne devrait jamais atteindre ce point
     }
-    else
+    else // Processus parent
     {
         close(heredoc_fd[1]); // Fermer le côté écriture du pipe
         
@@ -133,39 +140,136 @@ int redir_heredoc(t_cmd *cmd)
         {
             perror("waitpid");
             close(heredoc_fd[0]);
-            dup2(saved_stdin, STDIN_FILENO);
-            close(saved_stdin);
+            dup2(cmd->save_stdin, STDIN_FILENO);
+            close(cmd->save_stdin);
+            cmd->save_stdin = -1;
+            restore_signals();
             return (-1);
         }
+        
+        // Vérifier si l'enfant a été interrompu par un signal
         if (WIFSIGNALED(status))
         {
-            val_ret = 130; // Signalé
+            val_ret = 130; // SIGINT
             close(heredoc_fd[0]);
-            dup2(saved_stdin, STDIN_FILENO);
-            close(saved_stdin);
+            dup2(cmd->save_stdin, STDIN_FILENO);
+            close(cmd->save_stdin);
+            cmd->save_stdin = -1;
+            restore_signals();
             return (-1);
         }
-        else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+        
+        // Vérifier si l'enfant s'est terminé avec un code de sortie non nul
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
         {
             val_ret = WEXITSTATUS(status);
             close(heredoc_fd[0]);
-            dup2(saved_stdin, STDIN_FILENO);
-            close(saved_stdin);
+            dup2(cmd->save_stdin, STDIN_FILENO);
+            close(cmd->save_stdin);
+            cmd->save_stdin = -1;
+            restore_signals();
             return (-1);
         }
+        
+        // Rediriger l'entrée standard vers le pipe
         if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
         {
             perror("dup2");
             close(heredoc_fd[0]);
-            dup2(saved_stdin, STDIN_FILENO);
-            close(saved_stdin);
+            dup2(cmd->save_stdin, STDIN_FILENO);
+            close(cmd->save_stdin);
+            cmd->save_stdin = -1;
+            restore_signals();
             return (-1);
         }
         
         close(heredoc_fd[0]);
+        restore_signals(); // Restaurer les signaux pour le processus parent
     }
     
-    restore_signals();
-    cmd->save_stdin = saved_stdin;
+    // Le save_stdin reste valide pour être restauré plus tard
     return (0);
 }
+
+// int redir_heredoc(t_cmd *cmd)
+// {
+//     pid_t pid;
+//     int heredoc_fd[2];
+//     int status;
+//     int saved_stdin;
+
+//     // Sauvegarder l'entrée standard
+//     saved_stdin = dup(STDIN_FILENO);
+//     if (saved_stdin == -1)
+//     {
+//         perror("dup");
+//         return (-1);
+//     }
+
+//     config_signals_heredoc();
+//     if (heredoc_pipe(heredoc_fd) != 0)
+//     {
+//         close(saved_stdin);
+//         return (-1);
+//     }
+//     pid = fork();
+//     if (pid == -1)
+//     {
+//         perror("fork");
+//         close(heredoc_fd[0]);
+//         close(heredoc_fd[1]);
+//         close(saved_stdin);
+//         return (-1);
+//     }
+    
+//     if (pid == 0)
+//     {
+//         // Processus enfant
+//         close(saved_stdin);
+//         heredoc_child(cmd, heredoc_fd);
+//         exit(1);
+//     }
+//     else
+//     {
+//         close(heredoc_fd[1]); // Fermer le côté écriture du pipe
+        
+//         if (waitpid(pid, &status, 0) == -1)
+//         {
+//             perror("waitpid");
+//             close(heredoc_fd[0]);
+//             dup2(saved_stdin, STDIN_FILENO);
+//             close(saved_stdin);
+//             return (-1);
+//         }
+//         if (WIFSIGNALED(status))
+//         {
+//             val_ret = 130; // Signalé
+//             close(heredoc_fd[0]);
+//             dup2(saved_stdin, STDIN_FILENO);
+//             close(saved_stdin);
+//             return (-1);
+//         }
+//         else if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+//         {
+//             val_ret = WEXITSTATUS(status);
+//             close(heredoc_fd[0]);
+//             dup2(saved_stdin, STDIN_FILENO);
+//             close(saved_stdin);
+//             return (-1);
+//         }
+//         if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
+//         {
+//             perror("dup2");
+//             close(heredoc_fd[0]);
+//             dup2(saved_stdin, STDIN_FILENO);
+//             close(saved_stdin);
+//             return (-1);
+//         }
+        
+//         close(heredoc_fd[0]);
+//     }
+    
+//     restore_signals();
+//     cmd->save_stdin = saved_stdin;
+//     return (0);
+// }

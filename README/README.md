@@ -99,3 +99,8 @@ et tester ducoup commande avec redirections etc
 <!-- - tester redirection dans pipe et comparer avec bash -->
 
 <!-- - quand je fais entrer ca ecris un M retester cat cat ls -->
+
+
+07-04
+
+- regarder a l ecole si j ai le soucis de double free quand je fais "cat >>" ou autre

@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 16:02:10 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/07 16:55:22 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int has_stdout_redirection(t_cmd *cmd)
 void child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 				   char **envp, t_env *env)
 {
+	config_signals_exec();
 	if (pipe_precedent != -1)
 	{
 		dup2(pipe_precedent, STDIN_FILENO);
@@ -91,7 +92,7 @@ void child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 		exit(0);
 	}
 	exec_process(cur_cmd, fd, env, envp);
-	exit(1);
+	exit(127);
 }
 
 int parent_process(int *fd, int pipe_precedent, t_cmd *cur_cmd)
@@ -111,6 +112,10 @@ void restore_heredoc_stdin(t_cmd *cmd)
 	{
 		if (dup2(cmd->save_stdin, STDIN_FILENO) == -1)
 			perror("dup2 (restore_heredoc_stdin)");
+		else
+		{
+			
+		}
 		close(cmd->save_stdin);
 		cmd->save_stdin = -1;
 	}

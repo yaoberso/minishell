@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:14:01 by nas               #+#    #+#             */
-/*   Updated: 2025/04/04 11:09:11 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/07 16:49:07 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	gestionnaire(int sig)
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		printf("controle C detecte en mode normal\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
