@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/05 10:45:43 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/07 10:59:33 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 		ft_unset(cmd->arg, &env);
 	else if (ft_strcmp(cmd->cmd, "exit") == 0)
 	{
+		free(cmd);
+		free_env(env);
 		printf("exit\n");
 		exit(1);
 	}

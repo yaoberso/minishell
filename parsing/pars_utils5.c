@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils5.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:43 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/01 12:07:29 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/07 10:55:07 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,31 @@ char	*expand_variables(char *str, t_env *env)
 	while (result[i])
 	{
 		quote_state = update_quote_state(result[i], quote_state);
-		if (result[i] == '$' && quote_state != '\'')
+		if (result[i] == '$' && quote_state != '\'' && result[i + 1] != '\0')
+		{
+			if (result[i + 1] == '?')
+			{
+				expanded = replace_exit_status(result, i);
+				if (!expanded)
+					return (NULL);
+				free(result);
+				result = expanded;
+				i += 2;
+				continue ;
+			}
+			else if (result[i + 1] == '$')
+			{
+				i += 2;
+				continue ;
+			}
+			expanded = extract_var_name(result, i, &i);
+			if (!expanded)
+				return (NULL);
+			result = replace_var_in_str(result, i, expanded, i);
+			free(expanded);
+			continue ;
+		}
+		else if (result[i] == '\\' && quote_state != '\'' && result[i + 1])
 		{
 			expanded = expand_var_at_position(result, &i, env);
 			if (!expanded)

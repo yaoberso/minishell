@@ -6,7 +6,7 @@
 /*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:41 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/03/16 13:26:49 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/07 10:14:24 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ void	ft_pwd(void)
 {
 	char	cwd[1024];
 
+	val_ret = 0;
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 	{
 		perror("getcwd");
+		val_ret = 1;
 		exit(1);
 	}
 	printf("%s\n", cwd);
-	val_ret = 0;
 }
