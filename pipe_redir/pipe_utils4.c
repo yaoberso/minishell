@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 16:55:22 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/07 17:11:42 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,12 @@ void child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 		dup2(pipe_precedent, STDIN_FILENO);
 		close(pipe_precedent);
 	}
-
-	// rediriger la sortie vers le pipe SEULEMENT si pas de redirection explicite
 	if (cur_cmd->next_cmd && !has_stdout_redirection(cur_cmd))
 		dup2(fd[1], STDOUT_FILENO);
 
 	close(fd[1]);
 	close(fd[0]);
 
-	// exécuter les redirections (après les dup2 pour que les fichiers soient en dernier)
 	if (cur_cmd->redirection)
 		exec_redir(cur_cmd);
 
