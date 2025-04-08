@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 17:12:43 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/08 12:44:23 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void heredoc_child(t_cmd *cmd, int heredoc_fd[2])
     close(heredoc_fd[0]); 
     config_signals_heredoc();
     read_heredoc(cmd, heredoc_fd[1]);
+    free_cmd(cmd);
     close(heredoc_fd[1]);
     exit(0);
 }
