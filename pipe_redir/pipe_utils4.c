@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 17:11:42 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/08 10:51:39 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,10 @@ void child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 	if (cur_cmd->next_cmd && !has_stdout_redirection(cur_cmd))
 		dup2(fd[1], STDOUT_FILENO);
 
-	close(fd[1]);
-	close(fd[0]);
+	if (fd[1] != -1)
+		close(fd[1]);
+	if (fd[0] != -1)
+		close(fd[0]);
 
 	if (cur_cmd->redirection)
 		exec_redir(cur_cmd);
