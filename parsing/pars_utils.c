@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/04/05 13:51:35 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/09 18:50:30 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_redirection	*found_redirection(char *str, int *index, t_env *env)
 		return (redir);
 	if (!validate_redirection(redir, str, index, env))
 	{
-		free(redir);
+		// free(redir);
 		return (NULL);
 	}
 	return (redir);

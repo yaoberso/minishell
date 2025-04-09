@@ -112,11 +112,11 @@ et tester ducoup commande avec redirections etc
 
 
 09-04 
-
+<!-- 
 - toujours sa /home/nadahman/Desktop/minishell$ cat <<
 bash: syntax error near unexpected token `newline'
 /home/nadahman/Desktop/minishell$ cat >>
 bash: syntax error near unexpected token `newline'
 free(): double free detected in tcache 2
-[8]    28922 IOT instruction (core dumped)  ./minishell
-- revoir le val_ret pour l erreur de cat << >>
+[8]    28922 IOT instruction (core dumped)  ./minishell -->
+<!-- - revoir le val_ret pour l erreur de cat << >> -->

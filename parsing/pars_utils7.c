@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils7.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:50 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/01 12:08:58 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:31:43 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,21 @@ void	init_next_cmd(t_cmd *next_cmd)
 	next_cmd->arg = NULL;
 	next_cmd->redirection = NULL;
 	next_cmd->next_cmd = NULL;
+	next_cmd->prev_cmd = NULL;
+	next_cmd->heredoc_fd = -1;
+	next_cmd->save_stdin = -1;
+
+	next_cmd->std = malloc(sizeof(t_std));
+	if (next_cmd->std == NULL)
+	{
+		free(next_cmd);
+		return ;
+	}
+	next_cmd->std->save_instd = -1;
+	next_cmd->std->save_outstd = -1;
+	next_cmd->std->original_stdin = -1;
+	next_cmd->if_error = 0;
+	next_cmd->env = NULL;
 }
 
 int	check_pipe_syntax(char *str, int *index, t_cmd *next_cmd)

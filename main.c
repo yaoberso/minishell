@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:42:10 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/09 13:51:52 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:43:53 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd->std->save_instd = -1;
 	cmd->std->save_outstd = -1;
 	cmd->std->original_stdin = -1;
+	cmd->if_error = 0;
 	cmd->env = env_list;
 	while (1)
 	{
@@ -79,9 +80,9 @@ int	main(int argc, char **argv, char **envp)
 			cmd->save_stdin = -1;
 		}
 		parsing(input, cmd, env_list);
-		if (val_ret == 1)
+		if (cmd->if_error == 1)
 		{
-			val_ret = 0;
+			cmd->if_error = 0;
 		}
 		else
 		{
