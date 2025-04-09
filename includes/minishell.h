@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/09 11:27:28 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:29:02 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ void						free_token(t_token *token);
 void						free_redirection(t_redirection *redir);
 void						free_cmd(t_cmd *cmd);
 void						free_tab(char **tab);
+void free_content_cmd(t_cmd *cmd);
 
 // utils
 char						*creat_prompt(t_env *env);
