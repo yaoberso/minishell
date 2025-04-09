@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/09 11:50:45 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:50:51 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void exec_simple_cmd(t_cmd *cur_cmd, t_env *env)
 	}
 	cmd_exec(cur_cmd, env);
 	dup2(cur_cmd->std->save_instd, STDIN_FILENO);
-	dup2(cur_cmd->std->save_instd, STDOUT_FILENO);
+	dup2(cur_cmd->std->save_outstd, STDOUT_FILENO);
 	close(cur_cmd->std->save_instd);
-	close(cur_cmd->std->save_instd);
+	close(cur_cmd->std->save_outstd);
 }
 
 int has_stdout_redirection(t_cmd *cmd)

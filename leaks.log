@@ -1,66 +1,64 @@
-==4160536== Memcheck, a memory error detector
-==4160536== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==4160536== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==4160536== Command: ./minishell
-==4160536== Parent PID: 4160535
-==4160536== 
-==4160536== 
-==4160536== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==4160536== Open file descriptor 6: /dev/pts/1
-==4160536==    at 0x49DAFEB: dup (syscall-template.S:120)
-==4160536==    by 0x10E0CB: exec_simple_cmd (pipe_utils4.c:40)
-==4160536==    by 0x10DAE2: exec_pipe (pipe.c:75)
-==4160536==    by 0x1097C7: main (main.c:79)
-==4160536== 
-==4160536== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==4160536==    <inherited from parent>
-==4160536== 
-==4160536== Open file descriptor 43: /home/nadahman/.config/Code/logs/20250409T100127/ptyhost.log
-==4160536==    <inherited from parent>
-==4160536== 
-==4160536== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
-==4160536==    <inherited from parent>
-==4160536== 
-==4160536== 
-==4160536== HEAP SUMMARY:
-==4160536==     in use at exit: 208,353 bytes in 233 blocks
-==4160536==   total heap usage: 800 allocs, 567 frees, 237,339 bytes allocated
-==4160536== 
-==4160536== 6 bytes in 1 blocks are indirectly lost in loss record 2 of 70
-==4160536==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4160536==    by 0x10EE11: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
-==4160536==    by 0x109F95: new_token (pars_utils2.c:37)
-==4160536==    by 0x109A0A: process_single_token (parsing.c:47)
-==4160536==    by 0x109EE6: processe_token (pars_utils10.c:81)
-==4160536==    by 0x109B39: process_parsing_char (parsing.c:78)
-==4160536==    by 0x109BF9: parsing (parsing.c:97)
-==4160536==    by 0x10978A: main (main.c:71)
-==4160536== 
-==4160536== 11 bytes in 2 blocks are definitely lost in loss record 5 of 70
-==4160536==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4160536==    by 0x10AA21: process_quotes (pars_utils5.c:114)
-==4160536==    by 0x10ACD1: process_token (pars_utils6.c:63)
-==4160536==    by 0x10996D: recup_token (parsing.c:25)
-==4160536==    by 0x109ECF: processe_token (pars_utils10.c:80)
-==4160536==    by 0x109B39: process_parsing_char (parsing.c:78)
-==4160536==    by 0x109BF9: parsing (parsing.c:97)
-==4160536==    by 0x10978A: main (main.c:71)
-==4160536== 
-==4160536== 22 (16 direct, 6 indirect) bytes in 1 blocks are definitely lost in loss record 13 of 70
-==4160536==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==4160536==    by 0x109F77: new_token (pars_utils2.c:34)
-==4160536==    by 0x109A0A: process_single_token (parsing.c:47)
-==4160536==    by 0x109EE6: processe_token (pars_utils10.c:81)
-==4160536==    by 0x109B39: process_parsing_char (parsing.c:78)
-==4160536==    by 0x109BF9: parsing (parsing.c:97)
-==4160536==    by 0x10978A: main (main.c:71)
-==4160536== 
-==4160536== LEAK SUMMARY:
-==4160536==    definitely lost: 27 bytes in 3 blocks
-==4160536==    indirectly lost: 6 bytes in 1 blocks
-==4160536==      possibly lost: 0 bytes in 0 blocks
-==4160536==    still reachable: 0 bytes in 0 blocks
-==4160536==         suppressed: 208,320 bytes in 229 blocks
-==4160536== 
-==4160536== For lists of detected and suppressed errors, rerun with: -s
-==4160536== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==4164783== Memcheck, a memory error detector
+==4164783== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4164783== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==4164783== Command: ./minishell
+==4164783== Parent PID: 4164782
+==4164783== 
+==4164783== 
+==4164783== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==4164783== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==4164783==    <inherited from parent>
+==4164783== 
+==4164783== Open file descriptor 43: /home/nadahman/.config/Code/logs/20250409T100127/ptyhost.log
+==4164783==    <inherited from parent>
+==4164783== 
+==4164783== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
+==4164783==    <inherited from parent>
+==4164783== 
+==4164783== 
+==4164783== HEAP SUMMARY:
+==4164783==     in use at exit: 208,318 bytes in 230 blocks
+==4164783==   total heap usage: 744 allocs, 514 frees, 236,377 bytes allocated
+==4164783== 
+==4164783== 5 bytes in 1 blocks are indirectly lost in loss record 1 of 70
+==4164783==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4164783==    by 0x10EE13: ft_strdup (in /home/nadahman/Desktop/minishell/minishell)
+==4164783==    by 0x109F95: new_token (pars_utils2.c:37)
+==4164783==    by 0x109A0A: process_single_token (parsing.c:47)
+==4164783==    by 0x109EE6: processe_token (pars_utils10.c:81)
+==4164783==    by 0x109B39: process_parsing_char (parsing.c:78)
+==4164783==    by 0x109BF9: parsing (parsing.c:97)
+==4164783==    by 0x10978A: main (main.c:71)
+==4164783== 
+==4164783== 11 bytes in 2 blocks are definitely lost in loss record 5 of 70
+==4164783==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4164783==    by 0x10AA21: process_quotes (pars_utils5.c:114)
+==4164783==    by 0x10ACD1: process_token (pars_utils6.c:63)
+==4164783==    by 0x10996D: recup_token (parsing.c:25)
+==4164783==    by 0x109ECF: processe_token (pars_utils10.c:80)
+==4164783==    by 0x109B39: process_parsing_char (parsing.c:78)
+==4164783==    by 0x109BF9: parsing (parsing.c:97)
+==4164783==    by 0x10978A: main (main.c:71)
+==4164783== 
+==4164783== 12 bytes in 1 blocks are definitely lost in loss record 7 of 70
+==4164783==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4164783==    by 0x109657: main (main.c:41)
+==4164783== 
+==4164783== 21 (16 direct, 5 indirect) bytes in 1 blocks are definitely lost in loss record 14 of 70
+==4164783==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4164783==    by 0x109F77: new_token (pars_utils2.c:34)
+==4164783==    by 0x109A0A: process_single_token (parsing.c:47)
+==4164783==    by 0x109EE6: processe_token (pars_utils10.c:81)
+==4164783==    by 0x109B39: process_parsing_char (parsing.c:78)
+==4164783==    by 0x109BF9: parsing (parsing.c:97)
+==4164783==    by 0x10978A: main (main.c:71)
+==4164783== 
+==4164783== LEAK SUMMARY:
+==4164783==    definitely lost: 39 bytes in 4 blocks
+==4164783==    indirectly lost: 5 bytes in 1 blocks
+==4164783==      possibly lost: 0 bytes in 0 blocks
+==4164783==    still reachable: 0 bytes in 0 blocks
+==4164783==         suppressed: 208,274 bytes in 225 blocks
+==4164783== 
+==4164783== For lists of detected and suppressed errors, rerun with: -s
+==4164783== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
