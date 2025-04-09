@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:40 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/02 12:17:52 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:32:34 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,22 @@ char	*replace_var_in_str(char *str, int start, char *var_value, int end)
 
 char	*expand_var_at_position(char *str, int *pos, t_env *env)
 {
-	int		start;
-	int		end;
-	char	*var_name;
-	char	*var_value;
-	char	*result;
+	int     start;
+    int     end;
+    char    *var_name;
+    char    *var_value;
+    char    *result;
+    char    *val_str;
 
-	start = *pos;
-	if (str[start + 1] == '?')
-	{
-		result = replace_exit_status(str, start);
-		*pos = start + ft_strlen(ft_itoa(val_ret));
-		return (result);
-	}
+    start = *pos;
+    if (str[start + 1] == '?')
+    {
+        result = replace_exit_status(str, start);
+        val_str = ft_itoa(val_ret);
+        *pos = start + ft_strlen(val_str);
+        free(val_str);
+        return (result);
+    }
 	var_name = extract_var_name(str, start, &end);
 	if (!var_name)
 		return (ft_strdup(str));

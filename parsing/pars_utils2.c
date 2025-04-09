@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:16:13 by nas               #+#    #+#             */
-/*   Updated: 2025/04/01 12:02:49 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:05:16 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ t_token	*new_token(char *str)
 	t_token	*token;
 
 	token = malloc(sizeof(t_token));
-	if (token == NULL)
+	if (!token)
 		return (NULL);
 	token->value = ft_strdup(str);
+	// free(str);
 	token->next = NULL;
 	return (token);
 }

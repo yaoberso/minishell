@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/09 11:30:22 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:55:38 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 			close(cmd->std->save_outstd);
 			cmd->std->save_outstd = -1;
 		}
+		free_cmd(cmd);
+		free_env(env);
 		printf("exit\n");
 		exit(1);
 	}

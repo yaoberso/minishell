@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils5.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:43 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/07 16:14:41 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/09 11:10:33 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ char	*expand_variables(char *str, t_env *env)
 		{
 			expanded = expand_var_at_position(result, &i, env);
 			if (!expanded)
+			{
+				free(result);
 				return (NULL);
+			}
 			free(result);
 			result = expanded;
 			continue ;
@@ -69,7 +72,7 @@ char	*initialize_process_quotes(char *str, int *j)
 	*j = 0;
 	result = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!result)
-		return (str);
+		return (NULL);
 	return (result);
 }
 
@@ -98,24 +101,28 @@ void	handle_quote_chars(char current_char, char *quote_state, char *result,
 		result[(*j)++] = current_char;
 }
 
-char	*process_quotes(char *str)
+char *process_quotes(char *str)
 {
-	int		i;
-	int		j;
-	char	*result;
-	char	quote_state;
+    int     i;
+    int     j;
+    char    *result;
+    char    quote_state;
 
-	i = 0;
-	quote_state = 0;
-	result = initialize_process_quotes(str, &j);
-	if (result == str)
-		return (str);
-	while (str[i])
-	{
-		handle_quote_chars(str[i], &quote_state, result, &j);
-		i++;
-	}
-	result[j] = '\0';
-	free(str);
-	return (result);
+	if (!str)
+		return (NULL);
+
+    result = malloc(sizeof(char) * (ft_strlen(str) + 1));
+    if (!result)
+        return (str);
+    i = 0;
+    j = 0;
+    quote_state = 0;
+    while (str[i])
+    {
+        handle_quote_chars(str[i], &quote_state, result, &j);
+        i++;
+    }
+    result[j] = '\0';
+    free(str);
+    return (result);
 }

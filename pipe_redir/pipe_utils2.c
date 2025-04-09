@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:22:13 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/05 13:24:34 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/08 13:09:40 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
 	{
 		if (cur_cmd->cmd && is_only_spaces(cur_cmd->cmd))
 		{
-    		free(cmd_path);
     		return (0);
 		}
 		printf("command not found: %s\n", cur_cmd->cmd);
@@ -80,9 +79,10 @@ int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
 			close(fd[0]);
 			close(fd[1]);
 		}
-		free(cmd_path);
 		return (1);
 	}
+	if (cmd_path)
+        free(cmd_path);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:01:37 by nas               #+#    #+#             */
-/*   Updated: 2025/04/05 13:44:25 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/09 11:46:37 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void free_cmd(t_cmd *cmd)
             free_redirection(cmd->redirection);
         if (cmd->heredoc_fd != -1)
 			close(cmd->heredoc_fd);
+        if (cmd->std)
+            free(cmd->std);
         free(cmd);
         cmd = next;
     }

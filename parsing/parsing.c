@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 14:40:21 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/09 10:55:55 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	process_single_token(char *token, t_cmd *cmd)
 	if (token)
 	{
 		if (cmd->cmd == NULL)
+		{
 			cmd->cmd = token;
+		}
 		else
 			add_token(&cmd->arg, new_token(token));
 	}
