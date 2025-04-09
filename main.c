@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:42:10 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/09 13:30:58 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:51:52 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	main(int argc, char **argv, char **envp)
 // 		{
 // 			perror("malloc");
 // 			free(input);
-// 			continue ;
+// 			continue ;it vp
 // 		}
 // 		ft_memset(cmd, 0, sizeof(t_cmd));
 // 		cmd->heredoc_fd = -1;

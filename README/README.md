@@ -107,3 +107,16 @@ et tester ducoup commande avec redirections etc
 - regarder aussi les fd non fermer et les fermer
 - expansion dans heredoc ?
 - close fd regarder leaks
+
+
+
+
+09-04 
+
+- toujours sa /home/nadahman/Desktop/minishell$ cat <<
+bash: syntax error near unexpected token `newline'
+/home/nadahman/Desktop/minishell$ cat >>
+bash: syntax error near unexpected token `newline'
+free(): double free detected in tcache 2
+[8]    28922 IOT instruction (core dumped)  ./minishell
+- revoir le val_ret pour l erreur de cat << >>
