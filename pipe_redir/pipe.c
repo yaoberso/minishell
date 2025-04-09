@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/04/08 10:54:55 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:34:15 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
     int     pipe_precedent;
     int     status;
     char    *cmd_path;
-    int     original_stdin;
+    // int     original_stdin;
     int     heredoc_present = 0;
 
-    // Sauvegarder le stdin original pour tout le traitement
-    original_stdin = dup(STDIN_FILENO);
-    if (original_stdin == -1)
+    cmd->std->original_stdin = dup(STDIN_FILENO);
+    if (cmd->std->original_stdin == -1)
     {
         perror("dup");
         return;
@@ -43,15 +42,13 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
             // Si un signal a interrompu (comme CTRL+C)
             if (val_ret == 130)
             {
-                dup2(original_stdin, STDIN_FILENO);
-                close(original_stdin);
+                dup2(cmd->std->original_stdin, STDIN_FILENO);
+                close(cmd->std->original_stdin);
                 return;
             }
         }
         cur_cmd = cur_cmd->next_cmd;
     }
-
-    // Configuration des signaux pour l'exécution des commandes
     config_signals_exec();
     
     status = -1;
@@ -67,8 +64,8 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
         {
             if (cmd_path)
                 free(cmd_path);
-            dup2(original_stdin, STDIN_FILENO);
-            close(original_stdin);
+            dup2(cmd->std->original_stdin, STDIN_FILENO);
+            close(cmd->std->original_stdin);
             restore_signals();
             return;
         }
@@ -78,8 +75,8 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
             exec_simple_cmd(cur_cmd, env);
             if (cmd_path)
                 free(cmd_path);
-            dup2(original_stdin, STDIN_FILENO);
-            close(original_stdin);
+            dup2(cmd->std->original_stdin, STDIN_FILENO);
+            close(cmd->std->original_stdin);
             restore_signals();
             return;
         }
@@ -97,7 +94,7 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
         
         if (pid == 0)
         {
-            close(original_stdin);
+            close(cmd->std->original_stdin);
             if (cmd_path)
                 free(cmd_path);
             child_process(cur_cmd, fd, pipe_precedent, envp, env);
@@ -114,8 +111,8 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
     exit_status_process(status);
     
     // Restaurer le stdin original
-    dup2(original_stdin, STDIN_FILENO);
-    close(original_stdin);
+    dup2(cmd->std->original_stdin, STDIN_FILENO);
+    close(cmd->std->original_stdin);
     
     if (heredoc_present)
     {

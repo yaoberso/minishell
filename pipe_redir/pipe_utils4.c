@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/08 10:51:39 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:01:20 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,17 @@ void check_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2])
 
 void exec_simple_cmd(t_cmd *cur_cmd, t_env *env)
 {
-	int save_stdin;
-	int save_stdout;
-
-	save_stdin = dup(STDIN_FILENO);
-	save_stdout = dup(STDOUT_FILENO);
+	cur_cmd->std->save_instd = dup(STDIN_FILENO);
+	cur_cmd->std->save_outstd  = dup(STDOUT_FILENO);
 	if (cur_cmd->redirection && cur_cmd->cmd != NULL)
 	{
 		exec_redir(cur_cmd);
 	}
 	cmd_exec(cur_cmd, env);
-	dup2(save_stdin, STDIN_FILENO);
-	dup2(save_stdout, STDOUT_FILENO);
-	close(save_stdin);
-	close(save_stdout);
+	dup2(cur_cmd->std->save_instd, STDIN_FILENO);
+	dup2(cur_cmd->std->save_instd, STDOUT_FILENO);
+	close(cur_cmd->std->save_instd);
+	close(cur_cmd->std->save_instd);
 }
 
 int has_stdout_redirection(t_cmd *cmd)

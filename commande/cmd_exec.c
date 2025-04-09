@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/05 10:45:43 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/09 11:30:22 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,24 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 		ft_unset(cmd->arg, &env);
 	else if (ft_strcmp(cmd->cmd, "exit") == 0)
 	{
+		if (cmd->std->original_stdin >= 0)
+		{
+			dup2(cmd->std->original_stdin, STDIN_FILENO);
+			close(cmd->std->original_stdin);
+			cmd->std->original_stdin = -1;
+		}
+		if (cmd->std->save_instd >= 0)
+		{
+			dup2(cmd->std->save_instd, STDIN_FILENO);
+			close(cmd->std->save_instd);
+			cmd->std->save_instd = -1;
+		}
+		if (cmd->std->save_outstd >= 0)
+		{
+			dup2(cmd->std->save_outstd, STDOUT_FILENO);
+			close(cmd->std->save_outstd);
+			cmd->std->save_outstd = -1;
+		}
 		printf("exit\n");
 		exit(1);
 	}

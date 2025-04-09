@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:18:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/07 16:00:09 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/09 11:27:13 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int	main(int argc, char **argv, char **envp)
 	cmd->prev_cmd = NULL;
 	cmd->heredoc_fd = -1;
 	cmd->save_stdin = -1;
+	cmd->std = malloc(sizeof(t_std));
+	cmd->std->save_instd = -1;
+	cmd->std->save_outstd = -1;
+	cmd->std->original_stdin = -1;
 	cmd->env = env_list;
 	while (1)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/07 12:47:20 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/09 11:27:28 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ typedef struct s_redirection
 	struct s_redirection	*next;
 }							t_redirection;
 
+typedef struct s_std
+{
+	int save_instd;
+	int save_outstd;
+	int original_stdin;
+}							t_std;
+
 // Structure pour les commandes
 typedef struct s_cmd
 {
@@ -69,7 +76,9 @@ typedef struct s_cmd
 	int						save_stdin;
 	int						heredoc_fd;
 	t_env					*env;
+	t_std	*std;
 }							t_cmd;
+
 
 // Fonction pour l'environement
 void						free_env(t_env *env);

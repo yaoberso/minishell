@@ -106,3 +106,4 @@ et tester ducoup commande avec redirections etc
 - regarder a l ecole si j ai le soucis de double free quand je fais "cat >>" ou autre
 - regarder aussi les fd non fermer et les fermer
 - expansion dans heredoc ?
+- close fd regarder leaks
