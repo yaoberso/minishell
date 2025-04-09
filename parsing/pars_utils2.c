@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:16:13 by nas               #+#    #+#             */
-/*   Updated: 2025/04/01 12:02:49 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:05:24 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_token	*new_token(char *str)
 	if (token == NULL)
 		return (NULL);
 	token->value = ft_strdup(str);
+	// free(str);
 	token->next = NULL;
 	return (token);
 }

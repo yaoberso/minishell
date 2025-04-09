@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:46 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/08 13:15:00 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:08:06 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ char	*process_token(char *str_recup, t_env *env)
 	result = expand_variables(str_recup, env);
 	free(str_recup);
 	if (!result)
+	{
 		return (NULL);
+	}
 	result = process_quotes(result);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:43 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/08 13:34:11 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:10:33 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ char *process_quotes(char *str)
     char    *result;
     char    quote_state;
 
+	if (!str)
+		return (NULL);
+
     result = malloc(sizeof(char) * (ft_strlen(str) + 1));
     if (!result)
         return (str);
@@ -119,7 +122,6 @@ char *process_quotes(char *str)
         handle_quote_chars(str[i], &quote_state, result, &j);
         i++;
     }
-    
     result[j] = '\0';
     free(str);
     return (result);
