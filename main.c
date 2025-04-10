@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:42:10 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/10 12:10:20 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:49:55 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	main(int argc, char **argv, char **envp)
 		free(prompt);
 		if (!input)
 		{
-			free_cmd(cmd);
-			free_env(env_list);
 			printf("exit\n");
 			break ;
 		}
@@ -92,6 +90,8 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 		restore_signals();
 	}
+	free_content_cmd(cmd);
+	free_env(env_list);
 	return (0);
 }
 
