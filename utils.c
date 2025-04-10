@@ -28,7 +28,7 @@ int is_only_spaces(const char *str)
     i = 0;
     while (str[i])
     {
-        if (!ft_isspace(str[i]))
+        if (!ft_isspace(str[i]) && str[i] != '"' && str[i] != '\'')
             return (0);
         i++;
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/04/09 11:34:15 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:23:46 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
     
     close_pipe_precedent(pipe_precedent);
     exit_status_process(status);
-    
     // Restaurer le stdin original
     dup2(cmd->std->original_stdin, STDIN_FILENO);
     close(cmd->std->original_stdin);
