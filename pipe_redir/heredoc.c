@@ -6,9 +6,10 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/10 11:36:52 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:56:01 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -45,6 +46,7 @@ void heredoc_child(t_cmd *cmd, int heredoc_fd[2])
     close(heredoc_fd[0]); 
     config_signals_heredoc();
     read_heredoc(cmd, heredoc_fd[1]);
+    free_env(cmd->env);
     free_cmd(cmd);
     close(heredoc_fd[1]);
     exit(0);

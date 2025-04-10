@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/09 18:41:30 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/10 11:16:23 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,7 @@ void						free_redirection(t_redirection *redir);
 void						free_cmd(t_cmd *cmd);
 void						free_tab(char **tab);
 void free_content_cmd(t_cmd *cmd);
+void	free_env_init(t_env *env);
 
 // utils
 char						*creat_prompt(t_env *env);
