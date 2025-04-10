@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
-/*   Updated: 2025/04/07 16:06:36 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/10 10:23:09 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	exec_heredocs(t_cmd *cmd)
 	t_redirection	*tmp;
 	int heredoc_found;
 
+	heredoc_found = 0;
 	current = cmd->redirection;
 	while (current)
 	{

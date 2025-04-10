@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/04/09 11:34:15 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:40:46 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
         perror("dup");
         return;
     }
-
-    // Traitement des heredocs d'abord
     cur_cmd = cmd;
     while (cur_cmd)
     {
@@ -38,8 +36,6 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
         {   
             if (exec_heredocs(cur_cmd) == 0)
                 heredoc_present = 1;
-            
-            // Si un signal a interrompu (comme CTRL+C)
             if (val_ret == 130)
             {
                 dup2(cmd->std->original_stdin, STDIN_FILENO);

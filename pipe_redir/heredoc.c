@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/08 12:44:23 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:36:52 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ int redir_heredoc(t_cmd *cmd)
         return (-1);
     }
 
-    // Configurer les signaux pour le heredoc dans le processus parent
-    signal(SIGINT, SIG_IGN); // Ignorer SIGINT temporairement dans le parent
+    signal(SIGINT, SIG_IGN);
     
     if (heredoc_pipe(heredoc_fd) != 0)
     {
@@ -131,6 +130,7 @@ int redir_heredoc(t_cmd *cmd)
         signal(SIGQUIT, SIG_IGN);
         close(cmd->save_stdin);
         heredoc_child(cmd, heredoc_fd);
+        
     }
     else // Processus parent
     {
@@ -179,7 +179,7 @@ int redir_heredoc(t_cmd *cmd)
             restore_signals();
             return (-1);
         }
-        
+        close(cmd->save_stdin);
         close(heredoc_fd[0]);
         restore_signals();
     }
