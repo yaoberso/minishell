@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:22:13 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/08 13:09:40 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:36:28 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
         if (pipe(fd) == -1)
         {
             perror("pipe");
-            if (pipe_precedent != -1)
-                close(pipe_precedent);
+            if (pipe_precedent != -1) 
+				close(pipe_precedent);
             return;
         }
         if (cur_cmd->next_cmd && !cur_cmd->next_cmd->env && cur_cmd->env)

@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:34:51 by nas               #+#    #+#             */
-/*   Updated: 2025/04/10 11:56:09 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:23:38 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
         {
             if (cmd_path)
                 free(cmd_path);
+            close_pipes(fd);
             dup2(cmd->std->original_stdin, STDIN_FILENO);
             close(cmd->std->original_stdin);
             restore_signals();
@@ -71,6 +72,7 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
             exec_simple_cmd(cur_cmd, env);
             if (cmd_path)
                 free(cmd_path);
+            close_pipes(fd);
             dup2(cmd->std->original_stdin, STDIN_FILENO);
             close(cmd->std->original_stdin);
             restore_signals();
@@ -81,6 +83,9 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
         {
             if (cmd_path)
                 free(cmd_path);
+            dup2(cmd->std->original_stdin, STDIN_FILENO);
+            close(cmd->std->original_stdin);
+            close_pipes(fd);
             cur_cmd = cur_cmd->next_cmd;
             continue;
         }
@@ -122,5 +127,6 @@ void exec_pipe(t_cmd *cmd, t_env *env, char **envp)
             cur_cmd = cur_cmd->next_cmd;
         }
     }
+    close_pipes(fd);
     restore_signals();
 }
