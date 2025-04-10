@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:53 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/01 12:09:09 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/10 10:11:19 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	process_argument(t_cmd *next_cmd, char *str, int *index, t_env *env)
 
 	token = recup_token(str, index, env);
 	if (token)
+	{
 		add_token(&next_cmd->arg, new_token(token));
+		free(token);
+	}
 	else
 	{
 		free_cmd(next_cmd);
