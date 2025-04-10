@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/10 11:28:23 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:31:28 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ void child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 	if (is_cmd(cur_cmd->cmd))
 	{
 		cmd_exec(cur_cmd, env);
+		free_env(env);
+		free_cmd(cur_cmd);
 		exit(0);
 	}
 	exec_process(cur_cmd, fd, env, envp);
-	free_cmd(cur_cmd);
 	free_env(env);
+	free_cmd(cur_cmd);
 	exit(127);
 }
 
