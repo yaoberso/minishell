@@ -6,13 +6,13 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:55:59 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/05 13:13:28 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/12 10:32:27 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*check_absolute_path(t_cmd *cmd, char **paths)
+char *check_absolute_path(t_cmd *cmd, char **paths)
 {
 	if (cmd->cmd[0] == '/' || cmd->cmd[0] == '.')
 	{
@@ -27,11 +27,11 @@ char	*check_absolute_path(t_cmd *cmd, char **paths)
 	return ((char *)-1);
 }
 
-char	*search_in_paths(char **paths, char *cmd)
+char *search_in_paths(char **paths, char *cmd)
 {
-	int		i;
-	char	*tmp;
-	char	*full_path;
+	int i;
+	char *tmp;
+	char *full_path;
 
 	i = 0;
 	while (paths[i])
@@ -51,11 +51,11 @@ char	*search_in_paths(char **paths, char *cmd)
 	return (NULL);
 }
 
-char	*found_path(t_cmd *cmd, t_env *env)
+char *found_path(t_cmd *cmd, t_env *env)
 {
-	char	*path;
-	char	**paths;
-	char	*result;
+	char *path;
+	char **paths;
+	char *result;
 
 	path = get_env_value(env, "PATH");
 	if (path == NULL || cmd->cmd == NULL)

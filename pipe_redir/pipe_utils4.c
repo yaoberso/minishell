@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/10 13:27:11 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:32:50 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -38,7 +37,7 @@ void check_fork(pid_t pid, int pipe_precedent, t_cmd *cur_cmd, int fd[2])
 void exec_simple_cmd(t_cmd *cur_cmd, t_env *env)
 {
 	cur_cmd->std->save_instd = dup(STDIN_FILENO);
-	cur_cmd->std->save_outstd  = dup(STDOUT_FILENO);
+	cur_cmd->std->save_outstd = dup(STDOUT_FILENO);
 	if (cur_cmd->redirection && cur_cmd->cmd != NULL)
 	{
 		exec_redir(cur_cmd);
@@ -75,10 +74,7 @@ void child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 	if (cur_cmd->next_cmd && !has_stdout_redirection(cur_cmd))
 		dup2(fd[1], STDOUT_FILENO);
 
-	if (fd[1] != -1)
-		close(fd[1]);
-	if (fd[0] != -1)
-		close(fd[0]);
+	close_pipes(fd);
 
 	if (cur_cmd->redirection)
 		exec_redir(cur_cmd);
@@ -115,12 +111,8 @@ void restore_heredoc_stdin(t_cmd *cmd)
 			perror("dup2 (restore_heredoc_stdin)");
 		else
 		{
-			
 		}
 		close(cmd->save_stdin);
 		cmd->save_stdin = -1;
 	}
 }
-
-
-

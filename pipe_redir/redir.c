@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
-/*   Updated: 2025/04/10 10:23:09 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:33:11 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@
 // 	}
 // }
 
-void	exec_redir(t_cmd *cmd)
+void exec_redir(t_cmd *cmd)
 {
-	int				fd;
-	t_redirection	*current;
+	int fd;
+	t_redirection *current;
 
 	current = cmd->redirection;
 	while (current)
@@ -57,15 +57,15 @@ void	exec_redir(t_cmd *cmd)
 		else if (ft_strcmp(current->type, ">>") == 0)
 			redir_append(cmd, fd);
 		if (val_ret != 0)
-			return ;
+			return;
 		current = current->next;
 	}
 }
 
-int	exec_heredocs(t_cmd *cmd)
+int exec_heredocs(t_cmd *cmd)
 {
-	t_redirection	*current;
-	t_redirection	*tmp;
+	t_redirection *current;
+	t_redirection *tmp;
 	int heredoc_found;
 
 	heredoc_found = 0;
@@ -87,6 +87,5 @@ int	exec_heredocs(t_cmd *cmd)
 	if (heredoc_found == 1)
 		return (0);
 	else
-		return (-1);	
+		return (-1);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:42:10 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/10 13:49:55 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/11 09:14:19 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	main(int argc, char **argv, char **envp)
 			cmd->prev_cmd = NULL;
 			cmd->heredoc_fd = -1;
 			cmd->save_stdin = -1;
+
 		}
 		parsing(input, cmd, env_list);
 		if (cmd->if_error == 1)
@@ -91,6 +92,9 @@ int	main(int argc, char **argv, char **envp)
 		restore_signals();
 	}
 	free_content_cmd(cmd);
+	if (cmd->std)
+    	free(cmd->std);
+	free(cmd);
 	free_env(env_list);
 	return (0);
 }

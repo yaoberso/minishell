@@ -120,3 +120,11 @@ bash: syntax error near unexpected token `newline'
 free(): double free detected in tcache 2
 [8]    28922 IOT instruction (core dumped)  ./minishell -->
 <!-- - revoir le val_ret pour l erreur de cat << >> -->
+
+
+12-04
+
+- fd a fermer quand controle c dans heredoc
+- check des leaks complet
+- tests complet
+- norminette
