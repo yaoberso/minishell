@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/12 10:32:20 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/14 10:02:27 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,98 +92,47 @@ int heredoc_parent(pid_t pid, int heredoc_fd[2])
 
 int redir_heredoc(t_cmd *cmd)
 {
-    pid_t pid;
-    int heredoc_fd[2];
-    int status;
-
-    // Sauvegarder l'entrée standard
-    cmd->save_stdin = dup(STDIN_FILENO);
-    if (cmd->save_stdin == -1)
-    {
-        perror("dup");
-        return (-1);
-    }
-
-    signal(SIGINT, SIG_IGN);
-
-    if (heredoc_pipe(heredoc_fd) != 0)
-    {
-        close(cmd->save_stdin);
-        cmd->save_stdin = -1;
-        return (-1);
-    }
-
-    pid = fork();
-    if (pid == -1)
-    {
-        perror("fork");
-        close(heredoc_fd[0]);
-        close(heredoc_fd[1]);
-        close(cmd->save_stdin);
-        cmd->save_stdin = -1;
-        restore_signals();
-        return (-1);
-    }
-
-    if (pid == 0) // Processus enfant
-    {
-        // Restaurer le comportement par défaut de SIGINT dans l'enfant
-        signal(SIGINT, SIG_DFL);
-        signal(SIGQUIT, SIG_IGN);
-        if (cmd->save_stdin >= 0)
-            close(cmd->save_stdin);
-        heredoc_child(cmd, heredoc_fd);
-    }
-    else // Processus parent
-    {
-        close(heredoc_fd[1]); // Fermer le côté écriture du pipe
-        if (waitpid(pid, &status, 0) == -1)
-        {
-            perror("waitpid");
-            close(heredoc_fd[0]);
-            dup2(cmd->save_stdin, STDIN_FILENO);
-            close(cmd->save_stdin);
-            cmd->save_stdin = -1;
-            restore_signals();
-            return (-1);
-        }
-        // Vérifier si l'enfant a été interrompu par un signal
-        if (WIFSIGNALED(status))
-        {
-            val_ret = 130; // SIGINT
-            close(heredoc_fd[0]);
-            dup2(cmd->save_stdin, STDIN_FILENO);
-            close(cmd->save_stdin);
-            cmd->save_stdin = -1;
-            restore_signals();
-            return (-1);
-        }
-        // Vérifier si l'enfant s'est terminé avec un code de sortie non nul
-        if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-        {
-            val_ret = WEXITSTATUS(status);
-            close(heredoc_fd[0]);
-            dup2(cmd->save_stdin, STDIN_FILENO);
-            close(cmd->save_stdin);
-            cmd->save_stdin = -1;
-            restore_signals();
-            return (-1);
-        }
-
-        // Rediriger l'entrée standard vers le pipe
-        if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
-        {
-            perror("dup2");
-            close(heredoc_fd[0]);
-            dup2(cmd->save_stdin, STDIN_FILENO);
-            close(cmd->save_stdin);
-            cmd->save_stdin = -1;
-            restore_signals();
-            return (-1);
-        }
-        close(cmd->save_stdin);
-        close(heredoc_fd[0]);
-        restore_signals();
-    }
-    return (0);
+	pid_t pid;
+	int heredoc_fd[2];
+	int ret;
+	
+	if (init_heredoc(cmd, heredoc_fd) != 0)
+		return (-1);
+	
+	pid = fork_heredoc(cmd, heredoc_fd);
+	if (pid == -1)
+		return (-1);
+	else if (pid > 0)
+	{
+		close(heredoc_fd[1]);
+		ret = check_heredoc_status(cmd, heredoc_fd, pid);
+		if (ret != 0)
+			return (ret);
+		return (finalize_heredoc(cmd, heredoc_fd));
+	}
+	
+	return (0);
+}
+int redir_heredoc(t_cmd *cmd)
+{
+	pid_t pid;
+	int heredoc_fd[2];
+	int ret;
+	
+	if (init_heredoc(cmd, heredoc_fd) != 0)
+		return (-1);
+	
+	pid = fork_heredoc(cmd, heredoc_fd);
+	if (pid == -1)
+		return (-1);
+	else if (pid > 0)
+	{
+		close(heredoc_fd[1]);
+		ret = check_heredoc_status(cmd, heredoc_fd, pid);
+		if (ret != 0)
+			return (ret);
+		return (finalize_heredoc(cmd, heredoc_fd));
+	}
+	
+	return (0);
 }

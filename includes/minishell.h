@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/10 11:16:23 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/14 10:05:57 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,12 @@ char						*found_path(t_cmd *cmd, t_env *env);
 void						apply_redirections(t_cmd *cmd);
 int	exec_heredocs(t_cmd *cmd);
 void restore_heredoc_stdin(t_cmd *cmd);
+int heredoc_parent(pid_t pid, int heredoc_fd[2]);
+int init_heredoc(t_cmd *cmd, int heredoc_fd[2]);
+int fork_heredoc(t_cmd *cmd, int heredoc_fd[2]);
+int handle_heredoc_error(t_cmd *cmd, int heredoc_fd[0], int status);
+int check_heredoc_status(t_cmd *cmd, int heredoc_fd[2], pid_t pid);
+int finalize_heredoc(t_cmd *cmd, int heredoc_fd[2]);
 
 // pipe utils
 void						create_pipe_in_exec(t_cmd *cur_cmd, int fd[2],
