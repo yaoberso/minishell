@@ -1,0 +1,21 @@
+[DEBUG] Fermeture fd[0]: 5
+[DEBUG] Fermeture fd[1]: 5
+abrefe.txt
+commande
+de
+free
+includes
+leaks.log
+libft
+main.c
+main.o
+Makefile
+minishell
+parsing
+pipe_redir
+readline.supp
+README
+signaux
+test1.txt
+utils.c
+utils.o

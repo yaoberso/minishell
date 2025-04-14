@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/12 10:32:20 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/14 12:33:17 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ void read_heredoc(t_cmd *cmd, int fd)
             write(STDOUT_FILENO, "\n", 1);
             break;
         }
-        // if (val_ret == 130)
-        // {
-        //     free(line);
-        //     break;
-        // }
         if (ft_strcmp(line, cmd->redirection->heredoc_delim) == 0)
         {
             free(line);
@@ -42,16 +37,18 @@ void read_heredoc(t_cmd *cmd, int fd)
 
 void heredoc_child(t_cmd *cmd, int heredoc_fd[2])
 {
-    close(heredoc_fd[0]);
+    close(heredoc_fd[0]); // Fermer le côté lecture du pipe
     config_signals_heredoc();
     read_heredoc(cmd, heredoc_fd[1]);
     dup2(cmd->std->original_stdin, STDIN_FILENO);
     close(cmd->std->original_stdin);
     free_env(cmd->env);
     free_cmd(cmd);
-    close(heredoc_fd[1]);
+    close(heredoc_fd[1]); // Fermer le côté écriture du pipe
     exit(0);
 }
+
+
 
 int heredoc_pipe(int heredoc_fd[2])
 {

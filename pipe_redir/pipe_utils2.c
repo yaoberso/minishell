@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:22:13 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/12 10:32:44 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/14 12:37:04 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,10 @@ void close_pipes(int fd[2])
 {
 	if (fd[0] != -1)
 	{
-		printf("[DEBUG] Fermeture fd[0]: %d\n", fd[0]);
 		close(fd[0]);
 	}
 	if (fd[1] != -1)
 	{
-		printf("[DEBUG] Fermeture fd[1]: %d\n", fd[0]);
 		close(fd[1]);
 	}
 }

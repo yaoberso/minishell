@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:14:01 by nas               #+#    #+#             */
-/*   Updated: 2025/04/12 09:49:09 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/14 12:32:24 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	gestion_heredoc(int sig)
 {
 	if (sig == SIGINT || sig == SIGQUIT)
 	{
-		val_ret = 130;
-		exit(130);
+		close(STDIN_FILENO);
 	}
 }
 
