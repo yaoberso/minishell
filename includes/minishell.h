@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/10 11:16:23 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:14:13 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,19 @@ typedef struct s_cmd
 	t_std	*std;
 	int						if_error;
 }							t_cmd;
+
+typedef struct s_pipe_data
+{
+    int fd[2];
+    int pipe_precedent;
+    int stdin_restored;
+    int heredoc_present;
+    char *cmd_path;
+    pid_t pid;
+    int status;
+    t_env *env;
+    char **envp;
+} t_pipe_data;
 
 
 // Fonction pour l'environement
@@ -196,6 +209,11 @@ char						*found_path(t_cmd *cmd, t_env *env);
 void						apply_redirections(t_cmd *cmd);
 int	exec_heredocs(t_cmd *cmd);
 void restore_heredoc_stdin(t_cmd *cmd);
+int	heredoc_parent(pid_t pid, int heredoc_fd[2]);
+int	setup_heredoc(t_cmd *cmd, int heredoc_fd[2]);
+int	heredoc_fork(t_cmd *cmd, int heredoc_fd[2]);
+int	heredoc_cleanup(t_cmd *cmd, int fd, int status);
+int	heredoc_pipe(int heredoc_fd[2]);
 
 // pipe utils
 void						create_pipe_in_exec(t_cmd *cur_cmd, int fd[2],
