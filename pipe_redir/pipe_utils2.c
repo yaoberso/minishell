@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:22:13 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/14 12:37:04 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:12:52 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@
 // 	}
 // }
 
-void create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
+void	create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
 {
 	if (!cur_cmd)
-		return;
+		return ;
 	if (cur_cmd->next_cmd)
 	{
 		if (pipe(fd) == -1)
@@ -42,7 +42,7 @@ void create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
 			perror("pipe");
 			if (pipe_precedent != -1)
 				close(pipe_precedent);
-			return;
+			return ;
 		}
 		if (cur_cmd->next_cmd && !cur_cmd->next_cmd->env && cur_cmd->env)
 			cur_cmd->next_cmd->env = cur_cmd->env;
@@ -59,9 +59,9 @@ void create_pipe_in_exec(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
 	}
 }
 
-int command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
+int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
 {
-	char *cmd_path;
+	char	*cmd_path;
 
 	cmd_path = found_path(cur_cmd, env);
 	if (!cmd_path && is_cmd(cur_cmd->cmd) == 0 && cur_cmd->cmd)
@@ -71,7 +71,7 @@ int command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
 			return (0);
 		}
 		printf("command not found: %s\n", cur_cmd->cmd);
-		val_ret = 127;
+		g_val_ret = 127;
 		if (pipe_precedent != -1)
 			close(pipe_precedent);
 		if (cur_cmd->next_cmd)
@@ -86,20 +86,20 @@ int command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
 	return (0);
 }
 
-void exit_status_process(int status)
+void	exit_status_process(int status)
 {
 	while (wait(&status) > 0)
 	{
 		if (WIFEXITED(status))
-			val_ret = (WEXITSTATUS(status));
+			g_val_ret = (WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
 		{
-			val_ret = 128 + WTERMSIG(status);
+			g_val_ret = 128 + WTERMSIG(status);
 		}
 	}
 }
 
-void dup_and_close_in_child(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
+void	dup_and_close_in_child(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
 {
 	if (pipe_precedent != -1)
 	{
@@ -114,7 +114,7 @@ void dup_and_close_in_child(t_cmd *cur_cmd, int fd[2], int pipe_precedent)
 	}
 }
 
-void close_pipes(int fd[2])
+void	close_pipes(int fd[2])
 {
 	if (fd[0] != -1)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:14:01 by nas               #+#    #+#             */
-/*   Updated: 2025/04/14 12:32:24 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:21:25 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ void	gestionnaire(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		val_ret = 130;
+		g_val_ret = 130;
 	}
 }
-
 
 // Signal handler pour le mode heredoc
 void	gestion_heredoc(int sig)
@@ -41,12 +40,12 @@ void	gestion_exec(int sig)
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		val_ret = 130;
+		g_val_ret = 130;
 	}
 	else if (sig == SIGQUIT)
 	{
 		write(STDERR_FILENO, "Quit (core dumped)\n", 19);
-		val_ret = 131;
+		g_val_ret = 131;
 	}
 }
 
@@ -76,10 +75,9 @@ void	config_signals_exec(void)
 }
 
 // Configuration des signaux pour le mode heredoc
-void	config_signals_heredoc()
+void	config_signals_heredoc(void)
 {
 	struct sigaction	sa;
-
 
 	sa.sa_handler = gestion_heredoc;
 	sa.sa_flags = 0;

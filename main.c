@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:42:10 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/14 13:17:52 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:14:26 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	val_ret = 0;
+int	g_val_ret = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -28,7 +28,6 @@ int	main(int argc, char **argv, char **envp)
 	cmd = malloc(sizeof(t_cmd));
 	tcgetattr(STDIN_FILENO, &term);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	// config_signals();
 	cmd->cmd = NULL;
 	cmd->arg = NULL;
 	cmd->redirection = NULL;
@@ -75,7 +74,6 @@ int	main(int argc, char **argv, char **envp)
 			cmd->prev_cmd = NULL;
 			cmd->heredoc_fd = -1;
 			cmd->save_stdin = -1;
-
 		}
 		parsing(input, cmd, env_list);
 		if (cmd->if_error == 1)
@@ -93,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	free_content_cmd(cmd);
 	if (cmd->std)
-    	free(cmd->std);
+		free(cmd->std);
 	free(cmd);
 	free_env(env_list);
 	return (0);
@@ -101,7 +99,7 @@ int	main(int argc, char **argv, char **envp)
 
 // #include "minishell.h"
 
-// int val_ret = 0;
+// int g_val_ret = 0;
 // t_signal g_signal = {0, 0};
 
 // int	main(int argc, char **argv, char **envp)
@@ -154,13 +152,13 @@ int	main(int argc, char **argv, char **envp)
 
 // 		parsing(input, cmd, env_list);
 
-// 		if (val_ret != 1)
+// 		if (g_val_ret != 1)
 // 		{
 // 			exec_pipe(cmd, env_list, envp);
 // 			printf("JE SUIS DANS LE PARENT\n");
 // 		}
 // 		else
-// 			val_ret = 0;
+// 			g_val_ret = 0;
 
 // 		free_cmd(cmd);
 // 		free(input);

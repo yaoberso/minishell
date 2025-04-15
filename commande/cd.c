@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:30 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/07 16:13:30 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/15 13:12:52 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_cdwitharg(t_env *env, t_token *arg)
 	}
 	else
 	{
-		val_ret = 1;
+		g_val_ret = 1;
 		perror("cd");
 	}
 }
@@ -43,7 +43,7 @@ void	ft_cd(t_token *arg, t_env *env)
 	char	*home;
 	char	*old_pwd;
 
-	val_ret = 0;
+	g_val_ret = 0;
 	if (!arg || !arg->value)
 	{
 		home = get_env_value(env, "HOME");
@@ -61,7 +61,7 @@ void	ft_cd(t_token *arg, t_env *env)
 		}
 		else
 		{
-			val_ret = 1;
+			g_val_ret = 1;
 			perror("cd");
 		}
 	}

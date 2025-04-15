@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/15 10:48:29 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:35:36 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	read_heredoc(t_cmd *cmd, int fd)
 			free(line);
 			break ;
 		}
-		write(fd, line, ft_strlen(line)); // ecrit la ligne dans le fd
+		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
 	}
@@ -37,14 +37,14 @@ void	read_heredoc(t_cmd *cmd, int fd)
 
 void	heredoc_child(t_cmd *cmd, int heredoc_fd[2])
 {
-	close(heredoc_fd[0]); // Fermer le côté lecture du pipe
+	close(heredoc_fd[0]);
 	config_signals_heredoc();
 	read_heredoc(cmd, heredoc_fd[1]);
 	dup2(cmd->std->original_stdin, STDIN_FILENO);
 	close(cmd->std->original_stdin);
 	free_env(cmd->env);
 	free_cmd(cmd);
-	close(heredoc_fd[1]); // Fermer le côté écriture du pipe
+	close(heredoc_fd[1]);
 	exit(0);
 }
 
@@ -58,49 +58,17 @@ int	heredoc_pipe(int heredoc_fd[2])
 	return (0);
 }
 
-// int heredoc_parent(pid_t pid, int heredoc_fd[2])
-// {
-//     int status;
-
-//     close(heredoc_fd[1]);
-//     if (waitpid(pid, &status, 0) == -1)
-//     {
-//         perror("waitpid");
-//         close(heredoc_fd[0]);
-//         return (1);
-//     }
-//     if (WIFSIGNALED(status) || (WIFEXITED(status)
-		&& WEXITSTATUS(status) == 130))
-//     {
-//         close(heredoc_fd[0]);
-//         return (1);
-//     }
-//     if (dup2(heredoc_fd[0], STDIN_FILENO) == -1)
-//     {
-//         perror("dup2");
-//         close(heredoc_fd[0]);
-//         return (1);
-//     }
-
-//     close(heredoc_fd[0]);
-//     return (0);
-// }
-
-//
-
 int	redir_heredoc(t_cmd *cmd)
 {
-	pid_t pid;
-	int heredoc_fd[2];
-	int status;
+	pid_t	pid;
+	int		heredoc_fd[2];
+	int		status;
 
 	if (setup_heredoc(cmd, heredoc_fd) != 0)
 		return (-1);
-
 	pid = heredoc_fork(cmd, heredoc_fd);
 	if (pid == -1)
 		return (-1);
-
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);

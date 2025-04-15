@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/15 13:14:29 by yaoberso          #+#    #+#             */
+/*   Updated: 2025/04/15 13:15:15 by yaoberso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*creat_prompt(t_env *env)
@@ -21,16 +33,17 @@ char	*creat_prompt(t_env *env)
 	strcat(prompt, "$ ");
 	return (prompt);
 }
-int is_only_spaces(const char *str)
-{
-    int i;
 
-    i = 0;
-    while (str[i])
-    {
-        if (!ft_isspace(str[i]) && str[i] != '"' && str[i] != '\'')
-            return (0);
-        i++;
-    }
-    return (1);
+int	is_only_spaces(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isspace(str[i]) && str[i] != '"' && str[i] != '\'')
+			return (0);
+		i++;
+	}
+	return (1);
 }

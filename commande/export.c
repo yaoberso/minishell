@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:58 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/01 12:44:00 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:12:52 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,5 @@ void	ft_export(t_token *arg, t_env **env)
 			update_or_add_env(env, var_name, var_value);
 		current_arg = current_arg->next;
 	}
-	val_ret = 0;
+	g_val_ret = 0;
 }

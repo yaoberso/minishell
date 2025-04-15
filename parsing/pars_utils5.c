@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils5.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:43 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/09 19:17:45 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/15 12:58:35 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,28 +101,27 @@ void	handle_quote_chars(char current_char, char *quote_state, char *result,
 		result[(*j)++] = current_char;
 }
 
-char *process_quotes(char *str)
+char	*process_quotes(char *str)
 {
-    int     i;
-    int     j;
-    char    *result;
-    char    quote_state;
+	int		i;
+	int		j;
+	char	*result;
+	char	quote_state;
 
 	if (!str)
 		return (NULL);
-
-    result = malloc(sizeof(char) * (ft_strlen(str) + 1));
-    if (!result)
-        return (str);
-    i = 0;
-    j = 0;
-    quote_state = 0;
-    while (str[i])
-    {
-        handle_quote_chars(str[i], &quote_state, result, &j);
-        i++;
-    }
-    result[j] = '\0';
-    free(str);
-    return (result);
+	result = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!result)
+		return (str);
+	i = 0;
+	j = 0;
+	quote_state = 0;
+	while (str[i])
+	{
+		handle_quote_chars(str[i], &quote_state, result, &j);
+		i++;
+	}
+	result[j] = '\0';
+	free(str);
+	return (result);
 }

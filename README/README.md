@@ -119,7 +119,7 @@ bash: syntax error near unexpected token `newline'
 bash: syntax error near unexpected token `newline'
 free(): double free detected in tcache 2
 [8]    28922 IOT instruction (core dumped)  ./minishell -->
-<!-- - revoir le val_ret pour l erreur de cat << >> -->
+<!-- - revoir le g_val_ret pour l erreur de cat << >> -->
 
 
 12-04

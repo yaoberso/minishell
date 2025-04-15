@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils7.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:50 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/09 19:31:43 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/15 12:59:52 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	init_next_cmd(t_cmd *next_cmd)
 	next_cmd->prev_cmd = NULL;
 	next_cmd->heredoc_fd = -1;
 	next_cmd->save_stdin = -1;
-
 	next_cmd->std = malloc(sizeof(t_std));
 	if (next_cmd->std == NULL)
 	{

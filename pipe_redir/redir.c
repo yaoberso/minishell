@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
-/*   Updated: 2025/04/12 10:33:11 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/15 13:12:52 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@
 // 			redir_heredoc(cmd);
 // 			cmd->redirection = tmp;
 // 		}
-// 		if (val_ret != 0)
+// 		if (g_val_ret != 0)
 // 			return ;
 // 		current = current->next;
 // 	}
 // }
 
-void exec_redir(t_cmd *cmd)
+void	exec_redir(t_cmd *cmd)
 {
-	int fd;
-	t_redirection *current;
+	int				fd;
+	t_redirection	*current;
 
 	current = cmd->redirection;
 	while (current)
@@ -56,17 +56,17 @@ void exec_redir(t_cmd *cmd)
 			redir_in(cmd, fd);
 		else if (ft_strcmp(current->type, ">>") == 0)
 			redir_append(cmd, fd);
-		if (val_ret != 0)
-			return;
+		if (g_val_ret != 0)
+			return ;
 		current = current->next;
 	}
 }
 
-int exec_heredocs(t_cmd *cmd)
+int	exec_heredocs(t_cmd *cmd)
 {
-	t_redirection *current;
-	t_redirection *tmp;
-	int heredoc_found;
+	t_redirection	*current;
+	t_redirection	*tmp;
+	int				heredoc_found;
 
 	heredoc_found = 0;
 	current = cmd->redirection;
@@ -80,7 +80,7 @@ int exec_heredocs(t_cmd *cmd)
 			cmd->redirection = tmp;
 			heredoc_found = 1;
 		}
-		if (val_ret != 0)
+		if (g_val_ret != 0)
 			return (-1);
 		current = current->next;
 	}

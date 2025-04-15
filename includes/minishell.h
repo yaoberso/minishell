@@ -6,19 +6,18 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/15 12:14:13 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:13:44 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int					val_ret;
-
 # include "../libft/libft.h"
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <setjmp.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -27,14 +26,15 @@ extern int					val_ret;
 # include <termios.h>
 # include <unistd.h>
 
-# include <setjmp.h>
+extern int					g_val_ret;
+
 typedef struct s_signal
 {
-	int	in_heredoc;
-	int in_execution;
-}						t_signal;
+	int						in_heredoc;
+	int						in_execution;
+}							t_signal;
 
-// structur qui ce met a jour a chaque deplasement dans les fichier
+/*structur qui ce met a jour a chaque deplasement dans les fichier*/
 typedef struct s_env
 {
 	char					*name;
@@ -42,57 +42,56 @@ typedef struct s_env
 	struct s_env			*next;
 }							t_env;
 
-// stucture en liste chainé qui va contenir tout les elements de la commande
+/*stucture en liste chainé qui va contenir tout les elements de la commande*/
 typedef struct s_token
 {
 	char					*value;
 	struct s_token			*next;
 }							t_token;
 
-// Structure pour les redirections
+/*Structure pour les redirections*/
 typedef struct s_redirection
 {
-	char *type;          // le type de redirection ça "<" ça ">" ou ça">>"
-	char *file;          // le fichier de redirection
-	char *heredoc_delim; // le delimiteur pour le heredoc "<<"
+	char					*type;
+	char					*file;
+	char					*heredoc_delim;
 	struct s_redirection	*next;
 }							t_redirection;
 
 typedef struct s_std
 {
-	int save_instd;
-	int save_outstd;
-	int original_stdin;
+	int						save_instd;
+	int						save_outstd;
+	int						original_stdin;
 }							t_std;
 
 // Structure pour les commandes
 typedef struct s_cmd
 {
-	char *cmd;                  // pour les commandes
-	t_token *arg;               // liste chainé qui va contenir les arguments
-	t_redirection *redirection; // liste chainé qui va contenir les redirections
-	struct s_cmd *next_cmd;     // structure cree des qu un pipe est trouve
-	struct s_cmd *prev_cmd;     // structure cree des qu un pipe est trouve
+	char					*cmd;
+	t_token					*arg;
+	t_redirection			*redirection;
+	struct s_cmd			*next_cmd;
+	struct s_cmd			*prev_cmd;
 	int						save_stdin;
 	int						heredoc_fd;
 	t_env					*env;
-	t_std	*std;
+	t_std					*std;
 	int						if_error;
 }							t_cmd;
 
 typedef struct s_pipe_data
 {
-    int fd[2];
-    int pipe_precedent;
-    int stdin_restored;
-    int heredoc_present;
-    char *cmd_path;
-    pid_t pid;
-    int status;
-    t_env *env;
-    char **envp;
-} t_pipe_data;
-
+	int						fd[2];
+	int						pipe_precedent;
+	int						stdin_restored;
+	int						heredoc_present;
+	char					*cmd_path;
+	pid_t					pid;
+	int						status;
+	t_env					*env;
+	char					**envp;
+}							t_pipe_data;
 
 // Fonction pour l'environement
 void						free_env(t_env *env);
@@ -132,7 +131,7 @@ char						*sup_cote(char *str);
 char						*sup_exp(char *str);
 int							double_quote_with_simple_quote(char *str,
 								int double_quote);
-int						checkif2(char *str, char c);
+int							checkif2(char *str, char c);
 char						*replace_exit_status(char *str, int start);
 char						*extract_var_name(char *str, int start, int *end);
 char						*replace_var_in_str(char *str, int start,
@@ -207,13 +206,33 @@ char						**get_args(t_cmd *cmd);
 int							redir_heredoc(t_cmd *cmd);
 char						*found_path(t_cmd *cmd, t_env *env);
 void						apply_redirections(t_cmd *cmd);
-int	exec_heredocs(t_cmd *cmd);
-void restore_heredoc_stdin(t_cmd *cmd);
-int	heredoc_parent(pid_t pid, int heredoc_fd[2]);
-int	setup_heredoc(t_cmd *cmd, int heredoc_fd[2]);
-int	heredoc_fork(t_cmd *cmd, int heredoc_fd[2]);
-int	heredoc_cleanup(t_cmd *cmd, int fd, int status);
-int	heredoc_pipe(int heredoc_fd[2]);
+int							exec_heredocs(t_cmd *cmd);
+void						restore_heredoc_stdin(t_cmd *cmd);
+int							heredoc_parent(pid_t pid, int heredoc_fd[2]);
+int							setup_heredoc(t_cmd *cmd, int heredoc_fd[2]);
+int							heredoc_fork(t_cmd *cmd, int heredoc_fd[2]);
+int							heredoc_cleanup(t_cmd *cmd, int fd, int status);
+int							heredoc_pipe(int heredoc_fd[2]);
+void						exec_commands(t_cmd *cmd, t_cmd *cur_cmd,
+								t_pipe_data *data);
+int							handle_special_cases(t_cmd *cmd, t_cmd *cur_cmd,
+								t_pipe_data *data);
+int							is_simple_command(t_cmd *cur_cmd,
+								t_pipe_data *data);
+int							is_builtin_pipe(t_cmd *cur_cmd, t_pipe_data *data);
+void						cleanup_command(t_cmd *cmd, t_pipe_data *data);
+void						cleanup_builtin(t_cmd *cmd, t_cmd *cur_cmd,
+								t_pipe_data *data);
+void						execute_fork_command(t_cmd *cmd, t_cmd *cur_cmd,
+								t_pipe_data *data);
+void						execute_child_process(t_cmd *cmd, t_cmd *cur_cmd,
+								t_pipe_data *data);
+void						cleanup_execution(t_cmd *cmd, t_pipe_data *data);
+void						close_all_heredoc_fds(t_cmd *cmd);
+void						handle_heredoc_interrupt(t_cmd *cmd, t_cmd *cur_cmd,
+								t_pipe_data *data);
+void						close_original_stdin_if_needed(t_cmd *cmd,
+								int *stdin_restored);
 
 // pipe utils
 void						create_pipe_in_exec(t_cmd *cur_cmd, int fd[2],
@@ -234,7 +253,7 @@ void						create_process(t_cmd *cur_cmd, int fd[2],
 								int pipe_precedent, pid_t pid);
 void						exec_simple_cmd(t_cmd *cur_cmd, t_env *env);
 void						child_process(t_cmd *cur_cmd, int fd[2],
-								int pipe_precedent, char **envp, t_env *env);
+								int pipe_precedent, char **envp);
 int							parent_process(int *fd, int pipe_precedent,
 								t_cmd *cur_cmd);
 void						close_pipes(int fd[2]);
@@ -242,20 +261,23 @@ void						exec_builtin(t_cmd *cur_cmd, t_env *env,
 								char *cmd_path);
 char						*check_absolute_path(t_cmd *cmd, char **paths);
 char						*search_in_paths(char **paths, char *cmd);
+int							parent_process(int *fd, int pipe_precedent,
+								t_cmd *cur_cmd);
+void						restore_heredoc_stdin(t_cmd *cmd);
 
 // free
 void						free_token(t_token *token);
 void						free_redirection(t_redirection *redir);
 void						free_cmd(t_cmd *cmd);
 void						free_tab(char **tab);
-void free_content_cmd(t_cmd *cmd);
-void	free_env_init(t_env *env);
+void						free_content_cmd(t_cmd *cmd);
+void						free_env_init(t_env *env);
 
 // utils
 char						*creat_prompt(t_env *env);
 void						print_arguments(t_token *arg);
 int							ft_isspace(char c);
-int is_only_spaces(const char *str);
+int							is_only_spaces(const char *str);
 
 // signaux
 extern void					rl_replace_line(const char *text, int clear_undo);

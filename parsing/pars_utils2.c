@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:16:13 by nas               #+#    #+#             */
-/*   Updated: 2025/04/09 13:05:07 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:58:01 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_token	*new_token(char *str)
 	if (!token)
 		return (NULL);
 	token->value = ft_strdup(str);
-	// free(str);
 	token->next = NULL;
 	return (token);
 }
