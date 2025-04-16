@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:32:07 by nas               #+#    #+#             */
-/*   Updated: 2025/04/01 12:15:33 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:30:13 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,31 @@ int	double_quote_with_simple_quote(char *str, int double_quote)
 		}
 	}
 	return (0);
+}
+
+char	*handle_exit_status(char *str, int *pos, int start)
+{
+	char	*val_str;
+	char	*result;
+
+	result = replace_exit_status(str, start);
+	val_str = ft_itoa(g_val_ret);
+	*pos = start + ft_strlen(val_str);
+	free(val_str);
+	return (result);
+}
+
+int	handle_dollar(char **result, int *i, t_env *env)
+{
+	char	*expanded;
+
+	expanded = expand_var_at_position(*result, i, env);
+	if (!expanded)
+	{
+		free(*result);
+		return (0);
+	}
+	free(*result);
+	*result = expanded;
+	return (1);
 }

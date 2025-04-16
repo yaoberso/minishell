@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/15 13:13:44 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:43:38 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,10 @@ int							skip_spaces(char *str, int i);
 void						process_single_token(char *token, t_cmd *cmd);
 void						processe_token(char *str, int *i, t_cmd *cmd,
 								t_env *env);
+char						*handle_exit_status(char *str, int *pos, int start);
+int							handle_dollar(char **result, int *i, t_env *env);
+int							handle_pipe(t_cmd *cmd, char *str, int *i,
+								t_env *env);
 
 // pipe et redirection
 int							cmd_in_pipe(char *cmd);
@@ -272,12 +276,17 @@ void						free_cmd(t_cmd *cmd);
 void						free_tab(char **tab);
 void						free_content_cmd(t_cmd *cmd);
 void						free_env_init(t_env *env);
+void						free_all(t_cmd *cmd, t_env *env_list);
+void						free_content_cmd_base(t_cmd *cmd);
+void						free_content_cmd_std(t_std *std);
 
 // utils
 char						*creat_prompt(t_env *env);
 void						print_arguments(t_token *arg);
 int							ft_isspace(char c);
 int							is_only_spaces(const char *str);
+t_cmd						*init_cmd_struct(t_env *env_list);
+int							check_exit_signal(char *input);
 
 // signaux
 extern void					rl_replace_line(const char *text, int clear_undo);
@@ -288,5 +297,7 @@ void						gestion_exec(int sig);
 void						config_signals_heredoc(void);
 void						gestion_heredoc(int sig);
 void						restore_signals(void);
+void						restore_signals(void);
+void						config_signals_heredoc(void);
 
 #endif

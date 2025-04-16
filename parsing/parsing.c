@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/04/10 10:00:16 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:36:22 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	process_single_token(char *token, t_cmd *cmd)
 int	process_parsing_char(char *str, int *i, t_cmd *cmd, t_env *env)
 {
 	t_redirection	*new_redir;
-	t_cmd			*next_cmd;
 
 	if (str[*i] == '<' || str[*i] == '>')
 	{
@@ -63,24 +62,11 @@ int	process_parsing_char(char *str, int *i, t_cmd *cmd, t_env *env)
 			add_redirection(cmd, new_redir);
 		else
 			cmd->if_error = 1;
+		return (0);
 	}
-	else if (str[*i] == '|')
-	{
-		next_cmd = found_next_cmd(str, i, env);
-		if (next_cmd)
-		{
-			add_next_cmd(cmd, next_cmd);
-			next_cmd->prev_cmd = cmd;
-		}
-		else
-			cmd->if_error = 1;
-		return (1);
-	}
-	else
-	{
-		processe_token(str, i, cmd, env);
-	}
-	return (0);
+	if (str[*i] == '|')
+		return (handle_pipe(cmd, str, i, env));
+	return (processe_token(str, i, cmd, env), 0);
 }
 
 void	parsing(char *str, t_cmd *cmd, t_env *env)

@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:43 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/15 12:58:35 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:29:57 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	*expand_variables(char *str, t_env *env)
 	int		i;
 	char	quote_state;
 	char	*result;
-	char	*expanded;
 
 	i = 0;
 	quote_state = 0;
@@ -49,14 +48,8 @@ char	*expand_variables(char *str, t_env *env)
 		quote_state = update_quote_state(result[i], quote_state);
 		if (result[i] == '$' && quote_state != '\'' && result[i + 1] != '\0')
 		{
-			expanded = expand_var_at_position(result, &i, env);
-			if (!expanded)
-			{
-				free(result);
+			if (!handle_dollar(&result, &i, env))
 				return (NULL);
-			}
-			free(result);
-			result = expanded;
 			continue ;
 		}
 		i++;

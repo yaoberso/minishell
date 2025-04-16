@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 11:01:37 by nas               #+#    #+#             */
-/*   Updated: 2025/04/15 13:00:21 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:42:30 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,45 +48,9 @@ void	free_content_cmd(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
-	if (cmd->cmd)
-		free(cmd->cmd);
-	if (cmd->arg)
-		free_token(cmd->arg);
-	if (cmd->redirection)
-		free_redirection(cmd->redirection);
-	if (cmd->next_cmd)
-	{
-		free_cmd(cmd->next_cmd);
-		cmd->next_cmd = NULL;
-	}
-	if (cmd->heredoc_fd >= 0)
-	{
-		close(cmd->heredoc_fd);
-		cmd->heredoc_fd = -1;
-	}
-	if (cmd->save_stdin >= 0)
-	{
-		close(cmd->save_stdin);
-		cmd->save_stdin = -1;
-	}
+	free_content_cmd_base(cmd);
 	if (cmd->std)
-	{
-		if (cmd->std->save_instd >= 0)
-		{
-			close(cmd->std->save_instd);
-			cmd->std->save_instd = -1;
-		}
-		if (cmd->std->save_outstd >= 0)
-		{
-			close(cmd->std->save_outstd);
-			cmd->std->save_outstd = -1;
-		}
-		if (cmd->std->original_stdin >= 0)
-		{
-			close(cmd->std->original_stdin);
-			cmd->std->original_stdin = -1;
-		}
-	}
+		free_content_cmd_std(cmd->std);
 }
 
 void	free_cmd(t_cmd *cmd)
@@ -109,4 +73,13 @@ void	free_cmd(t_cmd *cmd)
 		free(cmd);
 		cmd = next;
 	}
+}
+
+void	free_all(t_cmd *cmd, t_env *env_list)
+{
+	free_content_cmd(cmd);
+	if (cmd->std)
+		free(cmd->std);
+	free(cmd);
+	free_env(env_list);
 }

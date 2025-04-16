@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:42:10 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/15 13:14:26 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:25:48 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 int	g_val_ret = 0;
 
-int	main(int argc, char **argv, char **envp)
+int	skip_if_empty_or_spaces(char *input)
 {
-	char			*input;
-	struct termios	term;
-	t_cmd			*cmd;
-	t_env			*env_list;
-	char			*prompt;
+	if (input[0] == '\0' || is_only_spaces(input))
+	{
+		free(input);
+		return (1);
+	}
+	return (0);
+}
 
-	(void)argc;
-	(void)argv;
-	env_list = init_env(envp);
-	cmd = malloc(sizeof(t_cmd));
-	tcgetattr(STDIN_FILENO, &term);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+void	reset_cmd(t_cmd *cmd)
+{
+	free_content_cmd(cmd);
 	cmd->cmd = NULL;
 	cmd->arg = NULL;
 	cmd->redirection = NULL;
@@ -35,134 +34,57 @@ int	main(int argc, char **argv, char **envp)
 	cmd->prev_cmd = NULL;
 	cmd->heredoc_fd = -1;
 	cmd->save_stdin = -1;
-	cmd->std = malloc(sizeof(t_std));
-	cmd->std->save_instd = -1;
-	cmd->std->save_outstd = -1;
-	cmd->std->original_stdin = -1;
-	cmd->if_error = 0;
-	cmd->env = env_list;
+}
+
+void	execute_input(t_cmd *cmd, t_env *env_list, char **envp, char *input)
+{
+	if (cmd->cmd || cmd->arg || cmd->redirection || cmd->next_cmd)
+		reset_cmd(cmd);
+	parsing(input, cmd, env_list);
+	if (cmd->if_error == 0)
+	{
+		cmd->env = env_list;
+		exec_pipe(cmd, env_list, envp);
+	}
+	else
+		cmd->if_error = 0;
+}
+
+void	loop_minishell(t_cmd *cmd, t_env *env_list, char **envp)
+{
+	char			*input;
+	struct termios	term;
+	char			*prompt;
+
+	tcgetattr(STDIN_FILENO, &term);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	while (1)
 	{
 		config_signals();
 		prompt = creat_prompt(env_list);
 		input = readline(prompt);
 		free(prompt);
-		if (!input)
-		{
-			printf("exit\n");
+		if (!check_exit_signal(input))
 			break ;
-		}
-		if (input[0] == '\0')
-		{
-			free(input);
+		if (skip_if_empty_or_spaces(input))
 			continue ;
-		}
-		if (input && is_only_spaces(input) == 1)
-		{
-			free(input);
-			continue ;
-		}
-		if (*input)
-			add_history(input);
-		if (cmd->cmd || cmd->arg || cmd->redirection || cmd->next_cmd)
-		{
-			free_content_cmd(cmd);
-			cmd->cmd = NULL;
-			cmd->arg = NULL;
-			cmd->redirection = NULL;
-			cmd->next_cmd = NULL;
-			cmd->prev_cmd = NULL;
-			cmd->heredoc_fd = -1;
-			cmd->save_stdin = -1;
-		}
-		parsing(input, cmd, env_list);
-		if (cmd->if_error == 1)
-		{
-			cmd->if_error = 0;
-		}
-		else
-		{
-			cmd->env = env_list;
-			exec_pipe(cmd, env_list, envp);
-			restore_signals();
-		}
+		add_history(input);
+		execute_input(cmd, env_list, envp, input);
 		free(input);
 		restore_signals();
 	}
-	free_content_cmd(cmd);
-	if (cmd->std)
-		free(cmd->std);
-	free(cmd);
-	free_env(env_list);
-	return (0);
 }
 
-// #include "minishell.h"
+int	main(int argc, char **argv, char **envp)
+{
+	t_cmd	*cmd;
+	t_env	*env_list;
 
-// int g_val_ret = 0;
-// t_signal g_signal = {0, 0};
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	char			*input;
-// 	struct termios	term;
-// 	t_cmd			*cmd;
-// 	t_env			*env_list;
-// 	char			*prompt;
-
-// 	(void)argc;
-// 	(void)argv;
-// 	env_list = init_env(envp);
-// 	tcgetattr(STDIN_FILENO, &term);
-// 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
-// 	while (1)
-// 	{
-// 		config_signals();
-// 		prompt = creat_prompt(env_list);
-// 		input = readline(prompt);
-// 		free(prompt);
-
-// 		if (!input)
-// 		{
-// 			printf("exit\n");
-// 			free_env(env_list);
-// 			break ;
-// 		}
-
-// 		if (input[0] == '\0' || is_only_spaces(input))
-// 		{
-// 			free(input);
-// 			continue ;
-// 		}
-
-// 		add_history(input);
-
-// 		cmd = malloc(sizeof(t_cmd));
-// 		if (!cmd)
-// 		{
-// 			perror("malloc");
-// 			free(input);
-// 			continue ;it vp
-// 		}
-// 		ft_memset(cmd, 0, sizeof(t_cmd));
-// 		cmd->heredoc_fd = -1;
-// 		cmd->save_stdin = -1;
-// 		cmd->env = env_list;
-
-// 		parsing(input, cmd, env_list);
-
-// 		if (g_val_ret != 1)
-// 		{
-// 			exec_pipe(cmd, env_list, envp);
-// 			printf("JE SUIS DANS LE PARENT\n");
-// 		}
-// 		else
-// 			g_val_ret = 0;
-
-// 		free_cmd(cmd);
-// 		free(input);
-// 		restore_signals();
-// 	}
-// 	return (0);
-// }
+	(void)argc;
+	(void)argv;
+	env_list = init_env(envp);
+	cmd = init_cmd_struct(env_list);
+	loop_minishell(cmd, env_list, envp);
+	free_all(cmd, env_list);
+	return (0);
+}

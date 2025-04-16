@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:14:01 by nas               #+#    #+#             */
-/*   Updated: 2025/04/15 13:21:25 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:38:57 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,4 @@ void	config_signals_exec(void)
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
-}
-
-// Configuration des signaux pour le mode heredoc
-void	config_signals_heredoc(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = gestion_heredoc;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-}
-
-// Restauration des signaux au mode interactif
-void	restore_signals(void)
-{
-	config_signals();
 }

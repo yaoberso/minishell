@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/15 13:17:54 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:41:35 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,37 @@ int	is_cmd(char *cmd)
 		return (0);
 }
 
+void	handle_exit(t_cmd *cmd, t_env *env)
+{
+	if (cmd->std->original_stdin >= 0)
+	{
+		dup2(cmd->std->original_stdin, STDIN_FILENO);
+		close(cmd->std->original_stdin);
+		cmd->std->original_stdin = -1;
+	}
+	if (cmd->std->save_instd >= 0)
+	{
+		dup2(cmd->std->save_instd, STDIN_FILENO);
+		close(cmd->std->save_instd);
+		cmd->std->save_instd = -1;
+	}
+	if (cmd->std->save_outstd >= 0)
+	{
+		dup2(cmd->std->save_outstd, STDOUT_FILENO);
+		close(cmd->std->save_outstd);
+		cmd->std->save_outstd = -1;
+	}
+	free_cmd(cmd);
+	free_env(env);
+	printf("exit\n");
+	exit(1);
+}
+
 void	cmd_exec(t_cmd *cmd, t_env *env)
 {
-	if (cmd->cmd == NULL || cmd == NULL)
-	{
+	if (cmd == NULL || cmd->cmd == NULL)
 		return ;
-	}
-	else if (ft_strcmp(cmd->cmd, "cd") == 0)
+	if (ft_strcmp(cmd->cmd, "cd") == 0)
 		ft_cd(cmd->arg, env);
 	else if (ft_strcmp(cmd->cmd, "echo") == 0)
 		ft_echo(cmd->arg);
@@ -53,30 +77,7 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 	else if (ft_strcmp(cmd->cmd, "unset") == 0)
 		ft_unset(cmd->arg, &env);
 	else if (ft_strcmp(cmd->cmd, "exit") == 0)
-	{
-		if (cmd->std->original_stdin >= 0)
-		{
-			dup2(cmd->std->original_stdin, STDIN_FILENO);
-			close(cmd->std->original_stdin);
-			cmd->std->original_stdin = -1;
-		}
-		if (cmd->std->save_instd >= 0)
-		{
-			dup2(cmd->std->save_instd, STDIN_FILENO);
-			close(cmd->std->save_instd);
-			cmd->std->save_instd = -1;
-		}
-		if (cmd->std->save_outstd >= 0)
-		{
-			dup2(cmd->std->save_outstd, STDOUT_FILENO);
-			close(cmd->std->save_outstd);
-			cmd->std->save_outstd = -1;
-		}
-		free_cmd(cmd);
-		free_env(env);
-		printf("exit\n");
-		exit(1);
-	}
+		handle_exit(cmd, env);
 }
 
 int	cmd_in_pipe(char *cmd)

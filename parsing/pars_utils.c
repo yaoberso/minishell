@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/04/15 12:57:53 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:36:47 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,19 @@ t_redirection	*found_redirection(char *str, int *index, t_env *env)
 		return (NULL);
 	}
 	return (redir);
+}
+
+int	handle_pipe(t_cmd *cmd, char *str, int *i, t_env *env)
+{
+	t_cmd	*next_cmd;
+
+	next_cmd = found_next_cmd(str, i, env);
+	if (next_cmd)
+	{
+		add_next_cmd(cmd, next_cmd);
+		next_cmd->prev_cmd = cmd;
+	}
+	else
+		cmd->if_error = 1;
+	return (1);
 }
