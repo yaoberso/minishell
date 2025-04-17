@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:35 by nas               #+#    #+#             */
-/*   Updated: 2025/04/15 12:35:36 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:35:47 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	read_heredoc(t_cmd *cmd, int fd)
 		line = readline("> ");
 		if (!line)
 		{
-			write(STDOUT_FILENO, "\n", 1);
 			break ;
 		}
 		if (ft_strcmp(line, cmd->redirection->heredoc_delim) == 0)
