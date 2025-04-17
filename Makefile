@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nas <nas@student.42.fr>                    +#+  +:+       +#+         #
+#    By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 13:35:28 by nadahman          #+#    #+#              #
-#    Updated: 2025/02/26 11:03:32 by nas              ###   ########.fr        #
+#    Updated: 2025/04/09 13:52:03 by nadahman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror -Iincludes -Iparsing -Isignaux -I$(READLINE_DIR)/include -g3
 CC = gcc
-OBJ = $(SRCS:.c=.o)
+CFLAGS = -Wall -Wextra -Werror -Iincludes -Iparsing -Isignaux -Icommande -Ifree -Ipipe_redir -I$(READLINE_DIR)/include -g3
 
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -22,12 +21,18 @@ else
     READLINE_DIR = /usr/include
 endif
 
-SRCS =	main.c \
-		parsing/parsing.c \
-		parsing/pars_utils.c \
-		parsing/pars_utils2.c \
-		signaux/signal.c
-	 
+SRCS = main.c \
+	   utils.c \
+       $(wildcard parsing/*.c) \
+       $(wildcard signaux/*.c) \
+       $(wildcard commande/*.c) \
+	   $(wildcard free/*.c) \
+	   $(wildcard pipe_redir/*.c) \
+	   
+
+
+OBJ = $(SRCS:.c=.o)
+
 LIBFT_DIR = libft
 LIBFT_OBJ = $(LIBFT_DIR)/libft.a
 
@@ -49,6 +54,8 @@ fclean: clean
 
 re: fclean all
 
+debug: $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=readline.supp --log-file="leaks.log" ./minishell
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-

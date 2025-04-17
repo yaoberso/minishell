@@ -3,228 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/02/26 10:21:48 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/16 10:36:47 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// pour creer un nouveau token en fonction de ce qu'on recupere 
-t_token	*new_token(char *str)
+int	check_redir_file(t_redirection *redir)
 {
-	t_token *token;
-
-	token = malloc(sizeof(t_token));
-	if (token == NULL)
-		return (NULL);
-	token->value = ft_strdup(str);
-	token->next = NULL;
-	return (token);
+	if (redir->file[0] == '>' || redir->file[0] == '<' || redir->file[0] == '|')
+	{
+		printf("bash: : No such file or directory\n");
+		free(redir->type);
+		free(redir->file);
+		free(redir);
+		return (0);
+	}
+	return (1);
 }
 
-// pour ajouter un token a la fin de la liste
-void add_token(t_token **head, t_token *new)
+int	handle_redirection_type(t_redirection *redir, char *str, int *index,
+		t_env *env)
 {
-	t_token *tmp;
-
-	if (head == NULL || new == NULL)
-		return ;
-	if (*head == NULL)
+	if (str[*index] == '<')
 	{
-		*head = new;
-		return ;
+		if (str[*index + 1] == '<')
+		{
+			if (!handle_heredoc(redir, str, index, env))
+				return (0);
+			return (2);
+		}
+		else if (!handle_input_redir(redir, index))
+			return (0);
+	}
+	else if (str[*index] == '>' && !handle_output_redir(redir, str, index))
+		return (0);
+	return (1);
+}
+
+int	validate_redirection(t_redirection *redir, char *str, int *index,
+		t_env *env)
+{
+	if (redir->type == NULL)
+		return (0);
+	if (!get_redir_file(redir, str, index, env))
+		return (0);
+	if (!check_redir_file(redir))
+		return (0);
+	return (1);
+}
+
+t_redirection	*found_redirection(char *str, int *index, t_env *env)
+{
+	t_redirection	*redir;
+	int				result;
+
+	redir = malloc(sizeof(t_redirection));
+	if (redir == NULL)
+		return (NULL);
+	init_redirection(redir);
+	result = handle_redirection_type(redir, str, index, env);
+	if (result == 0)
+		return (NULL);
+	if (result == 2)
+		return (redir);
+	if (!validate_redirection(redir, str, index, env))
+	{
+		return (NULL);
+	}
+	return (redir);
+}
+
+int	handle_pipe(t_cmd *cmd, char *str, int *i, t_env *env)
+{
+	t_cmd	*next_cmd;
+
+	next_cmd = found_next_cmd(str, i, env);
+	if (next_cmd)
+	{
+		add_next_cmd(cmd, next_cmd);
+		next_cmd->prev_cmd = cmd;
 	}
 	else
-	{
-		tmp = *head;
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
+		cmd->if_error = 1;
+	return (1);
 }
-// pour ajouter une redirection qu'on aura exrtait, a la fin de la liste
-void add_redirection(t_cmd *cmd, t_redirection *new_redir)
-{
-    t_redirection *tmp;
-
-    if (cmd == NULL || new_redir == NULL)
-        return;
-    if (cmd->redirection == NULL)
-    {
-        cmd->redirection = new_redir;
-        return;
-    }
-    else
-    {
-        tmp = cmd->redirection;
-        while (tmp->next != NULL)
-            tmp = tmp->next;
-        tmp->next = new_redir;
-    }
-}
-
-void add_next_cmd(t_cmd *cmd, t_cmd *next_cmd)
-{
-    t_cmd *tmp;
-    
-    if (cmd == NULL || next_cmd == NULL)
-        return;
-    
-    if (cmd->next_cmd == NULL)
-    {
-        cmd->next_cmd = next_cmd;
-        return;
-    }
-    else
-    {
-        tmp = cmd->next_cmd;
-        while (tmp->next_cmd != NULL)
-            tmp = tmp->next_cmd;
-        tmp->next_cmd = next_cmd;
-    }
-}
-
-t_cmd *found_next_cmd(char *str, int *index)
-{
-    t_cmd *next_cmd;
-    t_redirection *new_redir;
-    t_cmd *another_cmd;
-    char *token;
-    
-    next_cmd = malloc(sizeof(t_cmd));
-    if (next_cmd == NULL)
-        return (NULL);
-    next_cmd->cmd = NULL;
-    next_cmd->arg = NULL;
-    next_cmd->redirection = NULL;
-    next_cmd->next_cmd = NULL;
-    if (str[*index] == '|')
-    {
-        (*index)++;
-    }
-    else
-    {
-        free(next_cmd);
-        return (NULL);
-    }
-    while (str[*index] && ft_isspace(str[*index]))
-        (*index)++;
-    if (str[*index] == '\0' || str[*index] == '|' || str[*index] == '<' || str[*index] == '>')
-    {
-        printf("Error: apres le `|'\n");
-        free(next_cmd);
-        return (NULL);
-    }
-    next_cmd->cmd = recup_token(str, index);
-    if (next_cmd->cmd == NULL)
-    {
-        free(next_cmd);
-        return (NULL);
-    }
-    while (str[*index])
-    {
-        while (str[*index] && ft_isspace(str[*index]))
-            (*index)++;
-        if (!str[*index])
-            break ; 
-        if (str[*index] == '<' || str[*index] == '>')
-        {
-            new_redir = found_redirection(str, index);
-            if (new_redir)
-                add_redirection(next_cmd, new_redir);
-            else
-                break ;
-        }
-        else if (str[*index] == '|')
-        {
-            another_cmd = found_next_cmd(str, index);
-            if (another_cmd)
-                add_next_cmd(next_cmd, another_cmd);
-            break ;
-        }
-        else
-        {
-            token = recup_token(str, index);
-            if (token)
-                add_token(&next_cmd->arg, new_token(token));
-        }
-    }
-    return (next_cmd);
-}
-
-
-// pour trouver une redirection, le *index c'est la position du caractere apres la redirection
-t_redirection *found_redirection(char *str, int *index)
-{
-    t_redirection *redir = malloc(sizeof(t_redirection));
-    
-    if (redir == NULL)
-        return (NULL);
-    redir->type = NULL;
-    redir->file = NULL;
-    redir->next = NULL;
-    if (str[*index] == '<')
-    {
-        if (str[*index + 1] == '<')
-        {
-            redir->type = ft_strdup("<<");
-            *index = *index + 2;
-        }
-        else
-        {
-            redir->type = ft_strdup("<");
-            *index = *index + 1;
-        }
-    }
-    else if (str[*index] == '>')
-    {
-        if (str[*index + 1] == '>')
-        {
-            redir->type = ft_strdup(">>");
-            *index = *index + 2;
-        }
-        else
-        {
-            redir->type = ft_strdup(">");
-            *index = *index + 1;
-        }
-    }
-    if (redir->type == NULL)
-    {
-        free(redir);
-        return (NULL);
-    }
-    while (str[*index] && ft_isspace(str[*index]))
-        (*index)++;  
-    if (str[*index] == '\0' || ft_isspace(str[*index]) || str[*index] == '>' || str[*index] == '<' || str[*index] == '|')
-    {
-        printf("Error : apres la redirection\n");
-        free(redir->type);
-        free(redir);
-        return (NULL);
-    }
-    redir->file = recup_token(str, index);
-    if (redir->file == NULL)
-    {
-        free(redir->type);
-        free(redir);
-        return (NULL);
-    } 
-    if (redir->file[0] == '>' || redir->file[0] == '<' || redir->file[0] == '|')
-    {
-        printf("Error : Nom de fichier invalide\n");
-        free(redir->type);
-        free(redir->file);
-        free(redir);
-        return (NULL);
-    }
-    return (redir);
-}
-
-
-
-
-
