@@ -3,36 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:40 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/16 10:29:19 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:58:23 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	checkif2(char *str, char c)
+int checkif2(char *str, char c)
 {
-	int	i;
-	int	count;
-
-	count = 0;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-		{
-			count++;
-		}
-		i++;
-	}
-	if (count % 2 != 0)
-	{
-		printf("synthax error : quote\n");
-		return (0);
-	}
-	return (1);
+    int i;
+    int count;
+    int in_double_quotes;
+    int in_single_quotes;
+    
+    count = 0;
+    i = 0;
+    in_double_quotes = 0;
+    in_single_quotes = 0;
+    
+    while (str[i] != '\0')
+    {
+        if (str[i] == '"' && !in_single_quotes && (i == 0 || str[i-1] != '\\'))
+        {
+            in_double_quotes = !in_double_quotes;
+        }
+        if (str[i] == '\'' && !in_double_quotes && (i == 0 || str[i-1] != '\\'))
+        {
+            in_single_quotes = !in_single_quotes;
+        }
+        if (str[i] == c)
+        {
+            if (c == '\'' && !in_double_quotes)
+            {
+                count++;
+            }
+            else if (c == '"' && !in_single_quotes)
+            {
+                count++;
+            }
+            else if (c != '\'' && c != '"')
+            {
+                count++;
+            }
+        }
+        
+        i++;
+    }
+    
+    if (count % 2 != 0)
+    {
+        printf("synthax error : quote\n");
+        return (0);
+    }
+    
+    return (1);
 }
 
 char	*replace_exit_status(char *str, int start)
