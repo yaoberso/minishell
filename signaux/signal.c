@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:14:01 by nas               #+#    #+#             */
-/*   Updated: 2025/04/16 10:38:57 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:19:43 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	gestionnaire(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_val_ret = 130;
+		ms_status(130);
 	}
 }
 
@@ -40,12 +40,12 @@ void	gestion_exec(int sig)
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		g_val_ret = 130;
+		ms_status(130);
 	}
 	else if (sig == SIGQUIT)
 	{
 		write(STDERR_FILENO, "Quit (core dumped)\n", 19);
-		g_val_ret = 131;
+		ms_status(131);
 	}
 }
 

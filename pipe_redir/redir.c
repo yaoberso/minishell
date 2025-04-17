@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:35:39 by nas               #+#    #+#             */
-/*   Updated: 2025/04/15 13:12:52 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:22:14 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	exec_redir(t_cmd *cmd)
 			redir_in(cmd, fd);
 		else if (ft_strcmp(current->type, ">>") == 0)
 			redir_append(cmd, fd);
-		if (g_val_ret != 0)
+		if (ms_status(-1) != 0)
 			return ;
 		current = current->next;
 	}
@@ -80,7 +80,7 @@ int	exec_heredocs(t_cmd *cmd)
 			cmd->redirection = tmp;
 			heredoc_found = 1;
 		}
-		if (g_val_ret != 0)
+		if (ms_status(-1) != 0)
 			return (-1);
 		current = current->next;
 	}

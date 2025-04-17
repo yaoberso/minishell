@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:31 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/15 13:12:52 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:15:48 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_unset(t_token *arg, t_env **env)
 	t_env	*prev;
 
 	current_arg = arg;
+	ms_status(0);
 	while (current_arg)
 	{
 		current = *env;
@@ -48,5 +49,4 @@ void	ft_unset(t_token *arg, t_env **env)
 		}
 		current_arg = current_arg->next;
 	}
-	g_val_ret = 0;
 }

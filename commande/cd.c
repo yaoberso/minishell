@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:30 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/16 10:40:19 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:14:27 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_cdwitharg(t_env *env, t_token *arg)
 	}
 	else
 	{
-		g_val_ret = 1;
+		ms_status(1);
 		perror("cd");
 	}
 }
@@ -56,14 +56,14 @@ void	ft_cd_no_arg(t_env *env)
 	}
 	else
 	{
-		g_val_ret = 1;
+		ms_status(0);
 		perror("cd");
 	}
 }
 
 void	ft_cd(t_token *arg, t_env *env)
 {
-	g_val_ret = 0;
+	ms_status(0);
 	if (!arg || !arg->value)
 	{
 		ft_cd_no_arg(env);

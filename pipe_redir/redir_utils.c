@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:38:40 by nas               #+#    #+#             */
-/*   Updated: 2025/04/15 13:12:52 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:18:10 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	redir_out(t_cmd *cmd, int fd)
 	if (fd == -1)
 	{
 		perror("open");
-		g_val_ret = 1;
+		ms_status(1);
 		return ;
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -31,7 +31,7 @@ void	redir_in(t_cmd *cmd, int fd)
 	if (fd == -1)
 	{
 		perror("open");
-		g_val_ret = 1;
+		ms_status(1);
 		return ;
 	}
 	dup2(fd, STDIN_FILENO);
@@ -44,7 +44,7 @@ void	redir_append(t_cmd *cmd, int fd)
 	if (fd == -1)
 	{
 		perror("open");
-		g_val_ret = 1;
+		ms_status(1);
 		return ;
 	}
 	dup2(fd, STDOUT_FILENO);

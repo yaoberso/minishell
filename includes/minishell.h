@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/16 10:43:38 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:59:00 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-
-extern int					g_val_ret;
 
 typedef struct s_signal
 {
@@ -115,6 +113,7 @@ void						update_or_add_env(t_env **env, char *var_name,
 								char *var_value);
 void						add_env_variable(t_env **env, char *var_name,
 								char *var_value);
+void						ft_exit(t_cmd *cmd, t_env *env);
 
 // Fonctions de parsing
 void						add_token(t_token **head, t_token *new);
@@ -287,6 +286,7 @@ int							ft_isspace(char c);
 int							is_only_spaces(const char *str);
 t_cmd						*init_cmd_struct(t_env *env_list);
 int							check_exit_signal(char *input);
+int							ms_status(int new_value);
 
 // signaux
 extern void					rl_replace_line(const char *text, int clear_undo);

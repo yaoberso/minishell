@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:22:13 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/15 13:12:52 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:17:12 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	command_not_found(t_cmd *cur_cmd, int pipe_precedent, int fd[2], t_env *env)
 			return (0);
 		}
 		printf("command not found: %s\n", cur_cmd->cmd);
-		g_val_ret = 127;
+		ms_status(127);
 		if (pipe_precedent != -1)
 			close(pipe_precedent);
 		if (cur_cmd->next_cmd)
@@ -91,10 +91,10 @@ void	exit_status_process(int status)
 	while (wait(&status) > 0)
 	{
 		if (WIFEXITED(status))
-			g_val_ret = (WEXITSTATUS(status));
+			ms_status(WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
 		{
-			g_val_ret = 128 + WTERMSIG(status);
+			ms_status(128 + WTERMSIG(status));
 		}
 	}
 }

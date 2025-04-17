@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:32:07 by nas               #+#    #+#             */
-/*   Updated: 2025/04/16 10:30:13 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:23:11 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*handle_exit_status(char *str, int *pos, int start)
 	char	*result;
 
 	result = replace_exit_status(str, start);
-	val_str = ft_itoa(g_val_ret);
+	val_str = ft_itoa(ms_status(-1));
 	*pos = start + ft_strlen(val_str);
 	free(val_str);
 	return (result);

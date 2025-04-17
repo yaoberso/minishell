@@ -6,7 +6,7 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:09 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/15 13:12:52 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:15:08 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	ft_env(t_env *arg)
 		printf("%s=\"%s\"\n", current->name, current->value);
 		current = current->next;
 	}
-	g_val_ret = 0;
+	ms_status(0);
 }

@@ -6,13 +6,13 @@
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:42:10 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/16 10:25:48 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:13:29 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_val_ret = 0;
+// int	g_val_ret = 0;
 
 int	skip_if_empty_or_spaces(char *input)
 {
@@ -73,6 +73,15 @@ void	loop_minishell(t_cmd *cmd, t_env *env_list, char **envp)
 		free(input);
 		restore_signals();
 	}
+}
+
+int	ms_status(int new_value)
+{
+	static int status;
+
+	if (new_value != -1)
+		status = new_value;
+	return (status);
 }
 
 int	main(int argc, char **argv, char **envp)
