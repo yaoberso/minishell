@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:29 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/16 10:25:58 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:07:41 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,14 @@ int	check_exit_signal(char *input)
 		return (0);
 	}
 	return (1);
+}
+
+int	skip_if_empty_or_spaces(char *input)
+{
+	if (input[0] == '\0' || is_only_spaces(input))
+	{
+		free(input);
+		return (1);
+	}
+	return (0);
 }

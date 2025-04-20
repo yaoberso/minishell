@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 13:30:44 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/17 13:58:39 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:09:20 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_if_alpha(char *str)
+int	is_numeric(char *str)
 {
 	int	i;
 
 	i = 0;
+	if (str[0] == '-' || str[0] == '+')
+		i++;
+	if (str[i] == '\0')
+		return (0);
 	while (str[i] != '\0')
 	{
-		if (i <= '9' && i >= '0')
-		{
-			i++;
-		}
-		else
-		{
-			return (1);
-		}
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
 	}
-	return (0);
+	return (1);
 }
 
 void	handle_stdin_stdout(t_cmd *cmd)
@@ -53,29 +52,38 @@ void	handle_stdin_stdout(t_cmd *cmd)
 	}
 }
 
-void	process_exit_args(t_token *arg, int *ms_ex, int *count)
+static void	handle_exit_value(t_token *arg, int *ms_ex, int count)
 {
-	if (arg == NULL)
-		*ms_ex = 0;
+	if (!is_numeric(arg->value))
+	{
+		printf("exit: %s: numeric argument required\n", arg->value);
+		*ms_ex = 2;
+	}
 	else
 	{
-		if (check_if_alpha(arg->value) == 1)
-		{
-			printf("exit: %s: numeric argument required\n", arg->value);
-			*ms_ex = 2;
-		}
-		else
-		{
-			*ms_ex = ft_atoi(arg->value);
-			while (arg != NULL)
-			{
-				(*count)++;
-				arg = arg->next;
-			}
-			if (*count > 1)
-				printf("exit: too many arguments\n");
-		}
+		*ms_ex = ft_atoi(arg->value);
+		if (count > 1)
+			printf("exit: too many arguments\n");
 	}
+}
+
+void	process_exit_args(t_token *arg, int *ms_ex, int *count)
+{
+	t_token	*temp;
+
+	*count = 0;
+	if (arg == NULL)
+	{
+		*ms_ex = 0;
+		return ;
+	}
+	temp = arg;
+	while (temp != NULL)
+	{
+		(*count)++;
+		temp = temp->next;
+	}
+	handle_exit_value(arg, ms_ex, *count);
 }
 
 void	ft_exit(t_cmd *cmd, t_env *env)
@@ -84,10 +92,14 @@ void	ft_exit(t_cmd *cmd, t_env *env)
 	int		count;
 	t_token	*arg;
 
-	count = 0;
 	arg = cmd->arg;
 	printf("exit\n");
 	process_exit_args(arg, &ms_ex, &count);
+	if (count > 1 && is_numeric(arg->value))
+	{
+		handle_stdin_stdout(cmd);
+		return ;
+	}
 	handle_stdin_stdout(cmd);
 	free_cmd(cmd);
 	free_env(env);

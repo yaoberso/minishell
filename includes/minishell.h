@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/17 13:59:00 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:08:03 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include "../libft/libft.h"
 # include <fcntl.h>
+# include <signal.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <setjmp.h>
-# include <signal.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -102,7 +102,7 @@ char						*get_env_value(t_env *env, const char *name);
 void						ft_echo(t_token *current);
 void						ft_pwd(void);
 void						ft_cd(t_token *arg, t_env *env);
-void						ft_env(t_env *env);
+void						ft_env(t_env *env, t_token *arg);
 void						ft_export(t_token *arg, t_env **env);
 void						ft_unset(t_token *arg, t_env **env);
 void						cmd_exec(t_cmd *cmd, t_env *env);
@@ -287,6 +287,7 @@ int							is_only_spaces(const char *str);
 t_cmd						*init_cmd_struct(t_env *env_list);
 int							check_exit_signal(char *input);
 int							ms_status(int new_value);
+int							skip_if_empty_or_spaces(char *input);
 
 // signaux
 extern void					rl_replace_line(const char *text, int clear_undo);

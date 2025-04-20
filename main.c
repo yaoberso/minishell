@@ -3,26 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:42:10 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/17 13:13:29 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:07:33 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // int	g_val_ret = 0;
-
-int	skip_if_empty_or_spaces(char *input)
-{
-	if (input[0] == '\0' || is_only_spaces(input))
-	{
-		free(input);
-		return (1);
-	}
-	return (0);
-}
 
 void	reset_cmd(t_cmd *cmd)
 {
@@ -77,7 +67,7 @@ void	loop_minishell(t_cmd *cmd, t_env *env_list, char **envp)
 
 int	ms_status(int new_value)
 {
-	static int status;
+	static int	status;
 
 	if (new_value != -1)
 		status = new_value;

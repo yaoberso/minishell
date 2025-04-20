@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:26 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/17 13:48:51 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/20 15:50:39 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	cmd_exec(t_cmd *cmd, t_env *env)
 	else if (ft_strcmp(cmd->cmd, "echo") == 0)
 		ft_echo(cmd->arg);
 	else if (ft_strcmp(cmd->cmd, "env") == 0)
-		ft_env(env);
+		ft_env(env, cmd->arg);
 	else if (ft_strcmp(cmd->cmd, "export") == 0)
 		ft_export(cmd->arg, &env);
 	else if (ft_strcmp(cmd->cmd, "pwd") == 0)
