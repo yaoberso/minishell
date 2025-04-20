@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/15 12:57:09 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/20 20:40:03 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,18 @@ void	child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 		char **envp)
 {
 	config_signals_exec();
-	if (pipe_precedent != -1)
-	{
-		dup2(pipe_precedent, STDIN_FILENO);
-		close(pipe_precedent);
-	}
+	close_pipe_precedent(pipe_precedent);
 	if (cur_cmd->next_cmd && !has_stdout_redirection(cur_cmd))
 		dup2(fd[1], STDOUT_FILENO);
 	close_pipes(fd);
 	if (cur_cmd->redirection)
 		exec_redir(cur_cmd);
+	if (cur_cmd->in_child)
+	{
+		free_env(cur_cmd->env);
+		free_cmd(cur_cmd);
+		exit(1);
+	}
 	if (is_cmd(cur_cmd->cmd))
 	{
 		cmd_exec(cur_cmd, cur_cmd->env);
@@ -90,3 +92,4 @@ void	child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 	free_cmd(cur_cmd);
 	exit(127);
 }
+

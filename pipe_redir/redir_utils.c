@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 11:38:40 by nas               #+#    #+#             */
-/*   Updated: 2025/04/17 13:18:10 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/20 20:34:18 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	redir_out(t_cmd *cmd, int fd)
 	{
 		perror("open");
 		ms_status(1);
+		cmd->in_child = 1;
 		return ;
 	}
 	dup2(fd, STDOUT_FILENO);
@@ -32,6 +33,7 @@ void	redir_in(t_cmd *cmd, int fd)
 	{
 		perror("open");
 		ms_status(1);
+		cmd->in_child = 1;
 		return ;
 	}
 	dup2(fd, STDIN_FILENO);
@@ -45,6 +47,7 @@ void	redir_append(t_cmd *cmd, int fd)
 	{
 		perror("open");
 		ms_status(1);
+		cmd->in_child = 1;
 		return ;
 	}
 	dup2(fd, STDOUT_FILENO);

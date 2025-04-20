@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:29 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/20 16:07:41 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/20 20:33:54 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_cmd	*init_cmd_struct(t_env *env_list)
 	cmd->std->save_outstd = -1;
 	cmd->std->original_stdin = -1;
 	cmd->if_error = 0;
+	cmd->in_child = 0;
 	cmd->env = env_list;
 	return (cmd);
 }

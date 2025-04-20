@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/20 16:08:03 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/20 20:33:20 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_cmd
 	t_env					*env;
 	t_std					*std;
 	int						if_error;
+	int						in_child;
 }							t_cmd;
 
 typedef struct s_pipe_data
