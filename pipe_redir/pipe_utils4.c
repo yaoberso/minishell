@@ -6,7 +6,7 @@
 /*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by nas               #+#    #+#             */
-/*   Updated: 2025/04/20 20:40:03 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/20 20:45:17 by nas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,3 @@ void	child_process(t_cmd *cur_cmd, int fd[2], int pipe_precedent,
 	free_cmd(cur_cmd);
 	exit(127);
 }
-
