@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/04/22 10:51:06 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:00:59 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ t_redirection	*found_redirection(char *str, int *index, t_env *env)
 		return (NULL);
 	init_redirection(redir);
 	result = handle_redirection_type(redir, str, index, env);
+	if (redir->redir_error == 1)
+	{
+		free(redir);
+		return (NULL);
+	}
 	if (result == 0)
 		return (NULL);
 	if (result == 2)

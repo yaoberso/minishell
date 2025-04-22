@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 13:30:44 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/20 16:09:20 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/21 12:34:15 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_numeric(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	if (str[0] == '-' || str[0] == '+')
 		i++;
 	if (str[i] == '\0')
@@ -52,12 +54,13 @@ void	handle_stdin_stdout(t_cmd *cmd)
 	}
 }
 
-static void	handle_exit_value(t_token *arg, int *ms_ex, int count)
+static int	handle_exit_value(t_token *arg, int *ms_ex, int count)
 {
 	if (!is_numeric(arg->value))
 	{
 		printf("exit: %s: numeric argument required\n", arg->value);
 		*ms_ex = 2;
+		return (0);
 	}
 	else
 	{
@@ -65,9 +68,10 @@ static void	handle_exit_value(t_token *arg, int *ms_ex, int count)
 		if (count > 1)
 			printf("exit: too many arguments\n");
 	}
+	return (1);
 }
 
-void	process_exit_args(t_token *arg, int *ms_ex, int *count)
+int	process_exit_args(t_token *arg, int *ms_ex, int *count)
 {
 	t_token	*temp;
 
@@ -75,7 +79,7 @@ void	process_exit_args(t_token *arg, int *ms_ex, int *count)
 	if (arg == NULL)
 	{
 		*ms_ex = 0;
-		return ;
+		return (1);
 	}
 	temp = arg;
 	while (temp != NULL)
@@ -83,7 +87,7 @@ void	process_exit_args(t_token *arg, int *ms_ex, int *count)
 		(*count)++;
 		temp = temp->next;
 	}
-	handle_exit_value(arg, ms_ex, *count);
+	return (handle_exit_value(arg, ms_ex, *count));
 }
 
 void	ft_exit(t_cmd *cmd, t_env *env)
@@ -92,13 +96,16 @@ void	ft_exit(t_cmd *cmd, t_env *env)
 	int		count;
 	t_token	*arg;
 
+	ms_ex = 0;
 	arg = cmd->arg;
 	printf("exit\n");
-	process_exit_args(arg, &ms_ex, &count);
-	if (count > 1 && is_numeric(arg->value))
+	if (process_exit_args(arg, &ms_ex, &count))
 	{
-		handle_stdin_stdout(cmd);
-		return ;
+		if (count > 1 && is_numeric(arg->value))
+		{
+			handle_stdin_stdout(cmd);
+			return ;
+		}
 	}
 	handle_stdin_stdout(cmd);
 	free_cmd(cmd);

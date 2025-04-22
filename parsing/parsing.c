@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:27:05 by nas               #+#    #+#             */
-/*   Updated: 2025/04/16 10:36:22 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:11:36 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,16 @@ void	parsing(char *str, t_cmd *cmd, t_env *env)
 	initialize_cmd(cmd);
 	while (str[i])
 	{
+		if (str[i] == '|')
+		{
+			printf("bash: syntax error near unexpected token `|'\n");
+			ms_status(2);
+			cmd->if_error = 1;
+			return ;
+		}
 		while (str[i] && ft_isspace(str[i]))
 			i++;
-		if (!str[i])
+		if (!str[i] || cmd->if_error == 1)
 			break ;
 		if (process_parsing_char(str, &i, cmd, env))
 			break ;

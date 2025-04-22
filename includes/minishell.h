@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/20 20:33:20 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/22 12:19:50 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include "../libft/libft.h"
 # include <fcntl.h>
-# include <signal.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <setjmp.h>
+# include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -53,7 +53,9 @@ typedef struct s_redirection
 	char					*type;
 	char					*file;
 	char					*heredoc_delim;
+	int						redir_error;
 	struct s_redirection	*next;
+
 }							t_redirection;
 
 typedef struct s_std
@@ -190,6 +192,7 @@ char						*handle_exit_status(char *str, int *pos, int start);
 int							handle_dollar(char **result, int *i, t_env *env);
 int							handle_pipe(t_cmd *cmd, char *str, int *i,
 								t_env *env);
+void						close_pp(int pipe_precedent);
 
 // pipe et redirection
 int							cmd_in_pipe(char *cmd);

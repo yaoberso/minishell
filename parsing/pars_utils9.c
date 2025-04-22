@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils9.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:57 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/07 16:47:41 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/22 11:16:23 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_redirection(t_redirection *redir)
 	redir->type = NULL;
 	redir->file = NULL;
 	redir->next = NULL;
+	redir->redir_error = 0;
 	redir->heredoc_delim = NULL;
 }
 
@@ -30,8 +31,10 @@ int	handle_heredoc(t_redirection *redir, char *str, int *index, t_env *env)
 		|| str[*index] == '|')
 	{
 		printf("bash: syntax error near unexpected token `newline'\n");
+		ms_status(2);
+		redir->redir_error = 1;
 		free(redir->type);
-		free(redir);
+		// free(redir);
 		return (0);
 	}
 	redir->heredoc_delim = recup_token(str, index, env);
@@ -74,6 +77,8 @@ int	get_redir_file(t_redirection *redir, char *str, int *index, t_env *env)
 		|| str[*index] == '<' || str[*index] == '|')
 	{
 		printf("bash: syntax error near unexpected token `newline'\n");
+		ms_status(2);
+		redir->redir_error = 1;
 		free(redir->type);
 		free(redir);
 		return (0);

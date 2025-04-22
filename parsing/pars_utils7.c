@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:50 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/15 14:20:36 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:14:56 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	check_pipe_syntax(char *str, int *index, t_cmd *next_cmd)
 		|| str[*index] == '>')
 	{
 		printf("bash: syntax error near unexpected token `|'\n");
+		ms_status(2);
 		free_cmd(next_cmd);
 		return (0);
 	}

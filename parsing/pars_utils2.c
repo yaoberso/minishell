@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:16:13 by nas               #+#    #+#             */
-/*   Updated: 2025/04/15 12:58:01 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:58:37 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ void	add_redirection(t_cmd *cmd, t_redirection *new_redir)
 {
 	t_redirection	*tmp;
 
+	if (new_redir && new_redir->redir_error)
+	{
+		cmd->if_error = 1;
+		free_redirection(new_redir); // au cas où tu veux le libérer ici
+		return ;
+	}
 	if (cmd == NULL || new_redir == NULL)
 		return ;
 	if (cmd->redirection == NULL)

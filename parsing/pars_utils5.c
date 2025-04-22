@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils5.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:43 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/16 10:29:57 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:53:03 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*expand_variables(char *str, t_env *env)
 	while (result[i])
 	{
 		quote_state = update_quote_state(result[i], quote_state);
-		if (result[i] == '$' && quote_state != '\'' && result[i + 1] != '\0')
+		if (result[i] == '$' && quote_state != '\'' && result[i + 1] != '\0' && result[i + 1] != ' ')
 		{
 			if (!handle_dollar(&result, &i, env))
 				return (NULL);
