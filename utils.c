@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:29 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/23 13:57:10 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:02:42 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,47 @@ int	check_exit_signal(char *input)
 	return (1);
 }
 
-int	skip_if_empty_or_spaces(char *input)
+// int	skip_if_empty_or_spaces(char *input)
+// {
+// 	if (input[0] == '\0' || is_only_spaces(input))
+// 	{
+// 		printf("bash : command not found %s\n", input);
+// 		ms_status(127);
+// 		free(input);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+int skip_if_empty_or_spaces(char *input)
 {
-	if (input[0] == '\0' || is_only_spaces(input))
-	{
-		printf("bash : command not found %s\n", input);
-		ms_status(127);
-		free(input);
-		return (1);
-	}
-	return (0);
+    if (input[0] == '\0')
+        return (1);
+    if (is_only_spaces(input))
+    {
+        int has_quotes = 0;
+        int i = 0;
+        while (input[i])
+        {
+            if (input[i] == '"' || input[i] == '\'')
+            {
+                has_quotes = 1;
+                break;
+            }
+            i++;
+        }
+        if (has_quotes)
+        {
+            printf("bash: command not found: %s\n", input);
+            ms_status(127);
+            free(input);
+            return (1);
+        }
+        else
+        {
+            free(input);
+            return (1);
+        }
+    }
+    return (0);
 }
