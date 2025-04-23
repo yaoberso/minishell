@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas <nas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:29 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/20 20:33:54 by nas              ###   ########.fr       */
+/*   Updated: 2025/04/23 13:57:10 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	skip_if_empty_or_spaces(char *input)
 {
 	if (input[0] == '\0' || is_only_spaces(input))
 	{
+		printf("bash : command not found %s\n", input);
+		ms_status(127);
 		free(input);
 		return (1);
 	}
