@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:50 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/22 11:14:56 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:27:36 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	init_next_cmd(t_cmd *next_cmd)
 	next_cmd->std->save_outstd = -1;
 	next_cmd->std->original_stdin = -1;
 	next_cmd->if_error = 0;
+	next_cmd->in_child = 0;
 	next_cmd->env = NULL;
 }
 
