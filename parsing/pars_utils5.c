@@ -6,7 +6,7 @@
 /*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:43 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/23 12:43:16 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/23 13:23:29 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ char	*expand_variables(char *str, t_env *env)
 	while (result[i])
 	{
 		quote_state = update_quote_state(result[i], quote_state);
-		if (result[i] == '$' && quote_state != '\'' && result[i + 1] != '\0' && result[i + 1] != ' ' && result[i + 1] != '$')
+		if (result[i] == '$' && quote_state != '\'' && result[i + 1] != '\0' && 
+			result[i + 1] != ' ' && result[i + 1] != '$' && 
+			result[i + 1] != '\'' && result[i + 1] != '"')
 		{
 			if (!handle_dollar(&result, &i, env))
 				return (NULL);
