@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 10:16:13 by nas               #+#    #+#             */
-/*   Updated: 2025/04/22 10:58:37 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:09:53 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	add_redirection(t_cmd *cmd, t_redirection *new_redir)
 	if (new_redir && new_redir->redir_error)
 	{
 		cmd->if_error = 1;
-		free_redirection(new_redir); // au cas où tu veux le libérer ici
+		free_redirection(new_redir);
 		return ;
 	}
 	if (cmd == NULL || new_redir == NULL)

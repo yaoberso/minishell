@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:57 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/23 12:23:29 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:11:22 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	handle_heredoc(t_redirection *redir, char *str, int *index, t_env *env)
 		ms_status(2);
 		redir->redir_error = 1;
 		free(redir->type);
-		// free(redir);
 		return (0);
 	}
 	redir->heredoc_delim = recup_token(str, index, env);

@@ -1,34 +1,34 @@
-==278441== Memcheck, a memory error detector
-==278441== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==278441== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==278441== Command: ./minishell
-==278441== Parent PID: 278440
-==278441== 
-==278441== 
-==278441== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==278441== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==278441==    <inherited from parent>
-==278441== 
-==278441== Open file descriptor 38: /dev/ptmx
-==278441==    <inherited from parent>
-==278441== 
-==278441== Open file descriptor 37: /home/nadahman/.config/Code/logs/20250423T131630/ptyhost.log
-==278441==    <inherited from parent>
-==278441== 
-==278441== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
-==278441==    <inherited from parent>
-==278441== 
-==278441== 
-==278441== HEAP SUMMARY:
-==278441==     in use at exit: 204,211 bytes in 221 blocks
-==278441==   total heap usage: 674 allocs, 453 frees, 231,397 bytes allocated
-==278441== 
-==278441== LEAK SUMMARY:
-==278441==    definitely lost: 0 bytes in 0 blocks
-==278441==    indirectly lost: 0 bytes in 0 blocks
-==278441==      possibly lost: 0 bytes in 0 blocks
-==278441==    still reachable: 0 bytes in 0 blocks
-==278441==         suppressed: 204,211 bytes in 221 blocks
-==278441== 
-==278441== For lists of detected and suppressed errors, rerun with: -s
-==278441== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==282713== Memcheck, a memory error detector
+==282713== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==282713== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==282713== Command: ./minishell
+==282713== Parent PID: 282712
+==282713== 
+==282713== 
+==282713== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==282713== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==282713==    <inherited from parent>
+==282713== 
+==282713== Open file descriptor 38: /dev/ptmx
+==282713==    <inherited from parent>
+==282713== 
+==282713== Open file descriptor 37: /home/nadahman/.config/Code/logs/20250423T131630/ptyhost.log
+==282713==    <inherited from parent>
+==282713== 
+==282713== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
+==282713==    <inherited from parent>
+==282713== 
+==282713== 
+==282713== HEAP SUMMARY:
+==282713==     in use at exit: 208,266 bytes in 225 blocks
+==282713==   total heap usage: 676 allocs, 451 frees, 235,373 bytes allocated
+==282713== 
+==282713== LEAK SUMMARY:
+==282713==    definitely lost: 0 bytes in 0 blocks
+==282713==    indirectly lost: 0 bytes in 0 blocks
+==282713==      possibly lost: 0 bytes in 0 blocks
+==282713==    still reachable: 0 bytes in 0 blocks
+==282713==         suppressed: 208,266 bytes in 225 blocks
+==282713== 
+==282713== For lists of detected and suppressed errors, rerun with: -s
+==282713== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
