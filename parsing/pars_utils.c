@@ -6,7 +6,7 @@
 /*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 20:00:08 by nas               #+#    #+#             */
-/*   Updated: 2025/04/22 11:00:59 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:21:46 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	check_redir_file(t_redirection *redir)
 	if (redir->file[0] == '>' || redir->file[0] == '<' || redir->file[0] == '|')
 	{
 		printf("bash: : No such file or directory\n");
+		ms_status(1);
 		free(redir->type);
 		free(redir->file);
 		free(redir);

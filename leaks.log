@@ -1,62 +1,34 @@
-==1404229== Memcheck, a memory error detector
-==1404229== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1404229== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1404229== Command: ./minishell
-==1404229== Parent PID: 1404228
-==1404229== 
-==1404293== 
-==1404293== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==1404293== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==1404293==    <inherited from parent>
-==1404293== 
-==1404293== Open AF_UNIX socket 43: <unknown>
-==1404293==    <inherited from parent>
-==1404293== 
-==1404293== Open file descriptor 42: /home/yaoberso/.config/Code/logs/20250417T112224/ptyhost.log
-==1404293==    <inherited from parent>
-==1404293== 
-==1404293== Open file descriptor 3: /home/yaoberso/Desktop/minishell/leaks.log
-==1404293==    <inherited from parent>
-==1404293== 
-==1404293== 
-==1404293== HEAP SUMMARY:
-==1404293==     in use at exit: 208,227 bytes in 226 blocks
-==1404293==   total heap usage: 678 allocs, 452 frees, 235,165 bytes allocated
-==1404293== 
-==1404293== LEAK SUMMARY:
-==1404293==    definitely lost: 0 bytes in 0 blocks
-==1404293==    indirectly lost: 0 bytes in 0 blocks
-==1404293==      possibly lost: 0 bytes in 0 blocks
-==1404293==    still reachable: 0 bytes in 0 blocks
-==1404293==         suppressed: 208,227 bytes in 226 blocks
-==1404293== 
-==1404293== For lists of detected and suppressed errors, rerun with: -s
-==1404293== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1404399== 
-==1404399== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==1404399== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==1404399==    <inherited from parent>
-==1404399== 
-==1404399== Open AF_UNIX socket 43: <unknown>
-==1404399==    <inherited from parent>
-==1404399== 
-==1404399== Open file descriptor 42: /home/yaoberso/.config/Code/logs/20250417T112224/ptyhost.log
-==1404399==    <inherited from parent>
-==1404399== 
-==1404399== Open file descriptor 3: /home/yaoberso/Desktop/minishell/leaks.log
-==1404399==    <inherited from parent>
-==1404399== 
-==1404399== 
-==1404399== HEAP SUMMARY:
-==1404399==     in use at exit: 208,277 bytes in 229 blocks
-==1404399==   total heap usage: 749 allocs, 520 frees, 236,366 bytes allocated
-==1404399== 
-==1404399== LEAK SUMMARY:
-==1404399==    definitely lost: 0 bytes in 0 blocks
-==1404399==    indirectly lost: 0 bytes in 0 blocks
-==1404399==      possibly lost: 0 bytes in 0 blocks
-==1404399==    still reachable: 0 bytes in 0 blocks
-==1404399==         suppressed: 208,277 bytes in 229 blocks
-==1404399== 
-==1404399== For lists of detected and suppressed errors, rerun with: -s
-==1404399== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==173107== Memcheck, a memory error detector
+==173107== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==173107== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==173107== Command: ./minishell
+==173107== Parent PID: 173106
+==173107== 
+==173107== 
+==173107== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==173107== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==173107==    <inherited from parent>
+==173107== 
+==173107== Open AF_UNIX socket 37: <unknown>
+==173107==    <inherited from parent>
+==173107== 
+==173107== Open file descriptor 36: /home/nadahman/.config/Code/logs/20250423T102233/ptyhost.log
+==173107==    <inherited from parent>
+==173107== 
+==173107== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
+==173107==    <inherited from parent>
+==173107== 
+==173107== 
+==173107== HEAP SUMMARY:
+==173107==     in use at exit: 208,314 bytes in 229 blocks
+==173107==   total heap usage: 755 allocs, 526 frees, 237,058 bytes allocated
+==173107== 
+==173107== LEAK SUMMARY:
+==173107==    definitely lost: 0 bytes in 0 blocks
+==173107==    indirectly lost: 0 bytes in 0 blocks
+==173107==      possibly lost: 0 bytes in 0 blocks
+==173107==    still reachable: 0 bytes in 0 blocks
+==173107==         suppressed: 208,314 bytes in 229 blocks
+==173107== 
+==173107== For lists of detected and suppressed errors, rerun with: -s
+==173107== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
