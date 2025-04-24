@@ -1,31 +1,31 @@
-==225747== Memcheck, a memory error detector
-==225747== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==225747== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==225747== Command: ./minishell
-==225747== Parent PID: 225746
-==225747== 
-==225747== 
-==225747== FILE DESCRIPTORS: 6 open (3 std) at exit.
-==225747== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==225747==    <inherited from parent>
-==225747== 
-==225747== Open file descriptor 37: /home/yaoberso/.config/Code/logs/20250424T105623/ptyhost.log
-==225747==    <inherited from parent>
-==225747== 
-==225747== Open file descriptor 3: /home/yaoberso/Desktop/minishell/leaks.log
-==225747==    <inherited from parent>
-==225747== 
-==225747== 
-==225747== HEAP SUMMARY:
-==225747==     in use at exit: 208,454 bytes in 238 blocks
-==225747==   total heap usage: 1,061 allocs, 823 frees, 243,744 bytes allocated
-==225747== 
-==225747== LEAK SUMMARY:
-==225747==    definitely lost: 0 bytes in 0 blocks
-==225747==    indirectly lost: 0 bytes in 0 blocks
-==225747==      possibly lost: 0 bytes in 0 blocks
-==225747==    still reachable: 0 bytes in 0 blocks
-==225747==         suppressed: 208,454 bytes in 238 blocks
-==225747== 
-==225747== For lists of detected and suppressed errors, rerun with: -s
-==225747== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==276096== Memcheck, a memory error detector
+==276096== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==276096== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==276096== Command: ./minishell
+==276096== Parent PID: 276095
+==276096== 
+==276096== 
+==276096== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==276096== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==276096==    <inherited from parent>
+==276096== 
+==276096== Open file descriptor 37: /home/nadahman/.config/Code/logs/20250424T121005/ptyhost.log
+==276096==    <inherited from parent>
+==276096== 
+==276096== Open file descriptor 3: /home/nadahman/Desktop/minishell/leaks.log
+==276096==    <inherited from parent>
+==276096== 
+==276096== 
+==276096== HEAP SUMMARY:
+==276096==     in use at exit: 208,494 bytes in 244 blocks
+==276096==   total heap usage: 1,336 allocs, 1,092 frees, 248,692 bytes allocated
+==276096== 
+==276096== LEAK SUMMARY:
+==276096==    definitely lost: 0 bytes in 0 blocks
+==276096==    indirectly lost: 0 bytes in 0 blocks
+==276096==      possibly lost: 0 bytes in 0 blocks
+==276096==    still reachable: 0 bytes in 0 blocks
+==276096==         suppressed: 208,494 bytes in 244 blocks
+==276096== 
+==276096== For lists of detected and suppressed errors, rerun with: -s
+==276096== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:35:30 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/17 13:14:27 by yaoberso         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:18:25 by nadahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,26 @@ void	ft_cd_no_arg(t_env *env)
 
 void	ft_cd(t_token *arg, t_env *env)
 {
+	t_token		*current;
+	int			arg_count;
+
 	ms_status(0);
 	if (!arg || !arg->value)
 	{
 		ft_cd_no_arg(env);
+		return ;
+	}
+	current = arg;
+	arg_count = 0;
+	while (current && current->value)
+	{
+		arg_count++;
+		current = current->next;
+	}
+	if (arg_count > 1)
+	{
+		printf("cd: too many arguments\n");
+		ms_status(1);
 		return ;
 	}
 	ft_cdwitharg(env, arg);
