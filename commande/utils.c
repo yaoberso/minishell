@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nadahman <nadahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:21 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/23 13:41:05 by nadahman         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:49:43 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,39 @@ void	set_env_value(t_env *env, const char *name, const char *new_value)
 	}
 }
 
-void	print_env(t_env *env)
-{
-	t_env	*current;
-
-	current = env;
-	while (current)
-	{
-		printf("declare -x %s=\"%s\"\n", current->name, current->value);
-		current = current->next;
-	}
-}
-
 void	update_or_add_env(t_env **env, char *var_name, char *var_value)
 {
 	t_env	*current;
 
 	current = *env;
-	while (current && ft_strcmp(current->name, var_name) != 0)
-		current = current->next;
-	if (current)
+	while (current)
 	{
-		free(current->value);
-		current->value = var_value;
+		if (ft_strcmp(current->name, var_name) == 0)
+		{
+			free(var_name);
+			if (current->value)
+				free(current->value);
+			current->value = var_value;
+			return ;
+		}
+		current = current->next;
 	}
-	else
-		add_env_variable(env, var_name, var_value);
+	add_env_variable(env, var_name, var_value);
+}
+
+int	print_env(t_env *env_list, int flag)
+{
+	t_env	**env_array;
+	int		env_count;
+
+	if (!env_list)
+		return (0);
+	env_count = count_env_nodes(env_list);
+	env_array = create_env_array(env_list, env_count);
+	if (!env_array)
+		return (1);
+	sort_env_array(env_array, env_count);
+	print_sorted_env(env_array, env_count, flag);
+	free(env_array);
+	return (0);
 }

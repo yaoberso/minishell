@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 13:34:58 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/23 13:10:22 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/24 12:06:53 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	ft_export(t_token *arg, t_env **env)
 	ms_status(0);
 	if (!arg)
 	{
-		print_env(*env);
+		print_env(*env, 1);
 		return ;
 	}
 	current_arg = arg;
@@ -116,10 +116,9 @@ void	ft_export(t_token *arg, t_env **env)
 	{
 		var_name = extract_arg_name(current_arg->value);
 		var_value = extract_arg_value(current_arg->value);
-		if (!var_name)
+		if (!var_name || !is_valid_varname(var_name))
 		{
-			printf("export: `%s': not a valid identifier\n",
-				current_arg->value);
+			print_and_free(var_name, var_value, current_arg->value);
 			ms_status(1);
 		}
 		else

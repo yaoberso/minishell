@@ -1,45 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 13:35:09 by yaoberso          #+#    #+#             */
-/*   Updated: 2025/04/24 11:25:39 by yaoberso         ###   ########.fr       */
+/*   Created: 2025/04/24 11:56:12 by yaoberso          #+#    #+#             */
+/*   Updated: 2025/04/24 12:07:18 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_arg(t_token *arg)
+void	print_and_free(char *var_name, char *var_value, char *value)
 {
-	t_token	*temp;
-	int		arg_count;
-
-	arg_count = 0;
-	if (arg != NULL)
-	{
-		temp = arg;
-		while (temp)
-		{
-			arg_count++;
-			temp = temp->next;
-		}
-		if (arg_count > 0)
-			return (1);
-	}
-	return (0);
-}
-
-void	ft_env(t_env *env, t_token *arg)
-{
-	if (check_arg(arg))
-	{
-		printf("env: %s: No such file or directory\n", arg->value);
-		ms_status(127);
-		return ;
-	}
-	print_env(env, 0);
-	ms_status(0);
+	printf("minishell: export: `%s': not a valid identifier\n", value);
+	if (var_name)
+		free(var_name);
+	if (var_value)
+		free(var_value);
 }

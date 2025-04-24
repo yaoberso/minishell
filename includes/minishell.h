@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yaoberso <yaoberso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 11:21:04 by nadahman          #+#    #+#             */
-/*   Updated: 2025/04/23 13:20:00 by yann             ###   ########.fr       */
+/*   Updated: 2025/04/24 12:06:36 by yaoberso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include "../libft/libft.h"
 # include <fcntl.h>
-# include <signal.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <setjmp.h>
+# include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -100,6 +100,12 @@ t_env						*init_env(char **envp);
 void						set_env_value(t_env *env, const char *name,
 								const char *new_value);
 char						*get_env_value(t_env *env, const char *name);
+int							print_env(t_env *env_list, int i);
+int							count_env_nodes(t_env *env_list);
+t_env						**create_env_array(t_env *env_list, int env_count);
+void						sort_env_array(t_env **env_array, int env_count);
+void						print_sorted_env(t_env **env_array, int env_count,
+								int flag);
 
 // Fonction des commandes
 void						ft_echo(t_token *current);
@@ -111,12 +117,16 @@ void						ft_unset(t_token *arg, t_env **env);
 void						cmd_exec(t_cmd *cmd, t_env *env);
 void						exec_cmd_inter_exter(t_cmd *cmd, t_env *env);
 int							is_cmd(char *cmd);
-void						print_env(t_env *env);
 void						update_or_add_env(t_env **env, char *var_name,
 								char *var_value);
 void						add_env_variable(t_env **env, char *var_name,
 								char *var_value);
 void						ft_exit(t_cmd *cmd, t_env *env);
+int							is_valid_varname(char *name);
+void						process_export_arg(t_token *current_arg,
+								t_env **env);
+void						print_and_free(char *var_name, char *var_value,
+								char *value);
 
 // Fonctions de parsing
 void						add_token(t_token **head, t_token *new);
